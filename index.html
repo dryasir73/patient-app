@@ -164,6 +164,7 @@ a.btn{text-decoration:none}
 .gpick{display:inline-flex;align-items:center;gap:2px;font-weight:700;font-size:17px;border:1.5px solid var(--acc);border-radius:14px;padding:0 4px 0 14px;background:var(--card);min-height:50px;cursor:pointer}
 .gp span{width:34px;height:34px;border-radius:10px}
 .slist .gh{display:flex;align-items:center;gap:6px}
+.slist li.off>span{opacity:.55}
 
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-bottom:40px}input,textarea{-webkit-user-select:text;user-select:text}
 .gate{position:fixed;inset:0;z-index:200;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
@@ -480,7 +481,8 @@ let CFG=null,bip=null;
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();bip=e;const b=$('instNow');if(b)b.hidden=false});
 const card0=e=>`<button class="exc" data-go="x-${e.i}"><div class="stage" data-ex="${e.i}"></div><div><b>${e.n}</b><span class="dose">${dose(e)}</span></div>${ic('chev')}</button>`;
 const dose=e=>S.state&&e.p===1?'مرتان يومياً':e.d[lvl()];
-const mine=()=>EX.map((e,i)=>({...e,i})).filter(e=>SEL['ex-'+e.i]);
+const fitEx=e=>e.m>=S.grade&&(!S.state||e.p===1);
+const mine=()=>EX.map((e,i)=>({...e,i})).filter(e=>SEL['ex-'+e.i]&&fitEx(e));
 const any=p=>Object.keys(SEL).some(k=>SEL[k]&&k.startsWith(p));
 let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3600)}
 const pcs=t=>String(t).replace(/\\/g,'\\\\').replace(/"/g,'\\"');
@@ -532,7 +534,11 @@ const vh=(t,pk_)=>`<div class="vhead"><button class="btn" data-back>${ic('back')
 const PV={
  info:['الملخص المطبوع',()=>`<p class="sub">ملخص أنيق في صفحة واحدة لكل ما يخصك. اضغط "طباعة" لطباعته أو حفظه PDF.</p>${infoHTML()}`,()=>1,'info'],
  prof:['حالتك',()=>profileHTML(),()=>SEL.profile],
- ex:['تمارينك',()=>{const m=mine();return `<p class="sub">اضغط على أي تمرين لتراه كبيراً. الوهج الذهبي يوضح متى تكون عضلات الجذع العميقة مشدودة. توقّف عن أي تمرين يسبب ألماً نازلاً في الساق أو تنميلاً.</p>`+[1,2,3].map(p=>{const L=m.filter(e=>e.p===p);return L.length?`<div class="phase"><div class="ph"><h3>${PH[p][0]}</h3><span>${PH[p][1]}</span></div><div class="exgrid">${L.map(card0).join('')}</div></div>`:''}).join('')},()=>mine().length],
+ ex:['تمارينك',()=>{const m=mine();
+  let h=`<p class="sub">${S.state?'أنت في هجمة ألم: نفّذ تمارين المرحلة الأولى فقط حتى يهدأ الألم بشكل واضح (عادة خلال 1–2 أسبوع)، ثم راجع الطبيب ليحدّث برنامجك.':'انتقل إلى المرحلة التالية فقط عندما تؤدي التمارين دون أن يزيد الألم في اليوم التالي. ابدأ كل جلسة بتمارين المرحلة الأولى كإحماء.'} اضغط على أي تمرين لتراه كبيراً. الوهج الذهبي يوضح متى تكون عضلات الجذع العميقة مشدودة. توقّف عن أي تمرين يسبب ألماً نازلاً في الساق أو تنميلاً.</p>`;
+  h+=(S.state?[1]:[1,2,3]).map(p=>{const L=m.filter(e=>e.p===p);return L.length?`<div class="phase"><div class="ph"><h3>${PH[p][0]}</h3><span>${PH[p][1]}</span></div>${p===3&&S.grade===2?'<div class="note">في درجتك: تمارين هذه المرحلة تحت إشراف معالج طبيعي فقط.</div>':''}<div class="exgrid">${L.map(card0).join('')}</div></div>`:''}).join('');
+  h+=S.state?`<div class="note">مع الهجمة: كمادة دافئة 15–20 دقيقة، والمسكن الذي يصفه طبيبك، ومشي قصير كل ساعتين. إذا لم يتحسّن الألم خلال أسبوعين، أو نزل إلى الساق، فراجع الطبيب.</div>`:`<div class="phase"><div class="ph"><h3>${PH[4][0]}</h3><span>${PH[4][1]}</span></div><div class="note">حافظ يومياً على "الثلاثي الذهبي": McGill curl-up، واللوح الجانبي، وBird-dog (حوالي 10 دقائق). أضف نشاطاً هوائياً ${['150–300','150','100–150'][S.age]} دقيقة أسبوعياً، وتمارين التقوية مرتين أسبوعياً.</div></div>`;
+  return h},()=>mine().length],
  plan:['منهاجي',()=>{const W=week(),t=todayI(),r=W[t];const L=dayEx(r[3]).filter(e=>SEL['ex-'+e.i]);
   return `${SEL.today?`<div class="note"><b>اليوم ${r[0]}: ${TL[r[3]]}</b><br>${r[1]}. النشاط الهوائي: ${r[2]}.</div>${L.length?`<div class="exgrid">${L.map(card0).join('')}</div>`:''}`:''}${SEL.week?`<h3 style="margin-top:26px">جدول الأسبوع</h3><table class="stack"><thead><tr><th>اليوم</th><th>التمارين</th><th>النشاط الهوائي</th></tr></thead><tbody>${W.map((x,i)=>`<tr class="${i===t?'today':''}"><td data-l="اليوم">${x[0]}</td><td data-l="التمارين">${x[1]}</td><td data-l="الهوائي">${x[2]}</td></tr>`).join('')}</tbody></table>`:''}`},()=>SEL.today||SEL.week],
  avoid:['الممنوع والمسموح',()=>avoidHTML(),()=>SEL.avoid||SEL.sports],
@@ -561,7 +567,7 @@ function exHTML(i){const e=EX[i],m=mine(),pos=m.findIndex(x=>x.i===i),prv=m[pos-
 
 let cur='home';const stack=[];
 function show(name){const a=$('app');let h;
- if(name.startsWith('x-')&&SEL['ex-'+name.slice(2)])h=exHTML(+name.slice(2));
+ if(name.startsWith('x-')&&SEL['ex-'+name.slice(2)]&&fitEx(EX[+name.slice(2)]))h=exHTML(+name.slice(2));
  else if(PV[name]&&PV[name][2]())h=`<div class="wrap">${vh(PV[name][0],PV[name][3])}${PV[name][1]()}</div>`;
  else{name='home';h=homeHTML()}
  a.innerHTML=h;a.className='on';$('bk').classList.toggle('hid',name==='home');const prev=cur;cur=name;
