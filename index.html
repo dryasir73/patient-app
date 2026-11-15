@@ -167,6 +167,25 @@ a.btn{text-decoration:none}
 .slist li.off>span{opacity:.55}
 sup.rf{font-size:.68em;color:var(--acc);font-weight:700;margin-inline-start:3px;white-space:nowrap}ol.refs{padding-inline-start:28px}ol.refs li{margin:10px 0;font-size:16px;line-height:1.6}ol.refs a{color:var(--acc);word-break:break-word}
 
+.fl select{display:block;width:100%;margin-top:6px;font:inherit;font-weight:500;font-size:18px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;min-height:50px;appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#5b55c9 50%),linear-gradient(135deg,#5b55c9 50%,transparent 50%);background-position:18px 52%,12px 52%;background-size:6px 6px;background-repeat:no-repeat;padding-inline-start:36px}
+.fl select:focus{outline:3px solid #8f7bff66;border-color:var(--acc)}
+.hname select{background-color:#fff;color:#1b1840;border-color:#fff;font-size:19px}
+.hname input,.hname select{height:54px}
+#anat .sil{fill:#ffffff10;stroke:#ffffff26;stroke-width:1.5}
+#anat .a-bone>*,#anat #lv>*{fill:#f3eee4;opacity:.88}
+#anat .a-mus>*{fill:url(#mus);stroke:#ff6f9c;opacity:0}
+#anat .a-mus .on{opacity:.85!important}
+#anat .a-joint>*{stroke:#ffd27a;opacity:0}
+#anat .a-joint .hl-facet>*,#anat .a-joint .hl-disc>*{fill:#ffd27a}
+#anat .a-nrv>*{stroke:#ffd84d;opacity:0}
+#anat .on{opacity:1!important;animation:apulse 2.2s ease-in-out infinite}
+#anat .a-nrv .on{filter:drop-shadow(0 0 5px #ffd84d)}
+#anat .a-mus .on{filter:drop-shadow(0 0 6px #ff6f9c)}
+#anat .a-bone .on{fill:#ff8fb3!important;filter:drop-shadow(0 0 6px #ff6f9c)}
+#anat .a-joint .on{filter:drop-shadow(0 0 6px #ffd27a)}
+@keyframes apulse{0%,100%{opacity:1}50%{opacity:.55}}
+@media(prefers-reduced-motion:reduce){#anat .on{animation:none}}
+
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-bottom:40px}input,textarea{-webkit-user-select:text;user-select:text}
 .gate{position:fixed;inset:0;z-index:200;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
 .gate[hidden]{display:none}
@@ -764,6 +783,16 @@ const dxAuto=()=>isSp()?dxAutoSp():`${dxC().n}، أعراض ${SEVL[S.grade]}${S.
 
 const dxNo=()=>{const d=dxC(),a=[];for(let g=0;g<=S.grade;g++)a.push(...d.avoid[g]);return a.map(stripR)};
 const exOK=e=>dxEx().includes(e.i===undefined?EX.indexOf(e):e.i);
+
+const HL={disc:['disc'],facet:['facet'],sij:['sij'],piri:['piri'],spasm:['spasm'],coccyx:['coccyx'],cluneal:['cluneal'],hipoa:['hip'],fai:['hip'],lcs:['lcs'],ischial:['ischial'],troch:['troch'],lfcn:['lfcn'],pfcn:['pfcn'],afcn:['afcn'],femoral:['femoral'],sciatic:['sciatic'],pudendal:['pudendal'],genitofem:['genitofem'],obturator:['obturator'],adductor:['adductor'],itb:['itb']};
+const CAT={disc:'الفقرات والأقراص',facet:'مفاصل الفقرات',sij:'المفاصل',piri:'العضلات والأعصاب',spasm:'العضلات',coccyx:'العظام',cluneal:'الأعصاب',hipoa:'المفاصل',fai:'المفاصل',lcs:'العضلات',ischial:'الأكياس الزلالية',troch:'الأوتار والأكياس الزلالية',lfcn:'الأعصاب',pfcn:'الأعصاب',afcn:'الأعصاب',femoral:'الأعصاب',sciatic:'الأعصاب',pudendal:'الأعصاب',genitofem:'الأعصاب',obturator:'الأعصاب',adductor:'العضلات',itb:'العضلات والأربطة'};
+function anat(){const a=document.getElementById('anat'),sp=document.getElementById('spsv'),lg=document.getElementById('lgd');if(!a)return;
+ const lv=a.querySelector('#lv');if(!lv.children.length){let h='',f='',d='';for(let i=0;i<5;i++){const y=6+i*26;h+=`<rect x="143" y="${y}" width="44" height="20" rx="6"/><rect x="${i%2?160:159}" y="${y+4}" width="12" height="12" rx="3" opacity=".6"/>`;f+=`<circle cx="134" cy="${y+12}" r="4.5"/><circle cx="196" cy="${y+12}" r="4.5"/>`;if(i<4)d+=`<rect x="145" y="${y+20.5}" width="40" height="5" rx="2.5"${i===3?'':' opacity=".35"'}/>`}
+  lv.innerHTML=h;a.querySelector('.hl-facet').innerHTML=f;a.querySelector('g.hl-disc').innerHTML=d}
+ if(isSp()){a.style.display='none';sp.style.display='';lg.innerHTML='<span><i style="background:#ece6da"></i>الفقرة</span><span><i style="background:#9b8cf0"></i>القرص</span><span><i style="background:#ff7aa8"></i>مستوى التزحزح</span>';return}
+ sp.style.display='none';a.style.display='';const ks=HL[S.dx]||[];
+ a.querySelectorAll('[class*="hl-"]').forEach(e=>{const c=e.getAttribute('class')||'';e.classList.toggle('on',ks.some(k=>c.split(/\s+/).includes('hl-'+k)))});
+ lg.innerHTML=`<span><i style="background:#ffd27a"></i>${CAT[S.dx]||''}: ${dxC().n}</span>`}
 
 
 /* ---------- تطبيق المريض ---------- */
