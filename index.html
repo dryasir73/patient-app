@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="برنامجي العلاجي">
 <meta name="robots" content="noindex,nofollow">
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png">
-<title>برنامج مريض تزحزح الفقرات</title>
+<title>برنامج ألم الظهر</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: أنيق، هادئ، سريري — تطبيق علاجي شخصي
@@ -219,14 +219,14 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;paddin
 <body>
 <input type="checkbox" id="ok" autocomplete="off"><div class="splash" role="dialog" aria-modal="true" aria-labelledby="spt"><div class="sbox">
  <div class="logo"><svg viewBox="0 0 56 56"><rect x="14" y="6" width="28" height="11" rx="5" fill="#fff"/><rect x="12" y="22" width="28" height="11" rx="5" fill="#fff" opacity=".9"/><rect x="16" y="38" width="28" height="11" rx="5" fill="#ffc24d"/></svg></div>
- <h1 id="spt">برنامج مريض تزحزح الفقرات</h1>
+ <h1 id="spt">برنامج ألم الظهر</h1>
  <p>هذا البرنامج مخصص للمريض بعد أن يتم فحصه من قبل الدكتور ياسر الخزرجي، وتحديد ما يلائم حالته.</p>
  <p class="warn">لا يجوز استخدامه بدون استشارة الطبيب.</p>
  <label for="ok" class="gobtn" tabindex="0">قرأت وأوافق، ابدأ</label></div></div>
 <div class="gate" id="gate"></div>
 <header class="top" id="top" hidden><div class="wrap tbar">
  <button class="ib hid" id="bk" aria-label="رجوع للصفحة السابقة"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
- <button class="ttl" id="home">برنامج مريض تزحزح الفقرات</button>
+ <button class="ttl" id="home">برنامج ألم الظهر</button>
 </div></header>
 <main id="app" hidden></main>
 <div class="wm" id="wm" aria-hidden="true"></div><div class="pmark" id="pmark" aria-hidden="true"></div><div id="lock" aria-hidden="true"></div>
@@ -260,7 +260,15 @@ const AN=[
 {pin:['H',200,128],pr:'weight',walk:1,base:{...STAND,ua:92,fa:90,g:.7},k:[[{th:72,sh:100,th2:110,sh2:120,ua2:105,fa2:95},450,0],[{th:90,sh:95,th2:88,sh2:130,ua2:90,fa2:85},450,0],[{th:110,sh:120,th2:72,sh2:100,ua2:75,fa2:60},450,0],[{th:88,sh:130,th2:90,sh2:95,ua2:90,fa2:85},450,0]]},
 {pin:['A',255,220],pr:'chair',base:{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},k:[[{},500,500],[{t:-42,h:-35},900,200],[{t:-60,th:55,sh:95,h:-50,g:.6},600,0],[{t:-88,th:88,sh:92,h:-88,g:.8},700,1200,1],[{t:-50,th:40,sh:95,h:-45},900,0],[{},700,600]]},
 {pin:['A',220,220],pr:'dowel',base:{...STAND,ua:92,fa:90,ua2:90,fa2:88},k:[[{},500,300],[{t:-93},150,0],[{t:-32,h:-22,th:66,sh:102,g:1},1200,1200],[{},1000,300]]},
-{pin:['A',215,220],pr:'',base:{...STAND,ua:70,fa:60,ua2:75,fa2:65},k:[[{},500,300],[{t:-92},200,0],[{th2:12,sh2:100,ft2:12,g:.6},900,300],[{t:-87,ua:66},900,0],[{t:-93,ua:74},900,0],[{},800,400]]}
+{pin:['A',215,220],pr:'',base:{...STAND,ua:70,fa:60,ua2:75,fa2:65},k:[[{},500,300],[{t:-92},200,0],[{th2:12,sh2:100,ft2:12,g:.6},900,300],[{t:-87,ua:66},900,0],[{t:-93,ua:74},900,0],[{},800,400]]},
+{pin:['H',225,214],pr:'mat',base:{t:180,h:178,ua:-22,fa:127,ua2:-25,fa2:125,th:1,sh:0,ft:80,th2:0,sh2:-1,ft2:82,b:0,g:0},k:[[{},500,400],[{t:181},150,0],[{t:208,h:212,ua:39,fa:134,ua2:37,fa2:132,b:6,g:.3},1300,1200,1],[{},1000,400]]},
+{pin:['H',240,213],pr:'mat',base:{...SUP,th:-90,sh:0,ft:-90,th2:-2,sh2:0,ft2:-82,ua:-20,fa:-16,ua2:-22,fa2:-14,h:180},k:[[{},500,300],[{sh:-75,ft:-165,h:189},1200,600],[{},900,100],[{sh:25,ft:-55,h:163},1000,600],[{},900,200]]},
+{pin:['H',225,214],pr:'mat',base:{...{t:180,h:178,ua:-22,fa:127,ua2:-25,fa2:125,th:1,sh:0,ft:80,th2:0,sh2:-1,ft2:82,b:0,g:0},ua:175,fa:180,ua2:178,fa2:182,h:180},k:[[{},500,300],[{sh:-95,ft:-5,h:200},1200,700],[{},1000,300]]},
+{...PH_,base:{...SUP,th:-70,sh:178,ft:-90,ua:4,fa:2},k:[[{},500,300],[{th2:-45},200,0],[{th:-112,sh:150,th2:-100,sh2:0,ft2:-90,ua:-40,fa:-55,ua2:-42,fa2:-58,b:2,g:.4},1300,1800],[{},1000,300]]},
+{pin:['H',225,212],pr:'mat',base:{t:180,h:182,ua:2,fa:8,ua2:178,fa2:150,th:2,sh:0,ft:-80,th2:6,sh2:-4,ft2:-82,b:0,g:0},k:[[{},500,300],[{th:4},150,0],[{th:-34,sh:-34,ft:-118,g:.6},1100,1200,1],[{},900,300]]},
+{...PH_,pr:'ball',base:SUP,k:[[{},500,300],[{g:1,b:-5},600,1500],[{},800,400]]},
+{...PH_,base:{...SUP,ua:-60,fa:40,ua2:-62,fa2:42},k:[[{},300,200],[{b:-10,ua:-64,ua2:-66},2200,500],[{},2600,400]]},
+{...PH_,base:{...SUP,th:3,sh:3,ft:-85},k:[[{},500,300],[{th:-50,sh:72,ft:0,g:.3},1300,700],[{},1200,300]]}
 ];
 AN.forEach(a=>{a.K=a.k.map(([p,d,h,e])=>({P:{...a.base,...p},d,h,e}));a.tot=a.K.reduce((s,k)=>s+k.d+k.h,0);
  let m=0,mi=0;a.K.forEach((k,i)=>{if(k.h>m){m=k.h;mi=i}});a.act=mi});
@@ -277,13 +285,14 @@ const isDark=()=>{const t=document.documentElement.dataset.theme;return t?t==='d
 let uid=0;
 const SEG=k=>`<line class="${k} m" stroke-linecap="round"/><line class="${k} hl" stroke-linecap="round" opacity=".5"/>`;
 function stageSVG(a){const u=++uid;let pre='',post='';
- if(a.pr==='mat'||a.pr==='strap')pre=`<rect class="mat" x="30" y="223" width="340" height="7" rx="3.5"/>`;
+ if(a.pr==='mat'||a.pr==='strap'||a.pr==='ball')pre=`<rect class="mat" x="30" y="223" width="340" height="7" rx="3.5"/>`;
  if(a.pr==='chair')pre=`<g class="chair"><rect x="175" y="186" width="50" height="9" rx="4"/><rect x="176" y="112" width="9" height="82" rx="4"/><rect x="179" y="192" width="6" height="36" rx="3"/><rect x="216" y="192" width="6" height="36" rx="3"/></g>`;
  if(a.pr==='band')pre=`<g class="chair"><rect x="70" y="60" width="14" height="168" rx="6"/><rect x="56" y="222" width="42" height="8" rx="4"/></g>`;
  if(a.walk)pre=`<line class="walk" x1="0" y1="232" x2="400" y2="232" stroke-width="3" stroke-dasharray="14 22"/>`;
  if(a.pr==='band')post=`<line class="band" stroke-width="3" stroke-linecap="round"/>`;
  if(a.pr==='strap')post=`<line class="band" stroke-width="2.5" stroke-linecap="round"/>`;
  if(a.pr==='weight')post=`<rect class="wt" width="20" height="28" rx="5"/>`;
+ if(a.pr==='ball')post=`<circle class="ball"/>`;
  if(a.pr==='dowel')post=`<line class="dowel" stroke-width="5" stroke-linecap="round"/>`;
  return `<svg viewBox="${AN.indexOf(a)<11?'38 62 323 210':'0 0 400 260'}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bg${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="s1"/><stop offset="1" class="s2"/></linearGradient><filter id="bl${u}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>
  <rect x="-20" y="-20" width="440" height="300" fill="url(#bg${u})"/><rect class="flr" x="0" y="229" width="400" height="31"/>${pre}<ellipse class="shd" cy="230" ry="5.5" opacity=".16"/>
@@ -294,7 +303,7 @@ function stageSVG(a){const u=++uid;let pre='',post='';
  <circle class="hd" r="13.5"/><circle class="hdh" r="4.5" opacity=".5"/>${post}</svg>`}
 function mount(el,i){el.insertAdjacentHTML('afterbegin',stageSVG(AN[i]));const s=el.querySelector('svg'),q=c=>s.querySelector(c),R={s,a:AN[i]};
  for(const k of['th','sh','ft','ua','fa','th2','sh2','ft2','ua2','fa2'])R[k]=[s.querySelector('.'+k+'.m'),s.querySelector('.'+k+'.hl')];
- Object.assign(R,{tor:q('.tor.m'),torh:q('.tor.hl'),gl:q('.glow'),gl2:q('.glow2'),hd:q('.hd'),hdh:q('.hdh'),shd:q('.shd'),band:q('.band'),wt:q('.wt'),dw:q('.dowel'),walk:q('.walk')});
+ Object.assign(R,{tor:q('.tor.m'),torh:q('.tor.hl'),gl:q('.glow'),gl2:q('.glow2'),hd:q('.hd'),hdh:q('.hdh'),shd:q('.shd'),band:q('.band'),wt:q('.wt'),dw:q('.dowel'),ball:q('.ball'),walk:q('.walk')});
  el._R=R;return R}
 function paint(R,p){const s=R.s;
  s.querySelector('.s1').setAttribute('stop-color',p.s1);s.querySelector('.s2').setAttribute('stop-color',p.s2);
@@ -303,7 +312,7 @@ function paint(R,p){const s=R.s;
  s.querySelectorAll('.farg .m').forEach(e=>e.setAttribute('stroke',p.far));s.querySelectorAll('.neag .m,.tor.m').forEach(e=>e.setAttribute('stroke',p.near));
  s.querySelectorAll('.hl').forEach(e=>e.setAttribute('stroke',p.hi));R.hd.setAttribute('fill',p.near);R.hdh.setAttribute('fill',p.hi);
  R.gl.setAttribute('stroke',p.glow);R.gl2.setAttribute('stroke',p.glow);R.shd.setAttribute('fill',p.shd);
- if(R.band)R.band.setAttribute('stroke',p.band);if(R.wt)R.wt.setAttribute('fill',p.prop);if(R.dw)R.dw.setAttribute('stroke',p.prop);if(R.walk)R.walk.setAttribute('stroke',p.flr==='#dcd7f6'?'#c4bdf0':'#433d8c');R.pal=p}
+ if(R.band)R.band.setAttribute('stroke',p.band);if(R.wt)R.wt.setAttribute('fill',p.prop);if(R.dw)R.dw.setAttribute('stroke',p.prop);if(R.ball)R.ball.setAttribute('fill',p.band);if(R.walk)R.walk.setAttribute('stroke',p.flr==='#dcd7f6'?'#c4bdf0':'#433d8c');R.pal=p}
 const sa=(e,o)=>{for(const k in o)e.setAttribute(k,o[k].toFixed?o[k].toFixed(1):o[k])};
 function seg(r,a,b,w){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;let n=[-dy/l,dx/l];if(n[1]>0||(Math.abs(n[1])<.05&&n[0]>0))n=[-n[0],-n[1]];const o=w*.22;
  sa(r[0],{x1:a[0],y1:a[1],x2:b[0],y2:b[1],'stroke-width':w});sa(r[1],{x1:a[0]+n[0]*o,y1:a[1]+n[1]*o,x2:b[0]+n[0]*o,y2:b[1]+n[1]*o,'stroke-width':w*.3})}
@@ -324,6 +333,7 @@ function draw(R,P,pal){if(R.pal!==pal)paint(R,pal);const a=R.a;
  const fl=Object.values(J).filter(v=>v[1]>196).map(v=>v[0]);const xs=fl.length?fl:[J.H[0]];const mn=Math.min(...xs),mx=Math.max(...xs);
  sa(R.shd,{cx:(mn+mx)/2,rx:(mx-mn)/2+18});
  if(R.band){const f=a.pr==='band'?[84,140]:J.A;sa(R.band,{x1:f[0],y1:f[1],x2:J.W[0],y2:J.W[1]})}
+ if(R.ball)sa(R.ball,{cx:J.K[0]-3,cy:J.K[1]+6,r:11-3*P.g});
  if(R.wt)sa(R.wt,{x:J.W[0]-10,y:J.W[1]+2});
  if(R.dw){sa(R.dw,{x1:J.S[0]+bk[0]*18+d[0]*30,y1:J.S[1]+bk[1]*18+d[1]*30,x2:J.H[0]+bk[0]*18-d[0]*12,y2:J.H[1]+bk[1]*18-d[1]*12})}
  if(R.walk)R.walk.setAttribute('stroke-dashoffset',(P.fl||0).toFixed(1))}
@@ -396,9 +406,9 @@ const FL=['فقدان السيطرة على البول أو البراز','تن�
 const FO=[['صورة جديدة فقط إذا تغيّرت الأعراض','مراجعة سنوية إذا استمر الألم','4–6 جلسات علاج طبيعي لتعلّم أداء التمارين بشكل صحيح'],['صورة جانبية وأنت واقف، مع صور الانثناء والبسط، كل 1–2 سنة أو عند تغيّر الأعراض','متابعة مع معالج طبيعي في الأشهر الأولى','الحقن التداخلية خيار عند الألم العصبي أو ألم المفاصل الوجيهية'],['تقييم من جراح عمود فقري، مع رنين مغناطيسي (MRI)','التمارين تحت إشراف معالج فقط','الجراحة تُناقش عند وجود ألم عصبي مستمر أو ضعف']];
 const D=['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
 const todayI=()=>(new Date().getDay()+1)%7;
-const allowed=p=>EX.map((e,i)=>({...e,i})).filter(e=>e.p===p&&e.m>=S.grade);
+const allowed=p=>EX.map((e,i)=>({...e,i})).filter(e=>e.p===p&&e.m>=S.grade&&exOK(e));
 const pk=k=>PM?'':`<label class="pick" title="تضمين في نسخة المريض"><input type="checkbox" data-k="${k}"${SEL[k]?' checked':''} aria-label="تضمين في نسخة المريض"><span>${ic('tick')}</span></label>`;
-function profileHTML(){
+function profileSpondy(){
  const typ=S.age===0?['غالباً من النوع البرزخي (Isthmic)','كسر إجهادي في القوس الخلفي للفقرة، يظهر عادة عند L5–S1، ويكثر مع الرياضات التي تبسط الظهر وتلويه بشكل متكرر.'+R(26,11)]:['غالباً من النوع التنكّسي','تآكل في القرص والمفاصل الوجيهية، يظهر غالباً عند L4–L5، ويرافقه أحياناً انحناء جانبي.'+R(26)];
  const gd=[['الدرجة الأولى: أقل من 25%','الأكثر شيوعاً. ثلثا المرضى لا يتقدّم لديهم الانزلاق، والعلاج غير الجراحي هو الأساس.'+R(8,10)],['الدرجة الثانية: من 25 إلى 50%','تُعالج غالباً بدون جراحة، مع التوقف عن الرياضة العنيفة حتى يهدأ الألم، ومتابعة دورية بالصور.'+R(10)],['الدرجة الثالثة والرابعة: أكثر من 50%','قد تحتاج جراحة إذا استمر الألم، لذلك البرنامج هنا مخفف ويُنفَّذ تحت إشراف، مع تقييم جراحي.'+R(10)]][S.grade];
  const it=['شدة خفيفة','شدة متوسطة','شدة أعلى'][lvl()];
@@ -408,17 +418,17 @@ const aer=[['مشي سريع 30–40 دقيقة','مشي 30 دقيقة','مشي 
 const A_=k=>aer[k][S.age===2||S.grade===2?2:S.age===1||S.grade===1?1:0];
 function week(){return S.state?D.map(d=>[d,'تمارين المرحلة الأولى صباحاً ومساءً (10 دقائق)','مشي 5–10 دقائق كل ساعتين','f']):D.map((d,i)=>i===6?[d,'راحة نشطة: إطالات خفيفة','مشي هادئ','r']:i%2?[d,S.grade===2?'تثبيت وتقوية تحت إشراف (30 دقيقة)':'إحماء وتثبيت وتقوية (30–40 دقيقة)',A_(i%3),'s']:[d,'إحماء وتثبيت (15 دقيقة)',A_(i%3),'c'])}
 function dayEx(type){const P1=allowed(1),P2=allowed(2),P3=allowed(3);
- if(type==='f')return P1;if(type==='r')return P1.filter(e=>[2,4].includes(e.i)).concat(EX.map((e,i)=>({...e,i})).filter(e=>e.i===9));
+ if(type==='f')return P1;if(type==='r')return P1.filter(e=>[2,4].includes(e.i)).concat(EX.map((e,i)=>({...e,i})).filter(e=>e.i===9&&exOK(e)));
  if(type==='c')return P1.slice(0,3).concat(P2);return P1.slice(0,2).concat(P2.filter(e=>[5,6,7].includes(e.i)),P3)}
 const TL={f:'يوم تهدئة',r:'يوم راحة نشطة',c:'يوم تثبيت',s:'يوم تقوية'};
-function avoidHTML(){const av=[...AV.base];for(let g=1;g<=S.grade;g++)av.push(...AV.g[g]);av.push(...AV.a[S.age]);
+function avoidSpondy(){const av=[...AV.base];for(let g=1;g<=S.grade;g++)av.push(...AV.g[g]);av.push(...AV.a[S.age]);
  const A=`<div><div class="fh">${pk('avoid')}<h3>تجنّب</h3></div><p class="sub">تكبر القائمة مع ارتفاع الدرجة.</p><ul class="x">${li(av)}</ul></div>`,B=`<div><div class="fh">${pk('sports')}<h3>رياضات مناسبة</h3></div><p class="sub">بعد أن يهدأ الألم، وبالتدرّج.</p><ul class="ok">${li(S.grade===2?SP[2]:S.age===2?SP[1]:SP[S.grade])}</ul></div>`;
  return `<div class="two">${!PM||SEL.avoid?A:''}${!PM||SEL.sports?B:''}</div>`}
-function lifeHTML(){return `<p class="sub">النصائح الملوّنة خاصة بعمرك أو درجتك.</p><div class="life">${LF.map((s,i)=>PM&&!SEL['life-'+i]?'':`<div class="pc"><div class="fh">${pk('life-'+i)}<h3>${s.t}</h3></div><ul>${li(s.b)}${li([...s.a[S.age],...s.g[S.grade]],'extra')}</ul></div>`).join('')}</div>`}
-function flagsHTML(){return `<div class="two">${!PM||SEL.flags?`<div class="flags"><div class="fh">${pk('flags')}<h3>راجع الطبيب فوراً عند</h3></div><ul class="x">${li(FL)}</ul></div>`:''}${!PM||SEL.follow?`<div><div class="fh">${pk('follow')}<h3>المتابعة الطبية</h3></div><p class="sub">حسب درجتك.</p><ul class="ok">${li(FO[S.grade])}</ul></div>`:''}</div>
+function lifeSpondy(){return `<p class="sub">النصائح الملوّنة خاصة بعمرك أو درجتك.</p><div class="life">${LF.map((s,i)=>PM&&!SEL['life-'+i]?'':`<div class="pc"><div class="fh">${pk('life-'+i)}<h3>${s.t}</h3></div><ul>${li(s.b)}${li([...s.a[S.age],...s.g[S.grade]],'extra')}</ul></div>`).join('')}</div>`}
+function flagsSpondy(){return `<div class="two">${!PM||SEL.flags?`<div class="flags"><div class="fh">${pk('flags')}<h3>راجع الطبيب فوراً عند</h3></div><ul class="x">${li(FL)}</ul></div>`:''}${!PM||SEL.follow?`<div><div class="fh">${pk('follow')}<h3>المتابعة الطبية</h3></div><p class="sub">حسب درجتك.</p><ul class="ok">${li(FO[S.grade])}</ul></div>`:''}</div>
  <p class="foot" style="margin-top:28px">برنامج تثقيفي مبني على مراجعة Cochrane للتمارين في ألم أسفل الظهر المزمن (Hayden 2021)، ومبادئ McGill في تثبيت الجذع، ومراجعات التاريخ الطبيعي للتزحزح التنكّسي. لا يغني عن فحص الطبيب. توقّف عن أي تمرين يسبب ألماً نازلاً في الساق أو تنميلاً.</p>`}
 
-const dxAuto=()=>`${S.age===0?'تزحزح فقرات قطني من النوع البرزخي':'تزحزح فقرات قطني تنكّسي'}، ${['الدرجة الأولى','الدرجة الثانية','الدرجة الثالثة–الرابعة'][S.grade]}${S.state?'، مع هجمة ألم حادة':''}`;
+const dxAutoSp=()=>`${S.age===0?'تزحزح فقرات قطني من النوع البرزخي':'تزحزح فقرات قطني تنكّسي'}، ${['الدرجة الأولى','الدرجة الثانية','الدرجة الثالثة–الرابعة'][S.grade]}${S.state?'، مع هجمة ألم حادة':''}`;
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtD=d=>{try{const [y,m,dd]=d.split('-');return `${+dd}/${+m}/${y}`}catch(e){return d}};
 const LOGO=`<svg viewBox="0 0 56 56" width="56" height="56" aria-hidden="true"><rect x="14" y="6" width="28" height="11" rx="5" fill="#fff"/><rect x="12" y="22" width="28" height="11" rx="5" fill="#fff" opacity=".9"/><rect x="16" y="38" width="28" height="11" rx="5" fill="#ffc24d"/></svg>`;
@@ -553,10 +563,207 @@ const IVU={esi:[['يمكنك العودة لنشاطك المعتاد بعد ا�
 IV.forEach(v=>{v.b=IVU[v.k][0];v.x=IVU[v.k][1]});
 setArr(IVG,['إذا أخذت مهدئاً فلا تقُد السيارة يوم الإجراء'+R(24),'أدوية السيولة: أعِد تناولها حسب تعليمات طبيبك تحديداً','سجّل أي تحسّن أو تغيّر لتخبر به الطبيب في موعد المراجعة']);
 setArr(IVF,['حرارة، أو احمرار، أو تورّم، أو إفرازات من مكان الحقنة'+R(25),'صداع شديد يزيد عند الوقوف ويخف عند الاستلقاء','ضعف جديد في الساق، أو تنميل يزداد بعد زوال المخدّر','فقدان السيطرة على البول أو البراز','ألم شديد مفاجئ مختلف عن ألمك المعتاد']);
-const doseNote=()=>`<div class="note">الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. الأدلة تثبت أن التمارين تقلل ألم أسفل الظهر المزمن${R(1)}، وأن تمارين التحكم بعضلات الجذع العميقة مفيدة مثل غيرها من التمارين${R(2)}. لا توجد دراسة تحدد عدد التكرارات لكل درجة تزحزح.</div>`;
-const maintNote=()=>`داوم على "الثلاثي الذهبي" (McGill curl-up، واللوح الجانبي، وBird-dog) 2–3 أيام أسبوعياً، ثم يومياً${R(4)}. أضف 150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة، وتمارين تقوية يومين على الأقل${R(12)}.`;
+const doseNote=()=>`<div class="note">الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. الأدلة تثبت أن التمارين تقلل ألم أسفل الظهر المزمن${R(1)}، وأن تمارين التحكم بعضلات الجذع العميقة مفيدة مثل غيرها من التمارين${R(2)}. لا توجد دراسة تحدد عدد التكرارات لكل درجة أو شدة.</div>`;
+const maintNote=()=>[5,6,7].every(i=>dxEx().includes(i))?`داوم على "الثلاثي الذهبي" (McGill curl-up، واللوح الجانبي، وBird-dog) 2–3 أيام أسبوعياً، ثم يومياً${R(4)}. أضف 150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة، وتمارين تقوية يومين على الأقل${R(12)}.`:`داوم على تمارينك بانتظام، وأضف 150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة، وتمارين تقوية يومين على الأقل${R(12)}.`;
 const flareNote=()=>`مع الهجمة: كمادات دافئة${R(15)}، والمسكن الذي يصفه طبيبك، وابقَ نشيطاً قدر استطاعتك بدل الراحة في السرير${R(14,5)}. إذا لم يتحسّن الألم خلال أسبوعين، أو نزل إلى الساق، فراجع الطبيب.`;
 const exSrc=e=>e.s?`<p class="foot">المصادر: ${R(...e.s)}</p>`:'';
+
+
+/* ---------- برنامج ألم الظهر: التشخيصات ---------- */
+Object.assign(SRC,{
+29:['StatPearls (NCBI Bookshelf, U.S. National Library of Medicine). Disk Herniation','https://www.statpearls.com/articlelibrary/viewarticle/20584/'],
+30:['StatPearls (NCBI Bookshelf). McKenzie Back Exercises','https://pubmed.ncbi.nlm.nih.gov/30969542/'],
+31:['Non-surgical approaches to the management of lumbar disc herniation associated with radiculopathy: a narrative review. J Clin Med 2024','https://pubmed.ncbi.nlm.nih.gov/38398287/'],
+32:['Qaseem A, et al. Noninvasive treatments for acute, subacute, and chronic low back pain: American College of Physicians guideline. Ann Intern Med 2017','https://pubmed.ncbi.nlm.nih.gov/28192789/'],
+33:['StatPearls (NCBI Bookshelf). Facet Joint Disease','https://www.ncbi.nlm.nih.gov/books/NBK541049/'],
+34:['StatPearls (NCBI Bookshelf). Lumbar Facet Arthropathy','https://www.ncbi.nlm.nih.gov/books/NBK538228/'],
+35:['StatPearls (NCBI Bookshelf). Sacroiliac Joint Injury','https://www.ncbi.nlm.nih.gov/books/NBK557881/'],
+36:['StatPearls (NCBI Bookshelf). Piriformis Syndrome','https://www.ncbi.nlm.nih.gov/books/NBK448172/'],
+37:['StatPearls (NCBI Bookshelf). Coccyx Pain','https://www.ncbi.nlm.nih.gov/books/NBK563139/'],
+38:['Cleveland Clinic. Coccydynia (tailbone pain)','https://my.clevelandclinic.org/health/symptoms/10436-coccydynia-tailbone-pain'],
+39:['Superior and middle cluneal nerve entrapment as a cause of low back pain. Neurospine 2018','https://pmc.ncbi.nlm.nih.gov/articles/PMC5944640'],
+40:['Kolasinski SL, et al. 2019 American College of Rheumatology / Arthritis Foundation guideline for osteoarthritis of the hand, hip, and knee','https://doi.org/10.1002/acr.24131'],
+41:['Griffin DR, et al. The Warwick Agreement on femoroacetabular impingement syndrome: international consensus. Br J Sports Med 2016','https://pubmed.ncbi.nlm.nih.gov/27629403/'],
+42:['Pasculli RM, et al. Non-operative management and outcomes of femoroacetabular impingement syndrome. Curr Rev Musculoskelet Med 2023','https://pmc.ncbi.nlm.nih.gov/articles/PMC10587039'],
+43:['Mellor R, et al. Education plus exercise vs corticosteroid injection vs wait and see for gluteal tendinopathy (LEAP trial). BMJ 2018','https://doi.org/10.1136/bmj.k1662'],
+44:['StatPearls (NCBI Bookshelf). Meralgia Paresthetica','https://www.ncbi.nlm.nih.gov/books/NBK557735/'],
+45:['StatPearls (NCBI Bookshelf). Ischial Bursitis','https://www.ncbi.nlm.nih.gov/books/NBK482285/'],
+46:['StatPearls (NCBI Bookshelf). Pudendal Neuralgia','https://www.ncbi.nlm.nih.gov/books/NBK562246/'],
+47:['American Academy of Physical Medicine and Rehabilitation (AAPM&R). Proximal lower extremity mononeuropathies','https://now.aapmr.org/proximal-lower-extremity-mononeuropathies-2/'],
+48:['Tipton JS. Obturator neuropathy. Curr Rev Musculoskelet Med 2008','https://pubmed.ncbi.nlm.nih.gov/19468309/'],
+49:['StatPearls (NCBI Bookshelf). Iliotibial Band Friction Syndrome','https://pubmed.ncbi.nlm.nih.gov/31194342/'],
+50:['Khaund R, Flynn SH. Iliotibial band syndrome: a common source of knee pain. American Family Physician 2005','https://www.aafp.org/afp/2005/0415/p1545'],
+51:['StatPearls (NCBI Bookshelf). Adductor Strain','https://www.ncbi.nlm.nih.gov/books/NBK493166/'],
+52:['Cesmebasi A, et al. Genitofemoral neuralgia: a review. Clin Anat 2015','https://pubmed.ncbi.nlm.nih.gov/25377757/'],
+53:['Basson A, et al. The effectiveness of neural mobilization for neuromusculoskeletal conditions: systematic review and meta-analysis. JOSPT 2017','https://pubmed.ncbi.nlm.nih.gov/28704626/'],
+54:['Page P, Frank CC, Lardner R. Assessment and Treatment of Muscle Imbalance: The Janda Approach. Human Kinetics, 2010',''],
+55:['Jottard K, et al. Diagnosis and treatment of pudendal and inferior cluneal nerve entrapment syndrome: a narrative review. Acta Chir Belg 2022','https://doi.org/10.1080/00015458.2022.2123138'],
+56:['Mayo Clinic Care Network. Meralgia paresthetica','https://mymlc.com/health-information/diseases-and-conditions/m/meralgia-paresthetica'],
+57:['Superior and middle cluneal nerve entrapment: a cause of low back and radicular pain (scoping review). Pain Physician 2022','https://pubmed.ncbi.nlm.nih.gov/35793175/'],
+58:['StatPearls (NCBI Bookshelf). Piriformis Syndrome (anatomy and management)','https://www.ncbi.nlm.nih.gov/books/NBK519497/'],
+59:['East Sussex Healthcare NHS Trust, Physiotherapy. Gluteal tendinopathy: patient information','https://www.esht.nhs.uk/wp-content/uploads/2019/07/0746.pdf'],
+60:['StatPearls (NCBI Bookshelf). Pudendal Nerve Entrapment Syndrome','https://www.ncbi.nlm.nih.gov/books/NBK544272/']});
+
+/* تمارين جديدة */
+EX.push(
+{p:1,n:'تمرين الضغط للأعلى من الانبطاح (McKenzie)',h:'استلقِ على بطنك ويداك تحت كتفيك. ادفع الجزء العلوي من جسمك للأعلى ببطء مع إبقاء الحوض على الأرض، ثم انزل. نفّذه فقط إذا أكّد طبيبك أن هذا الاتجاه يريح ألمك، وتوقف إذا نزل الألم أبعد في الساق.',d:['5 مرات','8 مرات','10 مرات'],m:2,s:[30,31]},
+{p:1,n:'انزلاق العصب النسي',h:'استلقِ على ظهرك وأمسك فخذك والورك مثني. مدّ الركبة ببطء وأنت ترجع رأسك للخلف، ثم اثنِ الركبة وأنت ترفع رأسك قليلاً. الحركة سلسة ودون ألم حاد.',d:['8 مرات','10 مرات','2 × 10'],m:2,s:[53]},
+{p:1,n:'انزلاق العصب الفخذي',h:'استلقِ على بطنك. اثنِ ركبتك وأنت ترفع رأسك قليلاً، ثم مدّها وأنت تخفض رأسك. الحركة سلسة ودون ألم حاد.',d:['8 مرات','10 مرات','2 × 10'],m:2,s:[53]},
+{p:1,n:'إطالة العضلة الكمثرية',h:'استلقِ على ظهرك وضع كاحل الساق المصابة فوق ركبة الساق الأخرى. اسحب الفخذ الأخرى نحو صدرك حتى تشعر بشد في الأرداف.',d:['2 × 20 ث','3 × 30 ث','3 × 30 ث'],m:2,s:[58,36]},
+{p:2,n:'رفع الساق جانبياً',h:'استلقِ على جنبك والساق السفلى مثنية قليلاً. ارفع الساق العليا مستقيمة للأعلى ببطء دون أن يدور الحوض، ثم أنزلها.',d:['2 × 8','3 × 10','3 × 12'],m:2,s:[43,50]},
+{p:2,n:'ضغط الكرة بين الركبتين',h:'استلقِ على ظهرك والركبتان مثنيتان وبينهما كرة أو وسادة. اضغطها بالركبتين وثبّت، ثم أرخِ.',d:['5 × 5 ث','8 × 8 ث','10 × 10 ث'],m:2,s:[51,48]},
+{p:1,n:'التنفس الحجابي مع إرخاء قاع الحوض',h:'استلقِ مسترخياً والركبتان مثنيتان. خذ نفساً عميقاً يرفع البطن، ودع عضلات الحوض ترتخي مع الشهيق، ثم ازفر ببطء.',d:['5 دقائق','5–10 دقائق','10 دقائق'],m:2,s:[60]},
+{p:1,n:'سحب الكعب (حركة الورك)',h:'استلقِ على ظهرك. اسحب كعبك نحو الحوض فتنثني الركبة والورك، ثم مدّ الساق ببطء.',d:['10 مرات','15 مرة','2 × 15'],m:2,s:[40]});
+
+/* إجراءات إضافية بعد التداخل */
+IV.push({k:'nb',n:'إحصار عصب طرفي أو حقن موضعي',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'hipj',n:'حقن مفصل الورك',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]});
+
+const SEVL=['خفيفة','متوسطة','شديدة'];
+const NERVE=['تجنّب الضغط الخارجي المباشر على مسار العصب'+R(47)];
+const DX={
+spondy:{n:'تزحزح الفقرات',g:'العمود الفقري',sp:1,ex:[...Array(16).keys()],lf:[0,1,2,3,4,5],iv:['esi','facet','mbb','rfa','sij']},
+disc:{n:'انزلاق غضروفي',g:'العمود الفقري',def:'خروج جزء من القرص بين الفقرات قد يضغط على جذر العصب. أغلب الحالات تتحسن خلال أسابيع'+R(29),
+ sev:['العلاج غير الجراحي هو الأساس: التثقيف، والبقاء نشيطاً، والتمارين'+R(29,31,5),'يُضاف العلاج الطبيعي الموجّه، وقد يناقش الطبيب الحقن'+R(31,29),'تحتاج متابعة لصيقة، والجراحة تُناقش عند الضعف العصبي المتزايد أو الألم المستعصي'+R(29)],
+ ex:[0,1,16,17,5,6,7,8,10,13,14,15],lf:[0,1,2,3,4,5],
+ avoid:[['أي حركة تجعل الألم ينزل أبعد في الساق، وأخبر طبيبك بها'+R(30),'الجلوس الطويل دون حركة'+R(12),'الراحة الطويلة في السرير'+R(14,5)],['رفع الأحمال الثقيلة حتى يسمح الطبيب'+R(18)],[]],
+ tips:['أغلب حالات الانزلاق الغضروفي تتحسن خلال أسابيع'+R(29),'التمارين في اتجاه الحركة الذي يريح الألم (طريقة McKenzie) لها أدلة متوسطة القوة'+R(31,30),'تمارين انزلاق العصب قد تخفف الألم والإعاقة في ألم الساق العصبي'+R(53)],
+ flags:[],follow:[['المتابعة حسب تحسّن الأعراض'+R(29)],['علاج طبيعي موجّه'+R(31),'الحقن فوق الجافية خيار عند استمرار الألم العصبي'+R(29)],['تقييم جراحي عند الضعف المتزايد أو الألم المستعصي'+R(29)]],iv:['esi']},
+facet:{n:'سوفان مفاصل الفقرات',g:'العمود الفقري',def:'تآكل في المفاصل الخلفية الصغيرة بين الفقرات. يزداد ألمه عادة مع البسط والالتواء، ويخف مع الانثناء'+R(34,33),
+ sev:['مسكنات حسب الطبيب، وتمارين منتظمة'+R(34,1),'علاج طبيعي، وقد يستخدم الطبيب حقن الفروع الإنسية للتشخيص'+R(34,33),'الكي الحراري للفروع الإنسية خيار عند الألم المستعصي'+R(34)],
+ ex:[0,1,2,3,4,5,6,7,8,9,10,13,14,15],lf:[0,1,2,3,4,5],
+ avoid:[['التقويس الخلفي المتكرر والالتواء'+R(34,33),'الجلوس الطويل دون حركة'+R(12)],[],[]],
+ tips:['الألم يزداد غالباً عند الاستيقاظ وبعد فترات الخمول، فالحركة المنتظمة جزء من العلاج'+R(33,5)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(34)],['علاج طبيعي'+R(34)],['حقن الفروع الإنسية ثم الكي الحراري عند الحاجة'+R(34,33)]],iv:['facet','mbb','rfa']},
+sij:{n:'التهاب المفصل العجزي الحرقفي',g:'العمود الفقري والحوض',def:'ألم في المفصل بين العجز والحوض، في أسفل الظهر والأرداف. قد يبدأ بعد سقوط أو حمل أو جهد متكرر'+R(35),
+ sev:['علاج طبيعي، وتمارين منزلية، ومسكنات حسب الطبيب'+R(35),'تمارين تثبيت أسفل الظهر والحوض مع تعديل النشاط'+R(35),'حقن المفصل أو الكي الحراري، والتثبيت الجراحي في الحالات المستعصية'+R(35)],
+ ex:[0,1,2,5,6,7,8,9,10,13,15,20],lf:[0,1,2,3,4,5],
+ avoid:[['الأنشطة التي تثير الألم حتى يهدأ'+R(35)],[],[]],
+ tips:['تعديل النشاط والعلاج الطبيعي لتثبيت أسفل الظهر والحوض أساس العلاج'+R(35)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(35)],['علاج طبيعي'+R(35)],['حقن المفصل أو الكي الحراري عند الحاجة'+R(35)]],iv:['sij','rfa']},
+piri:{n:'متلازمة العضلة الكمثرية',g:'الورك والحوض',def:'تهيج العصب الوركي عند العضلة الكمثرية في الأرداف، يسبب ألماً في الأرداف قد ينزل خلف الفخذ'+R(36),
+ sev:['تمارين الإطالة والحركة'+R(58),'علاج طبيعي منتظم'+R(58),'قد يحقن الطبيب العضلة بالستيرويد أو البوتوكس'+R(58,36)],
+ ex:[0,1,19,17,8,20,5,6,13,15],lf:[0],
+ avoid:[['الجلوس الطويل، وصعود الدرج والقرفصاء إذا كانت تثير الألم'+R(58)],[],[]],
+ tips:['تمارين الإطالة والحركة تساعد على تخفيف الالتصاقات حول العصب'+R(58)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(58)],['علاج طبيعي'+R(58)],['تصوير وتخطيط أعصاب لاستبعاد أسباب أخرى، وحقن العضلة عند الحاجة'+R(36,58)]],iv:['nb']},
+spasm:{n:'تشنج عضلات الظهر',g:'العضلات',def:'ألم ظهر حاد غير محدد السبب، وأغلبه يتحسن مع الوقت مهما كان العلاج'+R(32),
+ sev:['كمادات دافئة والبقاء نشيطاً'+R(32,14),'الحرارة السطحية أو التدليك أو المعالجة اليدوية كخيار أول'+R(32),'إذا احتاج الأمر دواءً فالطبيب يختار بين مضادات الالتهاب اللاستيرويدية ومرخيات العضلات'+R(32)],
+ ex:[0,1,2,3,4,5,6,7,8,9,13,15],lf:[0,1,2,3,4,5],
+ avoid:[['الراحة الطويلة في السرير'+R(14,5)],[],[]],
+ tips:['ألم الظهر الحاد يتحسن غالباً مع الوقت'+R(32),'الكمادات الدافئة تخفف الألم والإعاقة على المدى القصير'+R(15,32)],
+ flags:[],follow:[['المراجعة إذا لم يتحسن الألم أو ظهرت علامة خطر'+R(32,5)],['المراجعة إذا لم يتحسن الألم أو ظهرت علامة خطر'+R(32,5)],['المراجعة إذا لم يتحسن الألم أو ظهرت علامة خطر'+R(32,5)]],iv:[]},
+coccyx:{n:'ألم العصعص',g:'العمود الفقري والحوض',def:'ألم في العصعص يزداد بالجلوس والنهوض منه. أسبابه الإصابة، أو الجلوس الطويل، أو الولادة'+R(37),
+ sev:['تجنّب الجلوس الطويل، واستعمال وسادة جلوس مخصصة'+R(37,38),'علاج طبيعي، ومسكنات حسب الطبيب'+R(37),'حقن تحت التوجيه بالأشعة، ونادراً الجراحة'+R(37,38)],
+ ex:[22,2,1,15],lf:[0],
+ avoid:[['الجلوس الطويل، خاصة على الأسطح الصلبة'+R(38,37)],[],[]],
+ tips:['استعمل وسادة جلوس مخصصة لتخفيف الضغط عن العصعص'+R(37),'السمنة من عوامل الخطر، فحافظ على وزن صحي'+R(37)],
+ flags:['حرارة 39 درجة مئوية أو أكثر'+R(38)],follow:[['المتابعة حسب الأعراض'+R(37)],['علاج طبيعي'+R(37)],['الإحالة لأخصائي إذا لم يتحسن الألم'+R(37)]],iv:['nb']},
+cluneal:{n:'تهيج العصب الكلونيالي',g:'الأعصاب',def:'انحشار الأعصاب الجلدية للأرداف عند حافة الحوض، يسبب ألماً في أسفل الظهر والأرداف وقد يقلّد عرق النسا'+R(39,57),
+ sev:['تُشخَّص بنقطة ألم فوق حافة الحوض وتُؤكَّد بإحصار العصب'+R(39),'إحصار العصب علاج فعّال لكثير من المرضى'+R(39),'تحرير العصب جراحياً عند استمرار الألم'+R(39)],
+ ex:[0,1,5,6,7,8,15],lf:[0,1,2,3,4,5],
+ avoid:[NERVE,[],[]],tips:['اختفاء الأعراض بعد إحصار العصب مهم لتأكيد التشخيص'+R(39)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(39)],['إحصار العصب'+R(39)],['تقييم جراحي عند استمرار الألم'+R(39)]],iv:['nb']},
+hipoa:{n:'سوفان الورك',g:'الورك والحوض',def:'خشونة مفصل الورك. التمارين، وإنقاص الوزن لمن لديه زيادة، واستعمال العصا من أقوى التوصيات'+R(40),
+ sev:['تمارين منتظمة وبرامج الإدارة الذاتية'+R(40),'يُضاف إنقاص الوزن عند زيادته، وتمارين التوازن'+R(40),'استعمال العصا مع الاستمرار بالتمارين'+R(40)],
+ ex:[23,8,13,15,20,9,0,5],lf:[0],
+ avoid:[[],[],[]],sports:['التمارين المنتظمة'+R(40),'التاي تشي'+R(40),'المشي'+R(12)],
+ tips:['التمارين، وإنقاص الوزن لمن لديه زيادة، والتاي تشي، واستعمال العصا: توصيات قوية'+R(40),'تمارين التوازن مفيدة'+R(40)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(40)],['المتابعة حسب الأعراض'+R(40)],['المتابعة حسب الأعراض والقدرة على المشي'+R(40)]],iv:['hipj']},
+fai:{n:'انحشار مفصل الورك',g:'الورك والحوض',def:'احتكاك مبكر بين رأس عظم الفخذ وحافة الحُق. يُشخَّص بالأعراض والفحص والتصوير معاً'+R(41),
+ sev:['التثقيف وتعديل النشاط'+R(42),'علاج طبيعي يركز على تقوية عضلات الورك'+R(42),'حقن المفصل أو تقييم جراحي'+R(42,41)],
+ ex:[8,20,13,15,0,5,6,7],lf:[0],
+ avoid:[['الأنشطة التي تثير ألم الورك'+R(42)],[],[]],sports:['المشي'+R(42),'السباحة'+R(42)],
+ tips:['المشي والسباحة بدائل رياضية مناسبة'+R(42)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(42)],['علاج طبيعي'+R(42)],['تقييم جراحي عند استمرار الأعراض'+R(42,41)]],iv:['hipj']},
+lcs:{n:'متلازمة العبور السفلي',g:'العضلات',def:'نمط اختلال عضلي وصفه Janda: شدّ في عضلات ثني الورك وأسفل الظهر، مع ضعف في عضلات البطن والألوية. هو مفهوم سريري وأدلته العلمية محدودة'+R(54),
+ sev:['إطالة عضلات ثني الورك وتقوية الألوية والبطن'+R(54),'إطالة عضلات ثني الورك وتقوية الألوية والبطن'+R(54),'إطالة عضلات ثني الورك وتقوية الألوية والبطن، مع علاج طبيعي'+R(54)],
+ ex:[9,8,0,5,6,10,1,20],lf:[0,1,2,3,4,5],
+ avoid:[[],[],[]],tips:['التمارين تستهدف إعادة التوازن بين العضلات المشدودة والعضلات الضعيفة'+R(54)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(54)],['علاج طبيعي'+R(54)],['علاج طبيعي'+R(54)]],iv:[]},
+ischial:{n:'التهاب الكيس الجرابي الحوضي',g:'الورك والحوض',def:'التهاب الكيس بين عظم الجلوس والعضلة الألوية الكبرى، وغالباً سببه الجلوس الطويل على أسطح صلبة'+R(45),
+ sev:['تقليل الضغط على عظم الجلوس'+R(45),'علاج طبيعي'+R(45),'قد يلجأ الطبيب إلى الحقن الموضعي'+R(45)],
+ ex:[8,1,0,15,13],lf:[0],
+ avoid:[['الجلوس الطويل على الأسطح الصلبة'+R(45)],['ركوب الدراجة لفترات طويلة إذا أثار الألم'+R(45)],[]],
+ tips:['قم وتحرّك بين فترات الجلوس'+R(45,12)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(45)],['علاج طبيعي'+R(45)],['الحقن الموضعي عند الحاجة'+R(45)]],iv:['nb']},
+troch:{n:'التهاب الكيس الجرابي الوركي',g:'الورك والحوض',def:'ألم في جانب الورك، وغالباً سببه اعتلال أوتار عضلات الألوية'+R(43),
+ sev:['التثقيف عن تخفيف الضغط على الأوتار، مع التمارين'+R(43),'برنامج تمارين تدريجي: التثقيف مع التمارين أفضل من حقنة الستيرويد على المدى البعيد'+R(43),'حقنة الستيرويد تخفف الألم لفترة، والتمارين تبقى الأساس'+R(43)],
+ ex:[20,8,13,15,0,5],lf:[0],
+ avoid:[['وضع ساق فوق ساق، جالساً أو واقفاً'+R(59),'الجلوس على كراسٍ منخفضة'+R(59)],[],[]],
+ tips:['نَم مع وسادة بين الركبتين'+R(59),'الحرارة على مكان الألم قد تريح'+R(59)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(43)],['برنامج التثقيف والتمارين'+R(43)],['الحقن عند الحاجة مع الاستمرار بالتمارين'+R(43)]],iv:['nb']},
+lfcn:{n:'تهيج العصب الفخذي الجانبي',g:'الأعصاب',def:'انضغاط عصب حسّي يغذي جلد مقدمة الفخذ وجانبه، فيسبب تنميلاً أو حرقاناً'+R(44),
+ sev:['إزالة الضغط الخارجي: الملابس والأحزمة الضيقة'+R(47,56),'إنقاص الوزن، وعلاج ألم الأعصاب دوائياً حسب الطبيب'+R(47),'إحصار العصب تحت التوجيه بالأشعة، ونادراً الجراحة'+R(47,56)],
+ ex:[0,5,8,15],lf:[0],
+ avoid:[['الأحزمة والملابس الضيقة حول الخصر'+R(56,47),'حزام الأدوات الثقيل'+R(56)],[],[]],
+ tips:['زيادة الوزن ترفع الضغط على العصب'+R(56),'العلاج الطبيعي يركز على الوضعية ومرونة الورك وثبات الجذع'+R(47)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(47)],['المتابعة حسب الأعراض'+R(47)],['إحصار العصب عند الحاجة'+R(47)]],iv:['nb']},
+pfcn:{n:'تهيج العصب الفخذي الخلفي الجلدي',g:'الأعصاب',def:'تهيج العصب الجلدي لخلف الفخذ وأسفل الأرداف. فرعه الكلونيالي السفلي قد ينحشر مع العصب الفرجي'+R(55),
+ sev:['العلاج غير الجراحي أولاً'+R(55,47),'العلاج غير الجراحي أولاً'+R(55,47),'إحصار العصب عند استمرار الأعراض'+R(55,47)],
+ ex:[17,8,0,1,15],lf:[0],avoid:[NERVE,[],[]],tips:['يُعالج في إطار فريق متعدد التخصصات عند الحاجة'+R(55)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(55)],['المتابعة حسب الأعراض'+R(55)],['إحصار العصب عند الحاجة'+R(55)]],iv:['nb']},
+afcn:{n:'تهيج العصب الفخذي الأمامي الجلدي',g:'الأعصاب',def:'تهيج الفروع الجلدية الأمامية للعصب الفخذي، يسبب تنميلاً أو ألماً في مقدمة الفخذ. الحالة نادرة ومصادرها العلمية محدودة، فتُطبّق عليها مبادئ علاج انحشار الأعصاب الطرفية'+R(47),
+ sev:['تعديل النشاط وإزالة الضغط الخارجي'+R(47),'العلاج الطبيعي وعلاج ألم الأعصاب دوائياً حسب الطبيب'+R(47),'إحصار العصب تحت التوجيه بالأشعة'+R(47)],
+ ex:[18,8,0,15],lf:[0],avoid:[NERVE,[],[]],tips:['زيادة الوزن والضغط الخارجي من العوامل التي يُنصح بمعالجتها في انحشار الأعصاب'+R(47)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(47)],['المتابعة حسب الأعراض'+R(47)],['إحصار العصب عند الحاجة'+R(47)]],iv:['nb']},
+femoral:{n:'تهيج العصب الفخذي',g:'الأعصاب',def:'تهيج العصب الفخذي يسبب ألماً أو تنميلاً في مقدمة الفخذ، وقد يُضعف عضلة الفخذ الأمامية'+R(47),
+ sev:['تعديل النشاط والعلاج الطبيعي'+R(47),'العلاج الطبيعي، وعلاج ألم الأعصاب دوائياً حسب الطبيب'+R(47),'الجراحة عند وجود إصابة تركيبية في العصب أو ضعف مستمر'+R(47)],
+ ex:[18,8,13,0,15],lf:[0],avoid:[NERVE,[],[]],tips:['أخبر طبيبك فوراً إذا شعرت بضعف في مدّ الركبة'+R(47)],
+ flags:['ضعف في مدّ الركبة أو انثناؤها فجأة أثناء المشي'+R(47)],follow:[['المتابعة حسب الأعراض'+R(47)],['علاج طبيعي'+R(47)],['تقييم جراحي عند الضعف المستمر'+R(47)]],iv:['nb']},
+sciatic:{n:'تهيج العصب النَّسَي (عرق النسا)',g:'الأعصاب',def:'ألم ينزل على مسار العصب النسي خلف الساق، وغالباً سببه الضغط على جذر العصب في أسفل الظهر'+R(5,29),
+ sev:['البقاء نشيطاً والتمارين'+R(5),'تمارين انزلاق العصب والعلاج الطبيعي'+R(53,5),'قد يناقش الطبيب الحقن فوق الجافية للألم الحاد الشديد'+R(5)],
+ ex:[0,1,17,5,6,7,8,10,13,15],lf:[0,1,2,3,4,5],
+ avoid:[['الراحة الطويلة في السرير'+R(14,5)],[],[]],tips:['تمارين انزلاق العصب قد تخفف الألم والإعاقة'+R(53)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(5)],['علاج طبيعي'+R(5)],['الحقن فوق الجافية أو التقييم الجراحي حسب الطبيب'+R(5)]],iv:['esi']},
+pudendal:{n:'تهيج العصب الفرجي',g:'الأعصاب',def:'ألم مزمن في منطقة العجان والحوض يزداد غالباً عند الجلوس'+R(46),
+ sev:['تعديل النشاط وحماية العصب من الضغط'+R(46,60),'علاج طبيعي لقاع الحوض، وعلاج ألم الأعصاب دوائياً حسب الطبيب'+R(60),'إحصار العصب تحت التوجيه بالأشعة، والكي الحراري أو التحرير الجراحي للحالات المستعصية'+R(60)],
+ ex:[22,15],lf:[0],
+ avoid:[['الجلوس الطويل'+R(46),'ركوب الدراجة'+R(46,60)],[],[]],
+ tips:['العلاج الطبيعي لقاع الحوض جزء أساسي من العلاج'+R(60)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(60)],['علاج طبيعي لقاع الحوض'+R(60)],['إحصار العصب عند الحاجة'+R(60)]],iv:['nb']},
+genitofem:{n:'تهيج العصب التناسلي الفخذي',g:'الأعصاب',def:'ألم عصبي في أسفل البطن والمغبن قد يمتد إلى الأعضاء التناسلية وأعلى الفخذ، وكثيراً ما يحدث بعد جراحة الفتق'+R(52),
+ sev:['العلاج الدوائي حسب الطبيب'+R(52),'إحصار العصب'+R(52),'العلاج الجراحي أو الكي للحالات المستعصية'+R(52)],
+ ex:[0,15],lf:[0],avoid:[NERVE,[],[]],tips:['التشخيص يحتاج تمييزه عن أعصاب المغبن الأخرى المجاورة'+R(52)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(52)],['إحصار العصب عند الحاجة'+R(52)],['تقييم جراحي عند الحاجة'+R(52)]],iv:['nb']},
+obturator:{n:'تهيج العصب السدادي',g:'الأعصاب',def:'ألم في الجهة الداخلية للفخذ قد يمتد إلى الركبة. يُؤكَّد بتخطيط العضلات وإحصار العصب'+R(48),
+ sev:['الأدوية والعلاج الطبيعي في المرحلة الحادة'+R(48),'تمارين تقوية العضلات الضامة والحوض'+R(48),'تحرير العصب جراحياً عند استمرار الأعراض'+R(48)],
+ ex:[21,8,15,13,0],lf:[0],avoid:[NERVE,[],[]],tips:['تمارين تقوية العضلات الضامة والحوض جزء من العلاج غير الجراحي'+R(48)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(48)],['علاج طبيعي'+R(48)],['تقييم جراحي عند استمرار الأعراض'+R(48)]],iv:['nb']},
+adductor:{n:'تشنج العضلات الضامة',g:'العضلات',def:'إصابة أو شد في العضلات الضامة في الجهة الداخلية للفخذ، وهو من أشيع أسباب ألم المغبن عند الرياضيين'+R(51),
+ sev:['راحة نسبية من الرياضة، وثلج، وضغط، ومسكنات حسب الطبيب'+R(51),'برنامج علاج طبيعي منظم'+R(51),'الإصابة المزمنة قد تحتاج أشهراً للتعافي'+R(51)],
+ ex:[21,8,20,15,13,0],lf:[0],
+ avoid:[['الرياضة التي تثير الألم حتى يسمح الطبيب'+R(51)],[],[]],
+ tips:['الإصابة الحادة قد تسمح بالعودة للرياضة خلال 4–8 أسابيع'+R(51)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(51)],['علاج طبيعي'+R(51)],['علاج طبيعي ومتابعة طويلة'+R(51)]],iv:[]},
+itb:{n:'متلازمة الرباط الحرقفي الظنبوبي',g:'العضلات',def:'ألم في الجهة الخارجية للركبة من احتكاك الرباط مع ثني الركبة ومدّها المتكرر، كما في الجري'+R(49),
+ sev:['تعديل التدريب'+R(50),'تقوية عضلات تبعيد الورك'+R(50),'التوقف عن النشاط المثير للألم مع تعديل التدريب وتقوية الورك'+R(50)],
+ ex:[20,8,13,15,5,6],lf:[0],
+ avoid:[['الجري والأنشطة التي تكرر ثني الركبة ومدّها، حتى يسمح الطبيب'+R(50,49)],[],[]],
+ tips:['ضعف عضلات تبعيد الورك يساهم في الحالة، وتقويتها تحسّن الأعراض'+R(50)],
+ flags:[],follow:[['المتابعة حسب الأعراض'+R(50)],['علاج طبيعي'+R(50)],['علاج طبيعي'+R(50)]],iv:[]}};
+const dxC=()=>DX[S.dx]||DX.spondy,isSp=()=>!!dxC().sp,dxEx=()=>dxC().ex;
+const stripR=t=>String(t).replace(/<sup[\s\S]*?<\/sup>/g,'');
+const dxOptions=()=>{const g={};Object.keys(DX).forEach(k=>{(g[DX[k].g]=g[DX[k].g]||[]).push(k)});return Object.keys(g).map(n=>`<optgroup label="${n}">${g[n].map(k=>`<option value="${k}"${S.dx===k?' selected':''}>${DX[k].n}</option>`).join('')}</optgroup>`).join('')};
+function setDx(k){S.dx=DX[k]?k:'spondy';setArr(GR,isSp()?['الأولى','الثانية','الثالثة – الرابعة']:['خفيفة','متوسطة','شديدة'])}
+setDx(S.dx||'spondy');
+function profileHTML(){if(isSp())return profileSpondy();const d=dxC(),it=['شدة خفيفة','شدة متوسطة','شدة أعلى'][lvl()];
+ const goal=S.state?['الأولوية الآن: تهدئة الألم','تمارين المرحلة الأولى فقط، مع البقاء نشيطاً قدر الاستطاعة بدل الراحة في السرير.'+R(14,5)]:[`مستوى البرنامج: ${it}`,['تبدأ من الأساس وتتقدّم ببطء.','تتقدّم بالتدريج إذا لم يزد الألم في اليوم التالي.','يمكنك التقدّم نحو تمارين التقوية.'][lvl()]];
+ return `<div class="cards"><div class="pc"><b>${d.n}</b><p>${d.def}</p></div><div class="pc"><b>شدة الأعراض: ${SEVL[S.grade]}</b><p>${d.sev[S.grade]}</p></div><div class="pc"><b>${goal[0]}</b><p>${goal[1]}</p></div></div>`}
+function avoidHTML(){if(isSp())return avoidSpondy();const d=dxC(),av=[];for(let g=0;g<=S.grade;g++)av.push(...d.avoid[g]);if(S.age===2)av.push('الأنشطة التي تعرّضك للسقوط، مثل صعود السلالم اليدوية والكراسي'+R(13));
+ const sp=d.sports||['النشاط الهوائي المتوسط، مثل المشي، 150–300 دقيقة أسبوعياً'+R(12)];
+ const A=`<div><div class="fh">${pk('avoid')}<h3>تجنّب</h3></div><p class="sub">حسب تشخيصك وشدة الأعراض.</p><ul class="x">${li(av.length?av:['لا توجد قيود خاصة غير ما يحدده طبيبك'])}</ul></div>`,B=`<div><div class="fh">${pk('sports')}<h3>رياضات مناسبة</h3></div><p class="sub">بعد أن يهدأ الألم، وبالتدرّج.</p><ul class="ok">${li(sp)}</ul></div>`;
+ return `<div class="two">${!PM||SEL.avoid?A:''}${!PM||SEL.sports?B:''}</div>`}
+function lifeHTML(){if(isSp())return lifeSpondy();const d=dxC(),tips=d.tips;
+ const T=tips.length&&(!PM||SEL.tips)?`<div class="pc" style="grid-column:1/-1"><div class="fh">${pk('tips')}<h3>نصائح خاصة بـ${d.n}</h3></div><ul>${li(tips)}</ul></div>`:'';
+ return `<p class="sub">النصائح الملوّنة خاصة بعمرك.</p><div class="life">${T}${LF.map((s,i)=>!d.lf.includes(i)||PM&&!SEL['life-'+i]?'':`<div class="pc"><div class="fh">${pk('life-'+i)}<h3>${s.t}</h3></div><ul>${li(s.b)}${li(S.age===2?s.a[2]:[],'extra')}</ul></div>`).join('')}</div>`}
+function flagsHTML(){if(isSp())return flagsSpondy();const d=dxC(),fl=[...FL,...d.flags],fo=d.follow[S.grade];
+ return `<div class="two">${!PM||SEL.flags?`<div class="flags"><div class="fh">${pk('flags')}<h3>راجع الطبيب فوراً عند</h3></div><ul class="x">${li(fl)}</ul></div>`:''}${!PM||SEL.follow?`<div><div class="fh">${pk('follow')}<h3>المتابعة الطبية</h3></div><p class="sub">حسب شدة الأعراض.</p><ul class="ok">${li(fo)}</ul></div>`:''}</div>
+ <p class="foot" style="margin-top:28px">برنامج تثقيفي مبني على المصادر العلمية المذكورة بجانب كل معلومة، ولا يغني عن فحص الطبيب. توقّف عن أي تمرين يزيد الألم بوضوح أو يسبب تنميلاً.</p>`}
+const dxAuto=()=>isSp()?dxAutoSp():`${dxC().n}، أعراض ${SEVL[S.grade]}${S.state?'، مع هجمة ألم حادة':''}`;
+
+const dxNo=()=>{const d=dxC(),a=[];for(let g=0;g<=S.grade;g++)a.push(...d.avoid[g]);return a.map(stripR)};
+const exOK=e=>dxEx().includes(e.i===undefined?EX.indexOf(e):e.i);
 
 
 /* ---------- تطبيق المريض ---------- */
@@ -568,7 +775,7 @@ let CFG=null,bip=null;
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();bip=e;const b=$('instNow');if(b)b.hidden=false});
 const card0=e=>`<button class="exc" data-go="x-${e.i}"><div class="stage" data-ex="${e.i}"></div><div><b>${e.n}</b><span class="dose">${dose(e)}</span></div>${ic('chev')}</button>`;
 const dose=e=>S.state&&e.p===1?'مرتان يومياً':e.d[lvl()];
-const fitEx=e=>e.m>=S.grade&&(!S.state||e.p===1);
+const fitEx=e=>e.m>=S.grade&&(!S.state||e.p===1)&&exOK(e);
 const mine=()=>EX.map((e,i)=>({...e,i})).filter(e=>SEL['ex-'+e.i]&&fitEx(e));
 const any=p=>Object.keys(SEL).some(k=>SEL[k]&&k.startsWith(p));
 let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3600)}
@@ -579,7 +786,7 @@ function gate(kind,err){const g=$('gate');g.hidden=false;$('app').hidden=true;$(
  if(kind==='nolink')g.innerHTML=`<div class="gbox"><div class="glogo">${LOGO}</div><h2>افتح برنامجك من الرابط</h2><p>هذا البرنامج يُفتح فقط من الرابط الخاص الذي أرسله لك الدكتور ياسر الخزرجي. إذا فتحته من الرابط ولم يعمل، اطلب من العيادة رابطاً جديداً.</p></div>`;
  else if(kind==='expired')g.innerHTML=`<div class="gbox"><div class="glogo">${LOGO}</div><h2>انتهت صلاحية البرنامج</h2><p>انتهت صلاحية برنامجك العلاجي بتاريخ ${fmtD(CFG.e)}. راجع الدكتور ياسر الخزرجي لتحديثه.</p></div>`;
 }
-function apply(c){CFG=c;S.age=c.s[0];S.grade=c.s[1];S.state=c.s[2];SEL={};c.k.forEach(k=>SEL[k]=true);
+function apply(c){CFG=c;setDx(c.q||'spondy');S.age=c.s[0];S.grade=c.s[1];S.state=c.s[2];SEL={};c.k.forEach(k=>SEL[k]=true);
  Object.assign(PI,{name:c.n,age:c.a,dx:c.x,date:c.t,ivd:c.ivd,rest:c.r||{},ivn:c.ivn});}
 async function start(){
  if(window.__CFG){apply(window.__CFG);return boot()}
@@ -590,10 +797,10 @@ async function start(){
 /* ---------- العلامة المائية والطباعة ---------- */
 function marks(){const nm=esc(PI.name),dt=fmtD(PI.date),line=`د. ياسر الخزرجي · المريض: ${nm} · تاريخ المشاركة: ${dt}`;
  $('wm').innerHTML=Array.from({length:14},()=>`<span>${line}</span>`).join('');
- $('pmark').innerHTML=`<b>برنامج مريض تزحزح الفقرات</b><span>${line}</span><span>لا يجوز استخدامه بدون استشارة الطبيب</span>`;
+ $('pmark').innerHTML=`<b>برنامج ألم الظهر</b><span>${line}</span><span>لا يجوز استخدامه بدون استشارة الطبيب</span>`;
  $('lock').textContent=`خاص بالمريض ${PI.name} · د. ياسر الخزرجي · ${dt}`;
  const st=document.createElement('style');const plain=`د. ياسر الخزرجي — المريض: ${PI.name} — تاريخ المشاركة: ${dt}`;
- st.textContent=`@page{size:A4;margin:16mm 11mm 18mm;@top-center{content:"${pcs(plain)}";font:600 9pt Tahoma,sans-serif;color:#4b3fd6}@bottom-center{content:"برنامج مريض تزحزح الفقرات — لا يجوز استخدامه بدون استشارة الطبيب — صفحة " counter(page);font:500 8pt Tahoma,sans-serif;color:#4f4c72}}`;
+ st.textContent=`@page{size:A4;margin:16mm 11mm 18mm;@top-center{content:"${pcs(plain)}";font:600 9pt Tahoma,sans-serif;color:#4b3fd6}@bottom-center{content:"برنامج ألم الظهر — لا يجوز استخدامه بدون استشارة الطبيب — صفحة " counter(page);font:500 8pt Tahoma,sans-serif;color:#4f4c72}}`;
  document.head.appendChild(st)}
 function pr(kind){document.body.dataset.pv=kind||'';setTimeout(()=>{try{window.print()}catch(e){toast('الطباعة غير متاحة هنا. استخدم زر المشاركة في المتصفح ثم "طباعة".')}},60)}
 addEventListener('afterprint',()=>{document.body.dataset.pv=''});
@@ -603,14 +810,14 @@ const DO_S=['ابقَ نشيطاً: 150–300 دقيقة أسبوعياً','اج
 const NO_S=[['تمارين البطن التقليدية (Sit-ups)','التقويس الخلفي المتكرر للظهر','رفع الأحمال بظهر منحنٍ','الجلوس الطويل دون حركة','الراحة الطويلة في السرير'],['الرياضات العنيفة والقفز حتى يسمح الطبيب'],['الرياضات والأوزان قبل تقييم الجراح']];
 const WC={c:'#4b3fd6',s:'#1d3fc4',r:'#9b8cf0',f:'#d6336c'};
 function infoHTML(){const ex=mine().slice(0,8),W=week(),it=['خفيفة','متوسطة','أعلى'][lvl()];
- const no=[...NO_S[0]];for(let g=1;g<=S.grade;g++)no.push(...NO_S[g]);
- const dos=LF.map((x,i)=>SEL['life-'+i]?DO_S[i]:null).filter(Boolean);const ivs=IV.filter(v=>SEL['iv-'+v.k]);
+ let no=[...NO_S[0]];for(let g=1;g<=S.grade;g++)no.push(...NO_S[g]);if(!isSp())no=dxNo();
+ const dos=LF.map((x,i)=>SEL['life-'+i]&&(isSp()||dxC().lf.includes(i))?DO_S[i]:null).filter(Boolean);if(!isSp()&&SEL.tips)dos.push(...dxC().tips.slice(0,3).map(stripR));const ivs=IV.filter(v=>SEL['iv-'+v.k]);
  return `<div class="info" id="infoPage">
- <div class="ih"><div><small>برنامج مريض تزحزح الفقرات</small><h2>الملخص العلاجي</h2></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
+ <div class="ih"><div><small>برنامج ألم الظهر</small><h2>الملخص العلاجي</h2></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
  <div class="ipt"><div><small>المريض</small><b>${esc(PI.name)}</b></div>${PI.age?`<div><small>العمر</small><b>${esc(PI.age)} سنة</b></div>`:''}<div class="w2"><small>التشخيص</small><b>${esc(PI.dx)}</b></div><div><small>تاريخ المشاركة</small><b>${fmtD(PI.date)}</b></div></div>
- <div class="ist"><div><i>${['I','II','III+'][S.grade]}</i><span>درجة التزحزح</span></div><div><i>${S.age===0?'برزخي':'تنكّسي'}</i><span>نوع التزحزح</span></div><div><i>${S.state?'تهدئة':it}</i><span>${S.state?'المرحلة الحالية':'شدة البرنامج'}</span></div></div>
+ <div class="ist">${isSp()?`<div><i>${['I','II','III+'][S.grade]}</i><span>درجة التزحزح</span></div><div><i>${S.age===0?'برزخي':'تنكّسي'}</i><span>نوع التزحزح</span></div>`:`<div><i>${SEVL[S.grade]}</i><span>شدة الأعراض</span></div>`}<div><i>${S.state?'تهدئة':it}</i><span>${S.state?'المرحلة الحالية':'شدة البرنامج'}</span></div></div>
  ${ex.length?`<h3 class="ihd">تمارينك اليومية</h3><div class="iex">${ex.map(e=>`<div><div class="iimg">${snap(e.i)}</div><b>${e.n}</b><span>${dose(e)}</span></div>`).join('')}</div>`:''}
- <div class="icol">${dos.length?`<div class="ido"><h3>افعل</h3><ul>${li(dos)}</ul></div>`:''}${SEL.avoid?`<div class="ino"><h3>تجنّب</h3><ul>${li(no)}</ul></div>`:''}</div>
+ <div class="icol">${dos.length?`<div class="ido"><h3>افعل</h3><ul>${li(dos)}</ul></div>`:''}${SEL.avoid&&no.length?`<div class="ino"><h3>تجنّب</h3><ul>${li(no)}</ul></div>`:''}</div>
  ${SEL.week||SEL.today?`<h3 class="ihd">أسبوعك</h3><div class="iwk">${W.map(r=>`<div style="--c:${WC[r[3]]}"><b>${r[0]}</b><span>${TL[r[3]].replace('يوم ','')}</span></div>`).join('')}</div>`:''}
  ${ivs.length?`<div class="iiv"><h3>بعد الإجراء${PI.ivd?' ('+fmtD(PI.ivd)+')':''}</h3><ul>${li(ivs.map(v=>{const r=restOf(v.k);return `${v.n.split(' (')[0]}: ${r===null?(v.k==='mbb'?'سجّل الألم 5 ساعات بعد الحقنة':'حسب تعليمات الطبيب'):r?'راحة نسبية '+dayW(r)+(PI.ivd?' ثم العودة للتمارين '+fmtD(addDays(PI.ivd,r)):''):'لا راحة'}`}))}</ul></div>`:''}
  <div class="ifl"><h3>راجع الطبيب فوراً عند</h3><p>فقدان السيطرة على البول أو البراز · تنميل منطقة الجلوس · ضعف متزايد في الساق · حرارة بعد حقنة · ألم ليلي شديد لا يتغيّر</p></div>
@@ -634,7 +841,7 @@ const PV={
  flags:['الخطر والمتابعة',()=>flagsHTML(),()=>SEL.flags||SEL.follow],
  refs:['المصادر العلمية',()=>refsHTML(),()=>1],
  inst:['تثبيت البرنامج',()=>instHTML(),()=>!standalone()&&!window.__CFG]};
-const TI={info:['img','الملخص المطبوع','كل ما يخصك في صفحة واحدة'],prof:['user','حالتك','نوع التزحزح ودرجته'],ex:['move','تمارينك','تمارين متحركة بجرعاتك'],plan:['cal','منهاجي','اليوم والأسبوع'],avoid:['shield','الممنوع والمسموح','حركات تتجنّبها ورياضات تناسبك'],life:['home','نمط حياتك','العمل والجلوس والنوم والغذاء'],post:['needle','بعد التداخل','الراحة وتعليمات ما بعد الحقنة'],flags:['alert','الخطر والمتابعة','متى تراجع الطبيب فوراً'],refs:['book','المصادر العلمية','مصدر كل معلومة في برنامجك'],inst:['share','تثبيت البرنامج','أيقونة على شاشتك الرئيسية']};
+const TI={info:['img','الملخص المطبوع','كل ما يخصك في صفحة واحدة'],prof:['user','حالتك','تشخيصك وشدته'],ex:['move','تمارينك','تمارين متحركة بجرعاتك'],plan:['cal','منهاجي','اليوم والأسبوع'],avoid:['shield','الممنوع والمسموح','حركات تتجنّبها ورياضات تناسبك'],life:['home','نمط حياتك','العمل والجلوس والنوم والغذاء'],post:['needle','بعد التداخل','الراحة وتعليمات ما بعد الحقنة'],flags:['alert','الخطر والمتابعة','متى تراجع الطبيب فوراً'],refs:['book','المصادر العلمية','مصدر كل معلومة في برنامجك'],inst:['share','تثبيت البرنامج','أيقونة على شاشتك الرئيسية']};
 function instHTML(){const d=CFG.dv||'ios',ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
  const steps={ios:[['افتحه في Safari','إذا فُتح الرابط داخل واتساب، اضغط ⋯ أو زر البوصلة واختر "فتح في Safari".'],['اضغط زر المشاركة','المربع الذي فيه سهم للأعلى، أسفل الشاشة أو بجانب شريط العنوان.'],['إضافة إلى الشاشة الرئيسية','مرّر القائمة للأسفل واختر "إضافة إلى الشاشة الرئيسية"، ثم "إضافة".'],['افتحه من أيقونته','ستجد أيقونة "برنامجي العلاجي" على شاشتك. افتحه منها دائماً.']],
   and:[['افتحه في Chrome','إذا فُتح الرابط داخل واتساب، اضغط ⋮ واختر "فتح في Chrome".'],['ثبّت التطبيق','اضغط زر "ثبّت الآن" أدناه إن ظهر، أو من القائمة ⋮ اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".'],['وافق على التثبيت','ستظهر أيقونة "برنامجي العلاجي" بين تطبيقاتك.']],
