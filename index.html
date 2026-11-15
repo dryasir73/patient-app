@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3b40d9">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="برنامجي العلاجي">
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png">
+<title>برنامج مريض تزحزح الفقرات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: أنيق، هادئ، سريري — تطبيق علاجي شخصي
+   IDEA: دفتر علاج تفاعلي: صفحة رئيسية بأقسام، كل قسم صفحة مستقلة برجوع واضح
+   PICTURE: فقرات تنزلق حسب الدرجة + شخصية متحركة تؤدي كل تمرين بعمق وظل
+   COLOUR and TYPE: تدرّج أزرق ملكي → بنفسجي، أرضية لافندر فاتحة، ذهبي للعضلات العاملة؛ IBM Plex Sans Arabic بوزن 500/700 وحجم 19px
+   LAYOUT: شريط علوي ثابت (رجوع، عنوان، ملء الشاشة) + صفحات تتبدل بنعومة */
+:root{color-scheme:light dark;
+--bg:light-dark(#f7f6fe,#0d0c24);--ink:light-dark(#1b1840,#eeedff);--mut:light-dark(#4f4c72,#b9b6dc);
+--card:light-dark(#ffffff,#17153b);--line:light-dark(#e3e0f7,#2c2960);--soft:light-dark(#eeebff,#221f52);
+--go:light-dark(#2350d8,#9db8ff);--no:light-dark(#c92b5f,#ff8ab0);--acc:light-dark(#4b3fd6,#b9a8ff);
+--grad:linear-gradient(120deg,#1d3fc4 0%,#3b40d9 38%,#6a3de0 72%,#8d45e6 100%)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 19px/1.85 "IBM Plex Sans Arabic",Tahoma,sans-serif;overflow-x:clip}
+h1,h2,h3,b{font-weight:700}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(5vw,16px)}
+.top{position:sticky;top:0;z-index:20;background:var(--grad);color:#fff;box-shadow:0 6px 24px #2a1f8a33}
+.tbar{display:flex;align-items:center;gap:10px;min-height:64px}
+.tbar .ttl{flex:1;font-weight:700;font-size:20px;background:none;border:0;color:#fff;text-align:start;padding:0;min-height:44px;cursor:pointer;font-family:inherit}
+.ib{width:46px;height:46px;border-radius:14px;border:1.5px solid #ffffff55;background:#ffffff1f;color:#fff;display:grid;place-items:center;cursor:pointer;flex:none}
+.ib svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ib:focus-visible,button:focus-visible{outline:3px solid #ffd27a;outline-offset:2px}
+.hid{visibility:hidden}
+.view{display:none;padding-bottom:56px}.view.on{display:block;animation:vin .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes vin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.view.on{animation:none}}
+.hero{background:var(--grad);color:#fff;padding:clamp(26px,4vw,56px) 0 clamp(30px,4vw,60px)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-areas:"t f" "c f";gap:6px 40px;align-items:start}
+.htext{grid-area:t}.spine{grid-area:f;position:relative;min-height:340px;background:#ffffff14;border:1px solid #ffffff30;border-radius:24px}.ctrl{grid-area:c}
+h1{font-size:clamp(36px,5.2vw,54px);line-height:1.1;margin:0 0 12px;text-wrap:balance}
+.lead{margin:0 0 22px;color:#e4e1ff;max-width:54ch;font-size:19px}
+.grp{margin:0 0 16px;border:0;padding:0}
+.grp legend{font-weight:700;margin-bottom:8px;font-size:17px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{min-height:48px;padding:9px 18px;border-radius:14px;border:1.5px solid #ffffff66;cursor:pointer;font-weight:600;display:flex;align-items:center;transition:background .25s,color .25s}
+.seg input:checked+label{background:#fff;color:#2c2a9a;border-color:#fff;font-weight:700}
+.seg input:focus-visible+label{outline:3px solid #ffd27a;outline-offset:2px}
+.spine svg{position:absolute;inset:14px 14px 44px;width:calc(100% - 28px);height:calc(100% - 58px)}
+.slip{transition:transform .8s cubic-bezier(.3,1.3,.5,1)}
+.legend{position:absolute;bottom:10px;inset-inline:16px;display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:#e4e1ff}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:-26px;position:relative}
+.tile{display:flex;gap:16px;align-items:center;text-align:start;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:22px;padding:20px;cursor:pointer;font:inherit;box-shadow:0 10px 30px #3b2fa014;transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s}
+.tile:hover{transform:translateY(-3px);box-shadow:0 16px 36px #3b2fa026}
+.tile .ic{width:58px;height:58px;border-radius:18px;background:var(--grad);display:grid;place-items:center;flex:none}
+.tile .ic svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tile b{display:block;font-size:21px;line-height:1.35}.tile span{color:var(--mut);font-size:16px;line-height:1.6}
+.vhead{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:26px 0 8px}
+.vhead h2{flex:1 1 260px;margin:0;font-size:clamp(28px,3.6vw,38px);line-height:1.2}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:14px;font:inherit;font-weight:700;font-size:17px;cursor:pointer;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn.pri{background:var(--grad);color:#fff;border-color:transparent}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chip{background:var(--soft);color:var(--acc);border-radius:999px;padding:4px 14px;font-size:16px;font-weight:700}
+.sub{color:var(--mut);margin:0 0 20px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+.pc b{display:block;font-size:21px;margin-bottom:6px;line-height:1.4}.pc p{margin:0;color:var(--mut)}
+.phase{margin-top:30px}.ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:12px}
+.ph h3{margin:0;font-size:24px}.ph span{color:var(--mut);font-size:16px}
+.exgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:14px}
+.exc{display:grid;grid-template-columns:132px minmax(0,1fr) 24px;gap:14px;align-items:center;text-align:start;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.exc:hover{transform:translateY(-2px)}
+.exc b{display:block;font-size:18px;line-height:1.45}
+.exc>svg{width:22px;height:22px;fill:none;stroke:var(--mut);stroke-width:2.2}
+.stage{position:relative;aspect-ratio:400/260;border-radius:14px;overflow:hidden}
+.stage svg{display:block;width:100%;height:100%}
+.dose{display:inline-block;white-space:nowrap;background:var(--soft);color:var(--acc);border-radius:10px;padding:2px 12px;font-weight:700;font-size:16px;margin-top:4px}
+.note{background:var(--soft);border-radius:16px;padding:14px 18px;margin:14px 0}
+.det{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
+.big{border-radius:22px;box-shadow:0 14px 40px #3b2fa022}
+.big .ctl{position:absolute;top:12px;inset-inline-start:12px;display:flex;gap:8px}
+.big .ctl .ib{background:#1d1a5ccc;border-color:#ffffff40}
+.big.pfs,.big:fullscreen{position:fixed;inset:0;z-index:100;border-radius:0;aspect-ratio:auto;background:#eef0ff;display:grid;place-items:center}
+.big.pfs svg,.big:fullscreen svg{width:100%;height:100%}
+.steps{margin:6px 0 16px;padding-inline-start:24px}.steps li{margin:6px 0}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+ul.x,ul.ok{list-style:none;padding:0;margin:0}
+ul.x li,ul.ok li{padding:12px 0;border-bottom:1px solid var(--line);padding-inline-start:32px;position:relative}
+ul.x li::before,ul.x li::after{content:"";position:absolute;inset-inline-start:4px;top:26px;width:16px;height:3px;border-radius:2px;background:var(--no);transform:rotate(45deg)}
+ul.x li::after{transform:rotate(-45deg)}
+ul.ok li::before{content:"";position:absolute;inset-inline-start:7px;top:19px;width:8px;height:14px;border:solid var(--go);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.life{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.life h3{margin:0 0 8px;font-size:22px}.life ul{margin:0;padding-inline-start:22px}.life li{margin:6px 0}
+li.extra{color:var(--go);font-weight:600}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:18px;overflow:hidden}
+th,td{text-align:start;padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:16px;color:var(--mut)}td:first-child{font-weight:700;white-space:nowrap}
+tr.today td{background:var(--soft)}
+.flags{background:light-dark(#fff1f5,#2b1325);border:1.5px solid var(--no);border-radius:20px;padding:20px 22px}
+.flags h3{color:var(--no);margin:0 0 6px;font-size:24px}
+.foot{color:var(--mut);font-size:15px}
+.pick{flex:none;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;position:relative}
+.pick input{position:absolute;opacity:0;width:1px;height:1px}
+.pick span{width:30px;height:30px;border-radius:9px;border:2.5px solid var(--acc);display:grid;place-items:center;background:var(--card);transition:background .2s,border-color .2s}
+.pick svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .2s}
+.pick input:checked+span{background:var(--grad);border-color:transparent}.pick input:checked+span svg{opacity:1}
+.pick input:focus-visible+span{outline:3px solid #ffd27a;outline-offset:2px}
+.fld{display:flex;gap:10px;align-items:flex-start}.fld>div{flex:1}
+.fh{display:flex;align-items:center;gap:8px}.fh h3{margin:0}
+.row{display:flex;gap:6px;align-items:center}.row .exc{flex:1}
+#ok{position:fixed;opacity:0;pointer-events:none}
+.splash{position:fixed;inset:0;z-index:300;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px;overflow:auto}
+#ok:checked+.splash{display:none}
+.sbox{max-width:540px;text-align:center}.sbox .logo{width:92px;height:92px;margin:0 auto 18px;border-radius:26px;background:#ffffff26;display:grid;place-items:center}
+.sbox .logo svg{width:56px;height:56px}
+.sbox h1{font-size:clamp(28px,6vw,38px);line-height:1.25;margin:0 0 16px}.sbox p{font-size:19px;margin:0 0 14px;color:#eeeaff}
+.sbox .warn{background:#ffffff1f;border:1px solid #ffffff55;border-radius:16px;padding:12px 16px;font-weight:700;color:#fff}
+.gobtn{display:inline-flex;margin-top:14px;min-height:56px;padding:12px 30px;border-radius:16px;background:#fff;color:#2c2a9a;font-weight:700;font-size:19px;cursor:pointer;align-items:center}
+.ib{position:relative}.badge{position:absolute;top:-6px;inset-inline-start:-6px;min-width:22px;height:22px;border-radius:11px;background:#ffc24d;color:#1b1840;font-size:13px;font-weight:700;display:grid;place-items:center;padding:0 5px}
+.tile.hot{background:var(--grad);color:#fff;border-color:transparent}.tile.hot span{color:#e8e5ff}.tile.hot .ic{background:#ffffff2a}
+.shgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:20px;align-items:start}
+.fl{display:block;font-weight:700;margin-bottom:14px}
+.fl input,.fl textarea{display:block;width:100%;margin-top:6px;font:inherit;font-weight:500;font-size:18px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;min-height:50px}
+.fl input:focus,.fl textarea:focus{outline:3px solid #8f7bff66;border-color:var(--acc)}
+.sseg label{border-color:var(--line)!important;color:var(--ink)}.sseg input:checked+label{background:var(--grad)!important;color:#fff!important;border-color:transparent!important}
+.slist{list-style:none;margin:0;padding:0}.slist li{display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);padding:2px 0}
+.slist .gh{font-weight:700;color:var(--acc);padding-top:12px;border:0}
+.shbar{position:sticky;bottom:0;z-index:10;background:var(--bg);padding:12px 0;margin-top:18px;border-top:1px solid var(--line)}
+.xl{min-height:60px;font-size:20px;padding:12px 28px}
+.ov{position:fixed;inset:0;z-index:250;background:#0d0c24cc;display:none;padding:12px}.ov.on{display:flex;flex-direction:column;gap:10px}
+.ov iframe{flex:1;width:100%;border:0;border-radius:16px;background:#fff}
+@media(max-width:860px){.shgrid{grid-template-columns:minmax(0,1fr)}}
+#toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);opacity:0;background:#1d1a5c;color:#fff;padding:12px 20px;border-radius:14px;font-weight:600;transition:.3s;z-index:200;max-width:90vw;text-align:center;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:860px){.cards,.two,.life,.det{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){body{font-size:18px}.hgrid{grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "f" "c"}.spine{min-height:280px}
+.exc{grid-template-columns:110px minmax(0,1fr) 20px}
+.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}.stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:4px 12px}.stack td::before{content:attr(data-l);color:var(--mut);font-weight:500}}
+@media print{.top,.btn,.ib,.acts,.tiles{display:none!important}body{background:#fff;color:#000}.view{display:none!important}.view.on{display:block!important}}
+
+.iv{margin-bottom:14px}.rest{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:8px 0 4px}
+.rl{display:inline-flex;align-items:center;gap:10px;font-weight:700}.rin{width:86px;min-height:46px;font:inherit;font-size:18px;text-align:center;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+.restn{background:var(--grad);color:#fff;border-radius:12px;padding:4px 14px;font-weight:700}.restd{background:var(--soft);color:var(--acc);border-radius:12px;padding:4px 14px;font-weight:700}
+table.diary{margin-top:6px}table.diary td{height:40px}
+.pinrow{display:flex;gap:10px;margin-top:6px}.pinrow input{flex:1;font:inherit;font-size:26px;font-weight:700;letter-spacing:.3em;text-align:center;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);min-height:54px}
+.chkl{display:flex;align-items:center;gap:10px;margin:12px 0;font-weight:600;cursor:pointer}.chkl input{width:22px;height:22px;accent-color:#4b3fd6}
+.res{margin-top:20px;border:2px solid var(--acc)}.resg{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:22px;align-items:start}
+.pinbig{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--soft);border-radius:16px;padding:12px 16px;margin:10px 0}.pinbig span{color:var(--mut);font-weight:600}.pinbig b{font-size:36px;letter-spacing:.25em;color:var(--acc)}
+.qr{background:#fff;border-radius:16px;padding:8px}.qr svg{width:100%;height:auto;display:block}
+.lnk{width:100%;font:13px/1.4 ui-monospace,monospace;border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg);color:var(--mut)}
+a.btn{text-decoration:none}
+@media(max-width:700px){.resg{grid-template-columns:minmax(0,1fr)}.qr{max-width:240px}}
+
+.hname{color:#fff;font-size:17px}.hname input{background:#fff;color:#1b1840;border-color:#fff;font-size:19px}
+.pname{display:flex;flex-wrap:wrap;gap:10px 28px;margin-bottom:16px;background:var(--soft);border-color:transparent}.pname small{display:block;color:var(--mut);font-size:15px}.pname b{font-size:22px}
+.trow{display:flex;gap:8px;align-items:center}.trow .tile{flex:1}.tsp{width:44px;flex:none}
+.pick span{position:relative}.pick input:indeterminate+span{background:var(--soft);border-color:var(--acc)}
+.pick input:indeterminate+span::before{content:"";position:absolute;width:14px;height:3px;border-radius:2px;background:var(--acc)}
+.gpick{display:inline-flex;align-items:center;gap:2px;font-weight:700;font-size:17px;border:1.5px solid var(--acc);border-radius:14px;padding:0 4px 0 14px;background:var(--card);min-height:50px;cursor:pointer}
+.gp span{width:34px;height:34px;border-radius:10px}
+.slist .gh{display:flex;align-items:center;gap:6px}
+
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-bottom:40px}input,textarea{-webkit-user-select:text;user-select:text}
+.gate{position:fixed;inset:0;z-index:200;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
+.gate[hidden]{display:none}
+.gbox{max-width:420px;width:100%;text-align:center}.gbox h2{font-size:30px;margin:6px 0 8px}.gbox p{color:#e8e5ff;margin:0 0 14px}
+.glogo{width:84px;height:84px;margin:0 auto 14px;border-radius:24px;background:#ffffff26;display:grid;place-items:center}.glogo svg{width:52px;height:52px}
+#pin{width:100%;font:700 34px/1 "IBM Plex Sans Arabic",Tahoma,sans-serif;letter-spacing:.4em;text-align:center;border:0;border-radius:16px;padding:14px;min-height:64px;color:#1b1840}
+.gbox .chkl{justify-content:center;color:#fff}.gerr{color:#ffd0dd!important;font-weight:700;min-height:1.5em}.gbox .gobtn{border:0;font-family:inherit}
+#app{display:block}#app[hidden],.top[hidden]{display:none}
+.phero{background:var(--grad);color:#fff;padding:24px 0 54px}.phero h1{font-size:clamp(30px,6vw,46px);margin:0 0 14px}
+.pinfo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.pinfo div{background:#ffffff1f;border-radius:14px;padding:8px 14px}.pinfo small{display:block;color:#dcd8ff;font-size:14px}.pinfo b{font-size:18px}.pinfo .w2{grid-column:span 2}
+.ibanner{display:flex;gap:14px;align-items:center;width:100%;text-align:start;font:inherit;color:var(--ink);background:var(--card);border:2px dashed var(--acc);border-radius:20px;padding:14px 18px;margin:-30px 0 18px;position:relative;cursor:pointer}
+.ibanner>svg{width:30px;height:30px;fill:none;stroke:var(--acc);stroke-width:2.2;flex:none}.ibanner b{display:block}.ibanner span span{color:var(--mut);font-size:16px}
+.ptiles{margin-top:0}.phero+.wrap .ptiles:first-child{margin-top:-30px}
+.isteps{list-style:none;padding:0;margin:0;display:grid;gap:12px}.isteps li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.isteps i{font-style:normal;width:40px;height:40px;border-radius:12px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}.isteps p{margin:2px 0 0;color:var(--mut)}
+#lock{position:fixed;bottom:0;inset-inline:0;z-index:30;background:#1d1a5ce8;color:#fff;font-size:13px;font-weight:600;text-align:center;padding:5px 10px calc(5px + env(safe-area-inset-bottom))}
+.wm,.pmark{display:none}
+/* الإنفوجرافيك */
+.info{background:#fff;color:#1b1840;border-radius:22px;box-shadow:0 14px 40px #3b2fa022;padding:22px;max-width:820px;margin:0 auto;--g:linear-gradient(120deg,#1d3fc4,#3b40d9 38%,#6a3de0 72%,#8d45e6)}
+.ih{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--g);color:#fff;border-radius:18px;padding:16px 20px}
+.ih small{color:#dcd8ff;font-size:14px}.ih h2{margin:0;font-size:30px;line-height:1.2}.idoc{display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:700;font-size:15px}.idoc svg{width:44px;height:44px}
+.ipt{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}.ipt div{background:#f3f1ff;border-radius:12px;padding:6px 12px}.ipt small{display:block;color:#5d5a85;font-size:12px}.ipt b{font-size:15px;line-height:1.5;display:block}.ipt .w2{grid-column:span 1}
+.ist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.ist div{border:1.5px solid #e3e0f7;border-radius:14px;padding:8px;text-align:center}.ist i{display:block;font-style:normal;font-weight:700;font-size:26px;color:#4b3fd6;line-height:1.4}.ist span{font-size:13px;color:#5d5a85}
+.ihd{font-size:18px;margin:16px 0 8px;color:#3b40d9}
+.iex{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.iex>div{border:1px solid #e3e0f7;border-radius:12px;padding:6px;text-align:center}.iimg svg{width:100%;height:auto;display:block;border-radius:8px}.iex b{display:block;font-size:13px;line-height:1.45;margin-top:4px}.iex span{display:inline-block;font-size:12px;font-weight:700;color:#4b3fd6;background:#eeebff;border-radius:6px;padding:0 6px;margin-top:2px}
+.icol{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.icol h3{margin:0 0 4px;font-size:17px}.icol ul{margin:0;padding-inline-start:18px;font-size:14px;line-height:1.75}
+.ido{background:#eef3ff;border-radius:14px;padding:10px 14px}.ido h3{color:#1d3fc4}.ino{background:#fff0f5;border-radius:14px;padding:10px 14px}.ino h3{color:#c92b5f}
+.iwk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.iwk div{border-radius:12px;padding:6px 2px;text-align:center;background:color-mix(in srgb,var(--c) 14%,#fff);border-top:4px solid var(--c)}.iwk b{display:block;font-size:13px}.iwk span{font-size:11px;color:#4f4c72}
+.iiv{background:#f3f1ff;border-radius:14px;padding:10px 14px;margin-top:12px}.iiv h3{margin:0 0 4px;font-size:17px;color:#4b3fd6}.iiv ul{margin:0;padding-inline-start:18px;font-size:14px}
+.ifl{border:1.5px solid #c92b5f;border-radius:14px;padding:8px 14px;margin-top:12px}.ifl h3{margin:0;color:#c92b5f;font-size:16px}.ifl p{margin:2px 0 0;font-size:14px}
+.ift{margin-top:12px;text-align:center;font-size:12px;color:#5d5a85;border-top:1px solid #e3e0f7;padding-top:8px}
+@media(max-width:600px){.ipt{grid-template-columns:repeat(2,minmax(0,1fr))}.iex{grid-template-columns:repeat(2,minmax(0,1fr))}.iwk{grid-template-columns:repeat(4,minmax(0,1fr))}.icol{grid-template-columns:1fr}.pinfo .w2{grid-column:auto}.ih h2{font-size:24px}}
+/* الطباعة: العلامة المائية تظهر في كل صفحة ولا يمكن إخفاؤها */
+@media print{
+ html,body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .top,#lock,.btn,.ib,.tiles,.ibanner,.splash,#ok,.gate,.phero,.acts,#toast{display:none!important}
+ #app,#app>.wrap{display:block!important;padding:0;max-width:none}
+ .vhead{padding:0 0 6px}.vhead h2{font-size:22px}
+ .wm{display:grid!important;position:fixed;inset:0;grid-template-columns:1fr 1fr;align-content:space-around;z-index:9999;pointer-events:none;overflow:hidden}
+ .wm span{transform:rotate(-28deg);font:700 13pt Tahoma,sans-serif;color:rgba(75,63,214,.11);white-space:nowrap;text-align:center}
+ .pmark{display:flex!important;position:fixed;bottom:0;left:0;right:0;justify-content:space-between;gap:8px;font:600 8pt Tahoma,sans-serif;color:#4b3fd6;border-top:1px solid #c9c2f5;padding-top:3px;background:#fff;z-index:9998}
+ body[data-pv=info]{padding:0!important;margin:0!important}body[data-pv=info] #app>.wrap>*:not(.info){display:none!important}body[data-pv=info] .ift{margin-bottom:0}
+ body[data-pv=info] .info{box-shadow:none;padding:0;max-width:none;border-radius:0;zoom:.72}
+ body[data-pv=info] .ipt{grid-template-columns:repeat(4,1fr)}body[data-pv=info] .iex{grid-template-columns:repeat(4,1fr)}body[data-pv=info] .iwk{grid-template-columns:repeat(7,1fr)}body[data-pv=info] .icol{grid-template-columns:1fr 1fr}
+ .stage{break-inside:avoid}.exc,.pc,.ex,.iv{break-inside:avoid}.exgrid,.cards,.two,.life,.det{display:grid;grid-template-columns:1fr 1fr!important;gap:10px}
+ .exc{grid-template-columns:110px minmax(0,1fr) 0!important}.exc>svg{display:none}
+}
+</style>
+</head>
+<body>
+<input type="checkbox" id="ok" autocomplete="off"><div class="splash" role="dialog" aria-modal="true" aria-labelledby="spt"><div class="sbox">
+ <div class="logo"><svg viewBox="0 0 56 56"><rect x="14" y="6" width="28" height="11" rx="5" fill="#fff"/><rect x="12" y="22" width="28" height="11" rx="5" fill="#fff" opacity=".9"/><rect x="16" y="38" width="28" height="11" rx="5" fill="#ffc24d"/></svg></div>
+ <h1 id="spt">برنامج مريض تزحزح الفقرات</h1>
+ <p>هذا البرنامج مخصص للمريض بعد أن يتم فحصه من قبل الدكتور ياسر الخزرجي، وتحديد ما يلائم حالته.</p>
+ <p class="warn">لا يجوز استخدامه بدون استشارة الطبيب.</p>
+ <label for="ok" class="gobtn" tabindex="0">قرأت وأوافق، ابدأ</label></div></div>
+<div class="gate" id="gate"></div>
+<header class="top" id="top" hidden><div class="wrap tbar">
+ <button class="ib hid" id="bk" aria-label="رجوع للصفحة السابقة"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+ <button class="ttl" id="home">برنامج مريض تزحزح الفقرات</button>
+</div></header>
+<main id="app" hidden></main>
+<div class="wm" id="wm" aria-hidden="true"></div><div class="pmark" id="pmark" aria-hidden="true"></div><div id="lock" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+window.TZE=(()=>{
+/* ---------- محرّك الحركة ---------- */
+const L={T:70,UA:38,FA:34,TH:48,SH:46,FT:16,HD:20};
+const W8={t:30,th:21,sh:16,ft:9,ua:14,fa:12};
+const rad=a=>a*Math.PI/180,dir=a=>[Math.cos(rad(a)),Math.sin(rad(a))];
+const add=(p,a,l)=>{const d=dir(a);return[p[0]+d[0]*l,p[1]+d[1]*l]};
+const io=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const ob=t=>{const c=1.25;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)};
+const SUP={t:180,h:180,ua:5,fa:0,ua2:3,fa2:-2,th:-50,sh:73,ft:0,th2:-47,sh2:76,ft2:2,b:-4,g:0};
+const QUAD={t:-15,h:10,ua:75,fa:92,ua2:78,fa2:95,th:90,sh:180,ft:180,th2:93,sh2:183,ft2:183,b:0,g:0};
+const STAND={t:-90,h:-90,ua:88,fa:92,ua2:84,fa2:86,th:84,sh:98,ft:0,th2:88,sh2:94,ft2:2,b:-3,g:0};
+const PH_={pin:['H',215,213],pr:'mat'};
+const AN=[
+{...PH_,base:{...SUP,ua:-12,fa:12},k:[[{},500,300],[{ua:-17,fa:16,b:-6},1300,200],[{ua:-14,fa:13,g:1,b:-4},500,1600],[{},900,300]]},
+{...PH_,base:SUP,k:[[{},500,400],[{b:-5.5},200,0],[{b:2,t:178,th:-53,g:1},900,1500],[{},800,300]]},
+{...PH_,base:SUP,k:[[{},500,300],[{th:-46},200,0],[{th:-125,sh:10,ua:-60,fa:-15,g:.6},1100,1500,1],[{},900,300]]},
+{pin:['K',150,219],pr:'mat',base:QUAD,k:[[{},500,300],[{b:14,h:70,g:.5},1200,900],[{},700,100],[{b:-7,h:-25},1100,700],[{},700,0]]},
+{...PH_,pr:'strap',base:{...SUP,th:-55,sh:-55,ft:-145,th2:0,sh2:0,ft2:-85,ua:-50,fa:-45},k:[[{},500,300],[{th:-82,sh:-82,ft:-172,ua:-62,fa:-72,g:.3},1400,1800],[{},1000,300]]},
+{...PH_,base:{...SUP,th:2,sh:2,ft:-88,ua:6,fa:2},k:[[{},500,400],[{t:181},150,0],[{t:171,h:166,ua:16,g:1},700,1600,1],[{},700,400]]},
+{pin:['K',150,219],pr:'mat',base:QUAD,k:[[{},500,400],[{b:2},200,0],[{ua:-4,fa:-2,th2:180,sh2:178,ft2:90,g:1},1100,1500,1],[{},900,300]]},
+{pin:['E',250,221],pr:'mat',base:{t:-25,h:-20,ua:90,fa:0,ua2:40,fa2:160,th:172,sh:-130,ft:-40,th2:170,sh2:-128,ft2:-38,b:0,g:0},k:[[{},500,300],[{t:-27},200,0],[{t:-15,th:158,sh:-132,h:-12,g:1},900,1700,1],[{},800,300]]},
+{pin:['A',259,220],pr:'mat',base:SUP,k:[[{},500,300],[{th:-47},200,0],[{th:-12,sh:72,th2:-10,sh2:74,t:162,h:175,ua:9,ua2:8,g:1},1100,1500,1],[{},900,300]]},
+{pin:['K',187,221],pr:'mat',base:{t:-90,h:-90,ua:85,fa:88,ua2:80,fa2:84,th:105,sh:180,ft:180,th2:-5,sh2:90,ft2:0,b:-3,g:0},k:[[{},500,300],[{b:1,g:.6},600,200],[{th:118,th2:-8,sh2:102,t:-88,b:1,g:1},1200,1800],[{},900,300]]},
+{...PH_,base:{...SUP,ua:-90,fa:-90,ua2:-88,fa2:-88,th:-90,sh:0,ft:-90,th2:-88,sh2:2,ft2:-88,b:1},k:[[{},500,300],[{ua:-86},150,0],[{ua:-165,fa:-168,th2:-12,sh2:-10,ft2:-95,g:1},1300,1000],[{},1100,300],[{ua2:-165,fa2:-168,th:-12,sh:-10,ft:-95,g:1},1300,1000],[{},1100,300]]},
+{pin:['A',225,220],pr:'band',base:{...STAND,ua:70,fa:-60,ua2:72,fa2:-58},k:[[{},500,300],[{ua:74,ua2:76},150,0],[{ua:3,fa:0,ua2:5,fa2:2,g:1},900,1400,1],[{},900,300]]},
+{pin:['H',200,128],pr:'weight',walk:1,base:{...STAND,ua:92,fa:90,g:.7},k:[[{th:72,sh:100,th2:110,sh2:120,ua2:105,fa2:95},450,0],[{th:90,sh:95,th2:88,sh2:130,ua2:90,fa2:85},450,0],[{th:110,sh:120,th2:72,sh2:100,ua2:75,fa2:60},450,0],[{th:88,sh:130,th2:90,sh2:95,ua2:90,fa2:85},450,0]]},
+{pin:['A',255,220],pr:'chair',base:{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},k:[[{},500,500],[{t:-42,h:-35},900,200],[{t:-60,th:55,sh:95,h:-50,g:.6},600,0],[{t:-88,th:88,sh:92,h:-88,g:.8},700,1200,1],[{t:-50,th:40,sh:95,h:-45},900,0],[{},700,600]]},
+{pin:['A',220,220],pr:'dowel',base:{...STAND,ua:92,fa:90,ua2:90,fa2:88},k:[[{},500,300],[{t:-93},150,0],[{t:-32,h:-22,th:66,sh:102,g:1},1200,1200],[{},1000,300]]},
+{pin:['A',215,220],pr:'',base:{...STAND,ua:70,fa:60,ua2:75,fa2:65},k:[[{},500,300],[{t:-92},200,0],[{th2:12,sh2:100,ft2:12,g:.6},900,300],[{t:-87,ua:66},900,0],[{t:-93,ua:74},900,0],[{},800,400]]}
+];
+AN.forEach(a=>{a.K=a.k.map(([p,d,h,e])=>({P:{...a.base,...p},d,h,e}));a.tot=a.K.reduce((s,k)=>s+k.d+k.h,0);
+ let m=0,mi=0;a.K.forEach((k,i)=>{if(k.h>m){m=k.h;mi=i}});a.act=mi});
+function sample(a,ms){let t=((ms%a.tot)+a.tot)%a.tot;const K=a.K;
+ for(let i=0;i<K.length;i++){const k=K[i],pv=K[(i-1+K.length)%K.length].P;
+  if(t<k.d){const u=(k.e?ob:io)(t/k.d),o={};for(const x in k.P)o[x]=pv[x]+(k.P[x]-pv[x])*u;return o}
+  t-=k.d;if(t<k.h)return{...k.P};t-=k.h}return{...K[0].P}}
+const LAG=['fa','fa2','h','ft','ft2'];
+function pose(a,ms){const p=sample(a,ms),q=sample(a,ms-110);LAG.forEach(x=>p[x]=q[x]);if(a.walk)p.fl=(ms*0.085)%36;return p}
+
+const PAL={l:{s1:'#eef0ff',s2:'#f3ebff',flr:'#dcd7f6',mat:'#cfc7ff',near:'#2f2c95',far:'#a39ddc',hi:'#8e8bff',glow:'#ffb547',prop:'#b7aee8',band:'#ff7aa8',shd:'#2a1f8a'},
+ d:{s1:'#1d1b4c',s2:'#2a1d56',flr:'#2f2b6a',mat:'#3b3486',near:'#ddd8ff',far:'#7d76c8',hi:'#ffffff',glow:'#ffc24d',prop:'#5b53a8',band:'#ff8ab0',shd:'#000000'}};
+const isDark=()=>{const t=document.documentElement.dataset.theme;return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches};
+let uid=0;
+const SEG=k=>`<line class="${k} m" stroke-linecap="round"/><line class="${k} hl" stroke-linecap="round" opacity=".5"/>`;
+function stageSVG(a){const u=++uid;let pre='',post='';
+ if(a.pr==='mat'||a.pr==='strap')pre=`<rect class="mat" x="30" y="223" width="340" height="7" rx="3.5"/>`;
+ if(a.pr==='chair')pre=`<g class="chair"><rect x="175" y="186" width="50" height="9" rx="4"/><rect x="176" y="112" width="9" height="82" rx="4"/><rect x="179" y="192" width="6" height="36" rx="3"/><rect x="216" y="192" width="6" height="36" rx="3"/></g>`;
+ if(a.pr==='band')pre=`<g class="chair"><rect x="70" y="60" width="14" height="168" rx="6"/><rect x="56" y="222" width="42" height="8" rx="4"/></g>`;
+ if(a.walk)pre=`<line class="walk" x1="0" y1="232" x2="400" y2="232" stroke-width="3" stroke-dasharray="14 22"/>`;
+ if(a.pr==='band')post=`<line class="band" stroke-width="3" stroke-linecap="round"/>`;
+ if(a.pr==='strap')post=`<line class="band" stroke-width="2.5" stroke-linecap="round"/>`;
+ if(a.pr==='weight')post=`<rect class="wt" width="20" height="28" rx="5"/>`;
+ if(a.pr==='dowel')post=`<line class="dowel" stroke-width="5" stroke-linecap="round"/>`;
+ return `<svg viewBox="${AN.indexOf(a)<11?'38 62 323 210':'0 0 400 260'}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bg${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="s1"/><stop offset="1" class="s2"/></linearGradient><filter id="bl${u}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>
+ <rect x="-20" y="-20" width="440" height="300" fill="url(#bg${u})"/><rect class="flr" x="0" y="229" width="400" height="31"/>${pre}<ellipse class="shd" cy="230" ry="5.5" opacity=".16"/>
+ <g class="farg">${['th2','sh2','ft2','ua2','fa2'].map(SEG).join('')}</g>
+ <path class="tor m" fill="none" stroke-linecap="round" stroke-width="30"/><path class="tor hl" fill="none" stroke-linecap="round" stroke-width="7" opacity=".45"/>
+ <path class="glow" fill="none" stroke-linecap="round" stroke-width="9" filter="url(#bl${u})"/><path class="glow2" fill="none" stroke-linecap="round" stroke-width="3.5"/>
+ <g class="neag">${['th','sh','ft','ua','fa'].map(SEG).join('')}</g>
+ <circle class="hd" r="13.5"/><circle class="hdh" r="4.5" opacity=".5"/>${post}</svg>`}
+function mount(el,i){el.insertAdjacentHTML('afterbegin',stageSVG(AN[i]));const s=el.querySelector('svg'),q=c=>s.querySelector(c),R={s,a:AN[i]};
+ for(const k of['th','sh','ft','ua','fa','th2','sh2','ft2','ua2','fa2'])R[k]=[s.querySelector('.'+k+'.m'),s.querySelector('.'+k+'.hl')];
+ Object.assign(R,{tor:q('.tor.m'),torh:q('.tor.hl'),gl:q('.glow'),gl2:q('.glow2'),hd:q('.hd'),hdh:q('.hdh'),shd:q('.shd'),band:q('.band'),wt:q('.wt'),dw:q('.dowel'),walk:q('.walk')});
+ el._R=R;return R}
+function paint(R,p){const s=R.s;
+ s.querySelector('.s1').setAttribute('stop-color',p.s1);s.querySelector('.s2').setAttribute('stop-color',p.s2);
+ s.querySelector('.flr').setAttribute('fill',p.flr);s.querySelectorAll('.mat').forEach(e=>e.setAttribute('fill',p.mat));
+ s.querySelectorAll('.chair rect').forEach(e=>e.setAttribute('fill',p.prop));
+ s.querySelectorAll('.farg .m').forEach(e=>e.setAttribute('stroke',p.far));s.querySelectorAll('.neag .m,.tor.m').forEach(e=>e.setAttribute('stroke',p.near));
+ s.querySelectorAll('.hl').forEach(e=>e.setAttribute('stroke',p.hi));R.hd.setAttribute('fill',p.near);R.hdh.setAttribute('fill',p.hi);
+ R.gl.setAttribute('stroke',p.glow);R.gl2.setAttribute('stroke',p.glow);R.shd.setAttribute('fill',p.shd);
+ if(R.band)R.band.setAttribute('stroke',p.band);if(R.wt)R.wt.setAttribute('fill',p.prop);if(R.dw)R.dw.setAttribute('stroke',p.prop);if(R.walk)R.walk.setAttribute('stroke',p.flr==='#dcd7f6'?'#c4bdf0':'#433d8c');R.pal=p}
+const sa=(e,o)=>{for(const k in o)e.setAttribute(k,o[k].toFixed?o[k].toFixed(1):o[k])};
+function seg(r,a,b,w){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;let n=[-dy/l,dx/l];if(n[1]>0||(Math.abs(n[1])<.05&&n[0]>0))n=[-n[0],-n[1]];const o=w*.22;
+ sa(r[0],{x1:a[0],y1:a[1],x2:b[0],y2:b[1],'stroke-width':w});sa(r[1],{x1:a[0]+n[0]*o,y1:a[1]+n[1]*o,x2:b[0]+n[0]*o,y2:b[1]+n[1]*o,'stroke-width':w*.3})}
+function draw(R,P,pal){if(R.pal!==pal)paint(R,pal);const a=R.a;
+ let H=[0,0],S=add(H,P.t,L.T),J={H,S,Hd:add(S,P.h,L.HD)};
+ J.E=add(S,P.ua,L.UA);J.W=add(J.E,P.fa,L.FA);J.E2=add(S,P.ua2,L.UA);J.W2=add(J.E2,P.fa2,L.FA);
+ J.K=add(H,P.th,L.TH);J.A=add(J.K,P.sh,L.SH);J.F=add(J.A,P.ft,L.FT);J.K2=add(H,P.th2,L.TH);J.A2=add(J.K2,P.sh2,L.SH);J.F2=add(J.A2,P.ft2,L.FT);
+ const pp=J[a.pin[0]],ox=a.pin[1]-pp[0],oy=a.pin[2]-pp[1];for(const k in J)J[k]=[J[k][0]+ox,J[k][1]+oy];
+ seg(R.th2,J.H,J.K2,W8.th);seg(R.sh2,J.K2,J.A2,W8.sh);seg(R.ft2,J.A2,J.F2,W8.ft);seg(R.ua2,J.S,J.E2,W8.ua);seg(R.fa2,J.E2,J.W2,W8.fa);
+ seg(R.th,J.H,J.K,W8.th);seg(R.sh,J.K,J.A,W8.sh);seg(R.ft,J.A,J.F,W8.ft);seg(R.ua,J.S,J.E,W8.ua);seg(R.fa,J.E,J.W,W8.fa);
+ const d=dir(P.t),bk=[d[1],-d[0]],m=[(J.H[0]+J.S[0])/2,(J.H[1]+J.S[1])/2],C=[m[0]+bk[0]*2*P.b,m[1]+bk[1]*2*P.b];
+ R.tor.setAttribute('d',`M${J.H[0].toFixed(1)} ${J.H[1].toFixed(1)}Q${C[0].toFixed(1)} ${C[1].toFixed(1)} ${J.S[0].toFixed(1)} ${J.S[1].toFixed(1)}`);
+ R.torh.setAttribute('d',`M${(J.H[0]-3).toFixed(1)} ${(J.H[1]-5).toFixed(1)}Q${(C[0]-3).toFixed(1)} ${(C[1]-5).toFixed(1)} ${(J.S[0]-3).toFixed(1)} ${(J.S[1]-5).toFixed(1)}`);
+ const q=u=>[(1-u)*(1-u)*J.H[0]+2*u*(1-u)*C[0]+u*u*J.S[0]+bk[0]*13,(1-u)*(1-u)*J.H[1]+2*u*(1-u)*C[1]+u*u*J.S[1]+bk[1]*13];
+ const gp=[.06,.16,.26,.36,.46].map(q).map((v,i)=>(i?'L':'M')+v[0].toFixed(1)+' '+v[1].toFixed(1)).join('');
+ R.gl.setAttribute('d',gp);R.gl2.setAttribute('d',gp);R.gl.setAttribute('opacity',(P.g*.95).toFixed(2));R.gl2.setAttribute('opacity',(P.g*.9).toFixed(2));
+ sa(R.hd,{cx:J.Hd[0],cy:J.Hd[1]});sa(R.hdh,{cx:J.Hd[0]-4,cy:J.Hd[1]-5});
+ const fl=Object.values(J).filter(v=>v[1]>196).map(v=>v[0]);const xs=fl.length?fl:[J.H[0]];const mn=Math.min(...xs),mx=Math.max(...xs);
+ sa(R.shd,{cx:(mn+mx)/2,rx:(mx-mn)/2+18});
+ if(R.band){const f=a.pr==='band'?[84,140]:J.A;sa(R.band,{x1:f[0],y1:f[1],x2:J.W[0],y2:J.W[1]})}
+ if(R.wt)sa(R.wt,{x:J.W[0]-10,y:J.W[1]+2});
+ if(R.dw){sa(R.dw,{x1:J.S[0]+bk[0]*18+d[0]*30,y1:J.S[1]+bk[1]*18+d[1]*30,x2:J.H[0]+bk[0]*18-d[0]*12,y2:J.H[1]+bk[1]*18-d[1]*12})}
+ if(R.walk)R.walk.setAttribute('stroke-dashoffset',(P.fl||0).toFixed(1))}
+
+/* حلقة التحريك */
+const RM=matchMedia('(prefers-reduced-motion: reduce)');
+function loop(get,palFn){function frame(ts){const pal=palFn();
+ get().forEach(el=>{if(el.offsetParent===null&&!el.classList.contains('pfs'))return;let R=el._R;if(!R)R=mount(el,+el.dataset.ex);
+  if(el._off===undefined)el._off=Math.random()*3000;
+  const a=R.a;let P;
+  if(RM.matches)P=a.K[a.act].P;else{const ms=el._paused?el._pt:ts-el._off;el._pt=ms;P=pose(a,ms)}
+  draw(R,P,pal)});
+ requestAnimationFrame(frame)}requestAnimationFrame(frame)}
+/* لقطة ثابتة لطباعة أو صورة */
+function snap(i,ki,w,h){const t=document.createElement('div');t.className='stage';const R=mount(t,i);const a=AN[i];
+ const P=ki===undefined?a.K[a.act].P:a.K[ki].P;draw(R,P,PAL.l);const s=R.s;if(w){s.setAttribute('width',w);s.setAttribute('height',h)}return s.outerHTML}
+function frames(i){const a=AN[i];const idx=[0];a.K.map((k,j)=>[k.h,j]).filter(x=>x[1]).sort((x,y)=>y[0]-x[0]).slice(0,2).map(x=>x[1]).sort((x,y)=>x-y).forEach(j=>idx.push(j));return idx.map(j=>snap(i,j))}
+
+
+return{AN,PAL,isDark,mount,draw,pose,snap,frames,loop}})();
+</script>
+<script>
+{
+/* ---------- الحالة ---------- */
+const S={age:1,grade:0,state:0};
+try{Object.assign(S,JSON.parse(localStorage.getItem('tzh')||'{}'))}catch(e){}
+const AGE=['أقل من 40','40 – 60','فوق 60'],GR=['الأولى','الثانية','الثالثة – الرابعة'];
+const $=id=>document.getElementById(id);
+const lvl=()=>Math.max(0,2-S.age-S.grade);
+let SEL={};try{SEL=JSON.parse(localStorage.getItem('tzhsel')||'{}')}catch(e){}
+let PM=false;
+const td=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const PI={name:'',age:'',dx:'',dxE:false,date:td()};
+const li=(a,c)=>a.map(x=>`<li${c?` class="${c}"`:''}>${x}</li>`).join('');
+const IC={user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',move:'<circle cx="14" cy="4.5" r="2"/><path d="M9 21l3-6 3 2v4M12 15l-1-5 4-2 3 4h3M11 10l-4 2-2 4"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M8 15l2.5 2.5L16 13"/>',shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 9l6 6M15 9l-6 6"/>',home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/>',back:'<path d="M5 12h14M13 6l6 6-6 6"/>',chev:'<path d="M15 6l-6 6 6 6"/>',print:'<path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/>',img:'<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/>',fs:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',fsx:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',play:'<path d="M8 5v14l11-7z"/>',pause:'<path d="M8 5v14M16 5v14"/>',next:'<path d="M15 6l-6 6 6 6"/>',prev:'<path d="M9 6l6 6-6 6"/>',tick:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',share:'<path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'};
+const ic=(k,c='')=>`<svg viewBox="0 0 24 24" ${c}>${IC[k]}</svg>`;
+const {AN,PAL,isDark,snap,frames}=TZE;
+/* ---------- المحتوى ---------- */
+const EX=[
+{p:1,n:'تنفّس بطني مع شد خفيف للبطن',h:'استلقِ على ظهرك والركبتان مثنيتان. شدّ البطن بنسبة 20–30% كأنك تستعد لسعلة خفيفة. تنفّس بشكل طبيعي دون أن تحبس النفس.',d:['8 × 8 ث','10 × 10 ث','10 × 10 ث'],m:2},
+{p:1,n:'إمالة الحوض للخلف',h:'وأنت مستلقٍ، اضغط أسفل الظهر نحو الأرض بلطف. أرخِه ببطء. هذه الحركة تخفف الضغط عن مستوى التزحزح.',d:['8 × 5 ث','10 × 5 ث','12 × 5 ث'],m:2},
+{p:1,n:'ضمّ الركبة إلى الصدر',h:'اسحب ركبة واحدة نحو الصدر بيديك. ثم الأخرى، ثم الاثنتين معاً إن كان مريحاً. الانثناء الخفيف يريح المفاصل الخلفية.',d:['3 × 20 ث','3 × 30 ث','3 × 30 ث'],m:2},
+{p:1,n:'القطة والجمل',h:'على اليدين والركبتين، قوّس الظهر للأعلى ببطء ثم عُد. لا تصل إلى نهاية البسط، وابقَ ضمن المدى المريح.',d:['6 مرات','8 مرات','10 مرات'],m:1,o:'إن كان النزول على الركبتين صعباً، أدّه جالساً على كرسي.'},
+{p:1,n:'إطالة أوتار الركبة الخلفية',h:'وأنت مستلقٍ، ارفع الساق مستقيمة بحزام أو منشفة. توقف عند شد خفيف خلف الفخذ. لا تشدّ بقوة.',d:['2 × 20 ث','2 × 30 ث','3 × 30 ث'],m:2},
+{p:2,n:'McGill curl-up',h:'ركبة مثنية والأخرى ممدودة، واليدان تحت أسفل الظهر. ارفع الرأس والكتفين قليلاً فقط. حافظ على انحناء الظهر الطبيعي.',d:['4-3-2 × 8 ث','5-4-3 × 10 ث','6-5-4 × 10 ث'],m:2},
+{p:2,n:'Bird-dog',h:'على اليدين والركبتين، مدّ ذراعاً والساق المقابلة. لا تدع الحوض يدور أو الظهر يتقوّس. عُد ببطء وبدّل الجهة.',d:['5 لكل جهة × 6 ث','6 لكل جهة × 8 ث','8 لكل جهة × 10 ث'],m:2,o:'ابدأ بمد الذراع فقط ثم الساق فقط، ولا تجمعهما إلا بعد أن يثبت الحوض.'},
+{p:2,n:'اللوح الجانبي على الركبتين',h:'استند على الساعد والركبتين. ارفع الحوض حتى يستقيم الجسم من الكتف إلى الركبة. مع الانحناء الجانبي يمكن إطالة الثبات قليلاً على جهة التحدّب.',d:['3 × 10 ث','4 × 15 ث','4 × 20 ث'],m:2,o:'أدّه واقفاً مستنداً بالساعد على الجدار.'},
+{p:2,n:'جسر الألوية',h:'ارفع الحوض بشدّ عضلات الألوية حتى يستقيم الجسم من الكتف إلى الركبة. لا تقوّس أسفل الظهر. انزل ببطء.',d:['8 × 5 ث','10 × 5 ث','12 × 5 ث'],m:2},
+{p:2,n:'إطالة الحرقفية القطنية (Psoas)',h:'في وضعية نصف الركوع، أمِل الحوض للخلف أولاً. تقدّم قليلاً حتى تشعر بشد أمام الورك. شدّ هذه العضلة يزيد الضغط على مستوى التزحزح.',d:['2 × 20 ث','2 × 30 ث','3 × 30 ث'],m:2,o:'أدّها واقفاً ممسكاً بكرسي، والقدم الخلفية إلى الوراء.'},
+{p:3,n:'Dead bug',h:'استلقِ والذراعان والساقان للأعلى. مدّ ذراعاً والساق المقابلة ببطء. أبقِ أسفل الظهر ثابتاً على الأرض، ثم بدّل.',d:['6 لكل جهة','8 لكل جهة','10 لكل جهة × 2'],m:2},
+{p:3,n:'Pallof press',h:'شريط مطاطي مثبّت بجانبك. ادفعه للأمام وقاوم أن يلفّك. يقوّي الجذع ضد الالتواء.',d:['2 × 8 لكل جهة','3 × 10 لكل جهة','3 × 12 لكل جهة'],m:1},
+{p:3,n:'المشي بوزن في يد واحدة',h:'احمل وزناً في يد واحدة وامشِ مستقيماً دون أن تميل. يقوّي العضلات الجانبية، وهو مفيد خاصة مع الانحناء الجانبي.',d:['2 × 20 م','3 × 30 م','4 × 30 م'],m:1,o:'ابدأ بكيس خفيف (2–4 كغم) وامشِ قرب جدار للأمان.'},
+{p:3,n:'القيام من الكرسي',h:'مِل للأمام حتى يصبح الأنف فوق أصابع القدمين. قم والظهر مستقيم والثقل على الكعبين. اجلس ببطء.',d:['2 × 8','3 × 10','3 × 12 مع وزن'],m:2,o:'استخدم كرسياً بذراعين للدعم في البداية.'},
+{p:3,n:'الانثناء من الورك (Hip hinge)',h:'ضع عصا على الظهر تلامس الرأس وما بين الكتفين وأسفل الظهر. انثنِ من الورك دون أن تفقد التلامس. هذه هي طريقة الانحناء الآمنة في الحياة اليومية.',d:['2 × 8 بالعصا','3 × 10 بالعصا','3 × 10 بوزن خفيف'],m:1},
+{p:3,n:'التوازن على ساق واحدة',h:'قف على ساق واحدة قرب سطح تستند إليه عند الحاجة. صعّب التمرين لاحقاً بإغلاق العينين.',d:['3 × 15 ث','3 × 30 ث','3 × 45 ث'],m:2,o:'هذا تمرين أساسي لك: يقلل خطر السقوط والكسور.'}
+];
+const PH={1:['المرحلة الأولى: التهدئة والحركة','الأسبوعان الأول والثاني، ومرتان يومياً في الهجمات'],2:['المرحلة الثانية: التثبيت','من الأسبوع 2 إلى 6، يومياً'],3:['المرحلة الثالثة: التقوية','من الأسبوع 6 إلى 12، ثلاث مرات أسبوعياً'],4:['المرحلة الرابعة: الصيانة مدى الحياة','بعد الأسبوع 12']};
+const AV={base:['تمارين البسط لنهاية المدى بشكل متكرر: الكوبرا وSuperman وجهاز تمديد الظهر بأوزان','تمارين البطن التقليدية السريعة (Sit-ups)','الالتواء وأنت تحمل شيئاً ثقيلاً','رفع الأحمال من الأرض بظهر منحنٍ','البقاء في وضعية واحدة أكثر من 45 دقيقة'],
+g:[[],['القفز والجري على أرض صلبة','الرفعة الميتة (Deadlift) والقرفصاء بأوزان ثقيلة','رفع الأوزان فوق الرأس','وضعيات اليوغا الخلفية العميقة (Wheel وCamel)','الرياضات الاحتكاكية مثل كرة القدم التنافسية والمصارعة'],['أي تمرين بأوزان دون إشراف معالج','الرياضات الاحتكاكية بكل أنواعها','حمل أكثر من 10 كغم','ركوب الخيل والدراجات على الطرق الوعرة']],
+a:[['الرياضات التي تبسط الظهر بشكل متكرر: الجمباز، والرمي السريع، والغطس، وسباحة الفراشة، ورفع الأثقال الأولمبي'],['الحمل المفاجئ في نهاية يوم عمل طويل'],['صعود السلالم اليدوية والكراسي','الانحناء الطويل في أعمال الحديقة','حمل الأطفال الصغار فجأة من الأرض']]};
+const SP=[['المشي السريع','الدراجة الثابتة','السباحة الحرة وسباحة الظهر','البيلاتس العلاجي','المشي في الماء'],['المشي','الدراجة الثابتة أو الدراجة ذات الظهر المسنود','المشي في الماء','البيلاتس العلاجي المعدّل'],['المشي في الماء','الدراجة الثابتة ذات الظهر المسنود','المشي على أرض مستوية لفترات قصيرة']];
+const LF=[
+{t:'العمل',b:['اجعل سطح العمل على مستوى الكوع','ضع الشاشة أمامك مباشرة حتى لا تلتفت بجذعك','إذا كان عملك يتطلب حزاماً أو مريلة ثقيلة (مثل مريلة الرصاص) فاختر النوع المكوّن من قطعتين حتى يتوزّع الوزن على الحوض'],a:[['في الرياضة والتدريب: أحمِ 10 دقائق دائماً، ولا تتدرّب وأنت متعب'],['الجلوس المكتبي الطويل أكبر عدو في هذا العمر: ضع منبّهاً للحركة'],['قسّم أعمال المنزل على فترات قصيرة']],g:[[],['الأعمال التي فيها حمل ثقيل تحتاج تعديلاً'],['ناقش مع طبيبك ملاءمة عملك الجسدي']]},
+{t:'الجلوس',b:['الورك أعلى قليلاً من الركبة، مع دعامة قطنية صغيرة','قم وتحرّك كل 30–45 دقيقة','في القيادة الطويلة توقّف كل ساعة وامشِ دقيقتين'],a:[[],[],['كرسي بذراعين ثابت يسهّل القيام دون التواء']],g:[[],[],['تجنّب الكنبات المنخفضة الطرية']]},
+{t:'الوقوف والمشي',b:['ضع قدماً على مسند صغير عند الوقوف الطويل، وبدّل القدمين','حذاء مريح بكعب منخفض ونعل يمتص الصدمات','إذا ظهر ألم في الساقين مع المشي، فالانحناء قليلاً للأمام (كالاستناد على عربة التسوق) يريح'],a:[[],[],['عصا المشي ليست ضعفاً: تحسّن التوازن وتطيل المسافة']],g:[[],['فترات مشي أقصر وأكثر أفضل من مشية واحدة طويلة'],['ابدأ بـ5–10 دقائق وزد تدريجياً']]},
+{t:'النوم',b:['على الجنب مع وسادة بين الركبتين، أو على الظهر مع وسادة تحت الركبتين','فراش متوسط الصلابة','تجنّب النوم على البطن لأنه يزيد تقوّس أسفل الظهر','دش دافئ صباحاً قبل التمارين لفك التيبّس'],a:[[],[],['انهض من السرير بالتدحرج على الجنب ثم الدفع باليدين']],g:[[],[],[]]},
+{t:'الوزن والغذاء',b:['دهون البطن تزيد تقوّس أسفل الظهر والضغط على مستوى التزحزح، وكل كيلو تنقصه يفرق','نظام غذائي متوسطي: خضار وبقوليات وسمك وزيت زيتون','بروتين كافٍ (حوالي 1–1.2 غم لكل كغم يومياً) للحفاظ على العضلات','افحص فيتامين D وعالج النقص إن وُجد'],a:[[],['افحص كثافة العظم عند وجود عوامل خطر'],['البروتين والكالسيوم وفيتامين D أهم في هذا العمر','فحص كثافة العظم (DEXA) ضروري']],g:[[],[],[]]},
+{t:'عادات أخرى',b:['التدخين يسرّع تآكل الأقراص، والامتناع عنه من أهم الخطوات','النوم الجيد وتقليل التوتر يخففان حساسية الجهاز العصبي للألم','الألم لا يعني دائماً ضرراً: استمر بالحركة ضمن المريح'],a:[['لا تحمل الحقيبة على كتف واحد'],[],['راجع أدويتك مع الطبيب إن كانت تسبب دوخة، فالسقوط أخطر من الألم']],g:[[],['الحزام الطبي لفترة قصيرة فقط في الهجمات، وليس بشكل دائم'],['الحزام الطبي حسب توجيه الطبيب فقط']]}];
+const FL=['فقدان السيطرة على البول أو البراز','تنميل في منطقة العجان (منطقة الجلوس)','ضعف متزايد في الساق أو سقوط القدم','ألم شديد مستمر ليلاً لا يتغيّر مع تغيير الوضعية','حرارة، أو نقص وزن غير مبرر، أو تاريخ إصابة بالسرطان','ألم بعد سقوط أو حادث','قِصَر واضح في المسافة التي تمشيها قبل أن تؤلمك الساقان'];
+const FO=[['صورة جديدة فقط إذا تغيّرت الأعراض','مراجعة سنوية إذا استمر الألم','4–6 جلسات علاج طبيعي لتعلّم أداء التمارين بشكل صحيح'],['صورة جانبية وأنت واقف، مع صور الانثناء والبسط، كل 1–2 سنة أو عند تغيّر الأعراض','متابعة مع معالج طبيعي في الأشهر الأولى','الحقن التداخلية خيار عند الألم العصبي أو ألم المفاصل الوجيهية'],['تقييم من جراح عمود فقري، مع رنين مغناطيسي (MRI)','التمارين تحت إشراف معالج فقط','الجراحة تُناقش عند وجود ألم عصبي مستمر أو ضعف']];
+const D=['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
+const todayI=()=>(new Date().getDay()+1)%7;
+const allowed=p=>EX.map((e,i)=>({...e,i})).filter(e=>e.p===p&&e.m>=S.grade);
+const pk=k=>PM?'':`<label class="pick" title="تضمين في نسخة المريض"><input type="checkbox" data-k="${k}"${SEL[k]?' checked':''} aria-label="تضمين في نسخة المريض"><span>${ic('tick')}</span></label>`;
+function profileHTML(){
+ const typ=S.age===0?['غالباً من النوع البرزخي (Isthmic)','كسر إجهادي في القوس الخلفي للفقرة. يظهر عادة عند L5–S1، ويرتبط بالرياضات التي تبسط الظهر بشكل متكرر.']:['غالباً من النوع التنكّسي','تآكل في القرص والمفاصل الوجيهية. يظهر عادة عند L4–L5، ويرافقه أحياناً انحناء جانبي.'];
+ const gd=[['الدرجة الأولى: أقل من 25%','الأكثر شيوعاً. أغلب المرضى لا يتقدّم لديهم الانزلاق، والتمارين تكفي غالباً.'],['الدرجة الثانية: من 25 إلى 50%','تحتاج حذراً أكبر مع الأحمال والقفز، ومتابعة دورية بالصور.'],['الدرجة الثالثة والرابعة: أكثر من 50%','نادرة في النوع التنكّسي. البرنامج هنا مخفف ويُنفَّذ تحت إشراف، مع تقييم جراحي.']][S.grade];
+ const it=['شدة خفيفة','شدة متوسطة','شدة أعلى'][lvl()];
+ const goal=S.state?['الأولوية الآن: تهدئة الألم','تمارين المرحلة الأولى فقط، مرتين يومياً، مع مشي قصير ومتكرر. لا راحة تامة في السرير.']:[`مستوى البرنامج: ${it}`,['تبدأ من الأساس وتتقدّم ببطء.','تتقدّم تدريجياً كل أسبوعين إذا لم يزد الألم.','يمكنك التقدّم بثقة نحو التقوية بالأوزان.'][lvl()]];
+ return `<div class="cards">${[typ,gd,goal].map(x=>`<div class="pc"><b>${x[0]}</b><p>${x[1]}</p></div>`).join('')}</div>`}
+const aer=[['مشي سريع 30–40 دقيقة','مشي 30 دقيقة','مشي 15–20 دقيقة مرتين'],['دراجة ثابتة 30 دقيقة','دراجة ثابتة 20–30 دقيقة','دراجة ثابتة 15 دقيقة'],['سباحة 30 دقيقة','مشي في الماء 30 دقيقة','مشي في الماء 20 دقيقة']];
+const A_=k=>aer[k][S.age===2||S.grade===2?2:S.age===1||S.grade===1?1:0];
+function week(){return S.state?D.map(d=>[d,'تمارين المرحلة الأولى صباحاً ومساءً (10 دقائق)','مشي 5–10 دقائق كل ساعتين','f']):D.map((d,i)=>i===6?[d,'راحة نشطة: إطالات خفيفة','مشي هادئ','r']:i%2?[d,S.grade===2?'تثبيت وتقوية تحت إشراف (30 دقيقة)':'إحماء وتثبيت وتقوية (30–40 دقيقة)',A_(i%3),'s']:[d,'إحماء وتثبيت (15 دقيقة)',A_(i%3),'c'])}
+function dayEx(type){const P1=allowed(1),P2=allowed(2),P3=allowed(3);
+ if(type==='f')return P1;if(type==='r')return P1.filter(e=>[2,4].includes(e.i)).concat(EX.map((e,i)=>({...e,i})).filter(e=>e.i===9));
+ if(type==='c')return P1.slice(0,3).concat(P2);return P1.slice(0,2).concat(P2.filter(e=>[5,6,7].includes(e.i)),P3)}
+const TL={f:'يوم تهدئة',r:'يوم راحة نشطة',c:'يوم تثبيت',s:'يوم تقوية'};
+function avoidHTML(){const av=[...AV.base];for(let g=1;g<=S.grade;g++)av.push(...AV.g[g]);av.push(...AV.a[S.age]);
+ const A=`<div><div class="fh">${pk('avoid')}<h3>تجنّب</h3></div><p class="sub">تكبر القائمة مع ارتفاع الدرجة.</p><ul class="x">${li(av)}</ul></div>`,B=`<div><div class="fh">${pk('sports')}<h3>رياضات مناسبة</h3></div><p class="sub">بعد أن يهدأ الألم، وبالتدرّج.</p><ul class="ok">${li(S.grade===2?SP[2]:S.age===2?SP[1]:SP[S.grade])}</ul></div>`;
+ return `<div class="two">${!PM||SEL.avoid?A:''}${!PM||SEL.sports?B:''}</div>`}
+function lifeHTML(){return `<p class="sub">النصائح الملوّنة خاصة بعمرك أو درجتك.</p><div class="life">${LF.map((s,i)=>PM&&!SEL['life-'+i]?'':`<div class="pc"><div class="fh">${pk('life-'+i)}<h3>${s.t}</h3></div><ul>${li(s.b)}${li([...s.a[S.age],...s.g[S.grade]],'extra')}</ul></div>`).join('')}</div>`}
+function flagsHTML(){return `<div class="two">${!PM||SEL.flags?`<div class="flags"><div class="fh">${pk('flags')}<h3>راجع الطبيب فوراً عند</h3></div><ul class="x">${li(FL)}</ul></div>`:''}${!PM||SEL.follow?`<div><div class="fh">${pk('follow')}<h3>المتابعة الطبية</h3></div><p class="sub">حسب درجتك.</p><ul class="ok">${li(FO[S.grade])}</ul></div>`:''}</div>
+ <p class="foot" style="margin-top:28px">برنامج تثقيفي مبني على مراجعة Cochrane للتمارين في ألم أسفل الظهر المزمن (Hayden 2021)، ومبادئ McGill في تثبيت الجذع، ومراجعات التاريخ الطبيعي للتزحزح التنكّسي. لا يغني عن فحص الطبيب. توقّف عن أي تمرين يسبب ألماً نازلاً في الساق أو تنميلاً.</p>`}
+
+const dxAuto=()=>`${S.age===0?'تزحزح فقرات قطني من النوع البرزخي':'تزحزح فقرات قطني تنكّسي'}، ${['الدرجة الأولى','الدرجة الثانية','الدرجة الثالثة–الرابعة'][S.grade]}${S.state?'، مع هجمة ألم حادة':''}`;
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtD=d=>{try{const [y,m,dd]=d.split('-');return `${+dd}/${+m}/${y}`}catch(e){return d}};
+const LOGO=`<svg viewBox="0 0 56 56" width="56" height="56" aria-hidden="true"><rect x="14" y="6" width="28" height="11" rx="5" fill="#fff"/><rect x="12" y="22" width="28" height="11" rx="5" fill="#fff" opacity=".9"/><rect x="16" y="38" width="28" height="11" rx="5" fill="#ffc24d"/></svg>`;
+IC.needle='<path d="M18 2l4 4M20 4l-9 9M8 10l6 6M14 7l3 3M11 13l-6 6-2 1 1-2 6-6"/>';
+
+/* ---------- تعليمات ما بعد التداخل ---------- */
+const IV=[
+{k:'esi',n:'حقنة الستيرويد فوق الجافية (Epidural)',rest:3,
+ b:['استرح بقية يوم الحقنة. المشي الخفيف مسموح ومفيد، والراحة هنا تعني تخفيف الحمل وليس البقاء في السرير','من اليوم التالي عُد لنشاطك اليومي، دون حمل ثقيل أو عمل مجهد لمدة يومين','قد يعود الألم الأصلي مساء اليوم نفسه، لأن مفعول المخدّر الموضعي ينتهي قبل أن يبدأ مفعول الستيرويد. هذا طبيعي','يبدأ مفعول الستيرويد عادة خلال 2–7 أيام','عُد إلى برنامج التمارين بالتدريج بعد انتهاء أيام الراحة'],
+ x:['مريض السكري: قد يرتفع السكر لعدة أيام وحتى أسبوعين. افحصه أكثر من المعتاد، وراجع طبيب السكري إذا بقي مرتفعاً','قد يحدث احمرار في الوجه، أو أرق، أو تغيّر في المزاج لأيام قليلة ثم يزول']},
+{k:'facet',n:'حقن المفاصل الوجيهية (Facet joint)',rest:2,
+ b:['استرح بقية اليوم، ثم عُد لنشاطك الطبيعي في اليوم التالي','عُد للتمارين أو العلاج الطبيعي بعد يومين إلى ثلاثة','حتى لو تحسّنت كثيراً، زِد نشاطك بالتدريج خلال أسبوع إلى أسبوعين حتى لا يعود الألم'],
+ x:['قد يزداد الألم في مكان الحقنة يوماً أو يومين، والثلج 15 دقيقة يخففه']},
+{k:'mbb',n:'إحصار الفرع الإنسي التشخيصي (Medial branch block)',rest:0,
+ b:['هذه حقنة تشخيصية وليست علاجية، فلا ترتح بعدها','خلال 4–6 ساعات بعد الحقنة، قم بالحركات التي كانت تسبب لك الألم عادة','سجّل درجة الألم من 0 إلى 10 في مفكرة الألم أدناه، وأحضرها معك للطبيب','لا تأخذ مسكنات قصيرة المفعول خلال 6–8 ساعات بعد الحقنة إلا للضرورة، واستمر بأدويتك الدائمة','عودة الألم بعد زوال المخدّر أمر متوقع'],
+ x:[],diary:1},
+{k:'rfa',n:'الكي الحراري للفروع الإنسية (Radiofrequency)',rest:7,
+ b:['ألم أو حرقان في مكان الإجراء قد يستمر من أيام إلى أسبوعين، وهذا متوقع','ضع الثلج (ملفوفاً بقطعة قماش) 15–20 دقيقة عدة مرات يومياً، وتجنّب الكمادات الحارة على المكان لعدة أسابيع','قد يظهر التحسّن بعد 2–4 أسابيع، فلا تحكم على النتيجة مبكراً','بعد أيام الراحة عُد للتمارين الخفيفة وزِدها بالتدريج','يستمر التحسّن عادة من 6 إلى 12 شهراً'],
+ x:['قد تظهر حساسية في الجلد فوق المنطقة تشبه حروق الشمس لأيام قليلة']},
+{k:'sij',n:'حقن المفصل العجزي الحرقفي (SI joint)',rest:2,
+ b:['استرح بقية اليوم، ثم عُد لنشاطك المعتاد بالتدريج','عُد للتمارين بعد يومين إلى ثلاثة'],x:[]}
+];
+const IVG=['لا تقُد السيارة يوم الإجراء، خاصة إذا أخذت مهدئاً أو شعرت بتنميل أو ثقل في الساق','التنميل أو الثقل في الساق يزول خلال ساعات: امشِ بحذر واستند عند الحاجة لتجنّب السقوط','حافظ على مكان الحقنة نظيفاً وجافاً، ولا تنقعه في الماء (حوض أو مسبح) لمدة 24 ساعة','أدوية السيولة: أعِد تناولها حسب تعليمات طبيبك تحديداً','الثلج على مكان الحقنة 15 دقيقة يخفف ألم الإبرة','سجّل أي تحسّن أو تغيّر لتخبر به الطبيب في موعد المراجعة'];
+const IVF=['حرارة، أو احمرار، أو تورّم، أو إفرازات من مكان الحقنة','صداع شديد يزيد عند الوقوف ويخف عند الاستلقاء','ضعف جديد في الساق، أو تنميل يزداد بعد زوال المخدّر','فقدان السيطرة على البول أو البراز','ألم شديد مفاجئ مختلف عن ألمك المعتاد'];
+const addDays=(d,n)=>{try{const x=new Date(d+'T00:00:00');x.setDate(x.getDate()+n);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}catch(e){return ''}};
+const restOf=k=>{const v=PI.rest&&PI.rest[k];return v!==undefined&&v!==''&&v!==null&&!isNaN(+v)?+v:IV.find(x=>x.k===k).rest};
+const dayW=n=>n===1?'يوم واحد':n===2?'يومان':n<=10?n+' أيام':n+' يوماً';
+function diaryHTML(){return `<h4 style="margin:14px 0 6px">مفكرة الألم</h4><table class="diary"><thead><tr><th>الوقت بعد الحقنة</th><th>الألم 0–10</th><th>النشاط الذي قمت به</th></tr></thead><tbody>${['قبل الحقنة','30 دقيقة','ساعة','ساعتان','3 ساعات','4 ساعات','5 ساعات','6 ساعات','24 ساعة'].map(t=>`<tr><td>${t}</td><td></td><td></td></tr>`).join('')}</tbody></table>`}
+function postHTML(){let h='';
+ if(!PM)h+=`<div class="pc" style="margin-bottom:16px"><div class="two"><label class="fl">تاريخ الإجراء<input type="date" id="ivd" value="${PI.ivd||''}"></label><label class="fl">ملاحظة الطبيب (اختيارية)<textarea id="ivn" rows="2">${esc(PI.ivn||'')}</textarea></label></div><p class="foot" style="margin:0">ضع ✓ على الإجراء الذي أُجري للمريض، وعدّل أيام الراحة إن أردت. يُحسب تاريخ العودة للتمارين تلقائياً عند إدخال تاريخ الإجراء.</p></div>`;
+ else{if(PI.ivd)h+=`<div class="note"><b>تاريخ الإجراء: ${fmtD(PI.ivd)}</b></div>`;if(PI.ivn)h+=`<div class="note"><b>ملاحظة الطبيب:</b> ${esc(PI.ivn)}</div>`}
+ h+=IV.map(v=>{const key='iv-'+v.k;if(PM&&!SEL[key])return '';const r=restOf(v.k),bk=PI.ivd?addDays(PI.ivd,r):'';
+  return `<div class="pc iv"><div class="fh">${pk(key)}<h3>${v.n}</h3></div>
+  <div class="rest">${PM?`<span class="restn">${r===0?'لا راحة بعد هذه الحقنة':'الراحة النسبية: '+dayW(r)}</span>`:`<label class="rl">أيام الراحة<input type="number" inputmode="numeric" min="0" max="60" class="rin" data-r="${v.k}" value="${r}"></label>`}${PI.ivd&&r>0?`<span class="restd">العودة لبرنامج التمارين: ${fmtD(bk)}</span>`:''}</div>
+  <ul class="ok">${li(v.b)}${li(v.x,'extra')}</ul>${v.diary?diaryHTML():''}</div>`}).join('');
+ const G=`<div class="pc"><div class="fh">${pk('iv-gen')}<h3>تعليمات عامة بعد أي حقنة</h3></div><ul class="ok">${li(IVG)}</ul></div>`;
+ const F=`<div class="flags"><div class="fh">${pk('iv-flags')}<h3>اتصل بالطبيب فوراً بعد الإجراء عند</h3></div><ul class="x">${li(IVF)}</ul></div>`;
+ h+=`<div class="two" style="margin-top:16px">${!PM||SEL['iv-gen']?G:''}${!PM||SEL['iv-flags']?F:''}</div>`;
+ return h}
+
+/* ---------- تشفير نسخة المريض ---------- */
+const B64={enc:u=>{let s='';u.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')},
+ dec:t=>{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';const s=atob(t);return Uint8Array.from(s,c=>c.charCodeAt(0))}};
+async function kdf(pin,salt){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode('tzh|'+pin),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:2000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function seal(obj,pin){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+ const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},await kdf(pin,salt),new TextEncoder().encode(JSON.stringify(obj))));
+ const o=new Uint8Array(28+ct.length);o.set(salt);o.set(iv,16);o.set(ct,28);return B64.enc(o)}
+async function unseal(t,pin){const u=B64.dec(t);const k=await kdf(pin,u.slice(0,16));
+ return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv:u.slice(16,28)},k,u.slice(28))))}
+const PK='tzh-dr-khazraji-2026';
+const DV={ios:'آيفون',and:'أندرويد',pc:'حاسبة'};
+
+
+/* ---------- تطبيق المريض ---------- */
+PM=true;
+const qs=new URLSearchParams(location.search);let payload=qs.get('d');
+try{if(payload)localStorage.setItem('tzp',payload);else payload=localStorage.getItem('tzp')}catch(e){}
+const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+let CFG=null,bip=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();bip=e;const b=$('instNow');if(b)b.hidden=false});
+const card0=e=>`<button class="exc" data-go="x-${e.i}"><div class="stage" data-ex="${e.i}"></div><div><b>${e.n}</b><span class="dose">${dose(e)}</span></div>${ic('chev')}</button>`;
+const dose=e=>S.state&&e.p===1?'مرتان يومياً':e.d[lvl()];
+const mine=()=>EX.map((e,i)=>({...e,i})).filter(e=>SEL['ex-'+e.i]);
+const any=p=>Object.keys(SEL).some(k=>SEL[k]&&k.startsWith(p));
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3600)}
+const pcs=t=>String(t).replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+
+/* ---------- الدخول ---------- */
+function gate(kind,err){const g=$('gate');g.hidden=false;$('app').hidden=true;$('top').hidden=true;
+ if(kind==='nolink')g.innerHTML=`<div class="gbox"><div class="glogo">${LOGO}</div><h2>افتح برنامجك من الرابط</h2><p>هذا البرنامج يُفتح فقط من الرابط الخاص الذي أرسله لك الدكتور ياسر الخزرجي. إذا فتحته من الرابط ولم يعمل، اطلب من العيادة رابطاً جديداً.</p></div>`;
+ else if(kind==='expired')g.innerHTML=`<div class="gbox"><div class="glogo">${LOGO}</div><h2>انتهت صلاحية البرنامج</h2><p>انتهت صلاحية برنامجك العلاجي بتاريخ ${fmtD(CFG.e)}. راجع الدكتور ياسر الخزرجي لتحديثه.</p></div>`;
+}
+function apply(c){CFG=c;S.age=c.s[0];S.grade=c.s[1];S.state=c.s[2];SEL={};c.k.forEach(k=>SEL[k]=true);
+ Object.assign(PI,{name:c.n,age:c.a,dx:c.x,date:c.t,ivd:c.ivd,rest:c.r||{},ivn:c.ivn});}
+async function start(){
+ if(window.__CFG){apply(window.__CFG);return boot()}
+ if(!payload)return gate('nolink');
+ try{apply(await unseal(payload,PK))}catch(e){return gate('nolink')}
+ boot()}
+
+/* ---------- العلامة المائية والطباعة ---------- */
+function marks(){const nm=esc(PI.name),dt=fmtD(PI.date),line=`د. ياسر الخزرجي · المريض: ${nm} · تاريخ المشاركة: ${dt}`;
+ $('wm').innerHTML=Array.from({length:14},()=>`<span>${line}</span>`).join('');
+ $('pmark').innerHTML=`<b>برنامج مريض تزحزح الفقرات</b><span>${line}</span><span>لا يجوز استخدامه بدون استشارة الطبيب</span>`;
+ $('lock').textContent=`خاص بالمريض ${PI.name} · د. ياسر الخزرجي · ${dt}`;
+ const st=document.createElement('style');const plain=`د. ياسر الخزرجي — المريض: ${PI.name} — تاريخ المشاركة: ${dt}`;
+ st.textContent=`@page{size:A4;margin:16mm 11mm 18mm;@top-center{content:"${pcs(plain)}";font:600 9pt Tahoma,sans-serif;color:#4b3fd6}@bottom-center{content:"برنامج مريض تزحزح الفقرات — لا يجوز استخدامه بدون استشارة الطبيب — صفحة " counter(page);font:500 8pt Tahoma,sans-serif;color:#4f4c72}}`;
+ document.head.appendChild(st)}
+function pr(kind){document.body.dataset.pv=kind||'';setTimeout(()=>{try{window.print()}catch(e){toast('الطباعة غير متاحة هنا. استخدم زر المشاركة في المتصفح ثم "طباعة".')}},60)}
+addEventListener('afterprint',()=>{document.body.dataset.pv=''});
+
+/* ---------- الملخص (إنفوجرافيك) ---------- */
+const DO_S=['سطح العمل بمستوى الكوع، والشاشة أمامك','قم وتحرّك كل 30–45 دقيقة','حذاء مريح بكعب منخفض، ومشي يومي','نَم على جنبك مع وسادة بين الركبتين','وزن صحي، ونظام متوسطي، وبروتين كافٍ','امتنع عن التدخين، ونَم جيداً'];
+const NO_S=[['تقويس الظهر للخلف بشكل متكرر','تمارين البطن التقليدية السريعة','الالتواء وأنت تحمل ثقلاً','رفع الأحمال بظهر منحنٍ','الجلوس أو الوقوف 45 دقيقة دون حركة'],['القفز والجري على أرض صلبة','الأوزان الثقيلة وفوق الرأس'],['الرياضات الاحتكاكية','حمل أكثر من 10 كغم']];
+const WC={c:'#4b3fd6',s:'#1d3fc4',r:'#9b8cf0',f:'#d6336c'};
+function infoHTML(){const ex=mine().slice(0,8),W=week(),it=['خفيفة','متوسطة','أعلى'][lvl()];
+ const no=[...NO_S[0]];for(let g=1;g<=S.grade;g++)no.push(...NO_S[g]);
+ const dos=LF.map((x,i)=>SEL['life-'+i]?DO_S[i]:null).filter(Boolean);const ivs=IV.filter(v=>SEL['iv-'+v.k]);
+ return `<div class="info" id="infoPage">
+ <div class="ih"><div><small>برنامج مريض تزحزح الفقرات</small><h2>الملخص العلاجي</h2></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
+ <div class="ipt"><div><small>المريض</small><b>${esc(PI.name)}</b></div>${PI.age?`<div><small>العمر</small><b>${esc(PI.age)} سنة</b></div>`:''}<div class="w2"><small>التشخيص</small><b>${esc(PI.dx)}</b></div><div><small>تاريخ المشاركة</small><b>${fmtD(PI.date)}</b></div></div>
+ <div class="ist"><div><i>${['I','II','III+'][S.grade]}</i><span>درجة التزحزح</span></div><div><i>${S.age===0?'برزخي':'تنكّسي'}</i><span>نوع التزحزح</span></div><div><i>${S.state?'تهدئة':it}</i><span>${S.state?'المرحلة الحالية':'شدة البرنامج'}</span></div></div>
+ ${ex.length?`<h3 class="ihd">تمارينك اليومية</h3><div class="iex">${ex.map(e=>`<div><div class="iimg">${snap(e.i)}</div><b>${e.n}</b><span>${dose(e)}</span></div>`).join('')}</div>`:''}
+ <div class="icol">${dos.length?`<div class="ido"><h3>افعل</h3><ul>${li(dos)}</ul></div>`:''}${SEL.avoid?`<div class="ino"><h3>تجنّب</h3><ul>${li(no)}</ul></div>`:''}</div>
+ ${SEL.week||SEL.today?`<h3 class="ihd">أسبوعك</h3><div class="iwk">${W.map(r=>`<div style="--c:${WC[r[3]]}"><b>${r[0]}</b><span>${TL[r[3]].replace('يوم ','')}</span></div>`).join('')}</div>`:''}
+ ${ivs.length?`<div class="iiv"><h3>بعد الإجراء${PI.ivd?' ('+fmtD(PI.ivd)+')':''}</h3><ul>${li(ivs.map(v=>{const r=restOf(v.k);return `${v.n.split(' (')[0]}: ${r?'راحة نسبية '+dayW(r)+(PI.ivd?' ثم العودة للتمارين '+fmtD(addDays(PI.ivd,r)):''):'لا راحة، سجّل الألم 6 ساعات'}`}))}</ul></div>`:''}
+ <div class="ifl"><h3>راجع الطبيب فوراً عند</h3><p>فقدان السيطرة على البول أو البراز · تنميل منطقة الجلوس · ضعف متزايد في الساق · حرارة بعد حقنة · ألم ليلي شديد لا يتغيّر</p></div>
+ <div class="ift">أُعدّ خصيصاً للمريض ${esc(PI.name)} بتاريخ ${fmtD(PI.date)} من قبل الدكتور ياسر الخزرجي، ولا يجوز استخدامه بدون استشارة الطبيب.</div></div>`}
+
+/* ---------- الصفحات ---------- */
+const vh=(t,pk_)=>`<div class="vhead"><button class="btn" data-back>${ic('back')}رجوع</button><h2>${t}</h2><button class="btn pri" data-pr="${pk_||''}">${ic('print')}طباعة</button></div>`;
+const PV={
+ info:['الملخص المطبوع',()=>`<p class="sub">ملخص أنيق في صفحة واحدة لكل ما يخصك. اضغط "طباعة" لطباعته أو حفظه PDF.</p>${infoHTML()}`,()=>1,'info'],
+ prof:['حالتك',()=>profileHTML(),()=>SEL.profile],
+ ex:['تمارينك',()=>{const m=mine();return `<p class="sub">اضغط على أي تمرين لتراه كبيراً. الوهج الذهبي يوضح متى تكون عضلات الجذع العميقة مشدودة. توقّف عن أي تمرين يسبب ألماً نازلاً في الساق أو تنميلاً.</p>`+[1,2,3].map(p=>{const L=m.filter(e=>e.p===p);return L.length?`<div class="phase"><div class="ph"><h3>${PH[p][0]}</h3><span>${PH[p][1]}</span></div><div class="exgrid">${L.map(card0).join('')}</div></div>`:''}).join('')},()=>mine().length],
+ plan:['منهاجي',()=>{const W=week(),t=todayI(),r=W[t];const L=dayEx(r[3]).filter(e=>SEL['ex-'+e.i]);
+  return `${SEL.today?`<div class="note"><b>اليوم ${r[0]}: ${TL[r[3]]}</b><br>${r[1]}. النشاط الهوائي: ${r[2]}.</div>${L.length?`<div class="exgrid">${L.map(card0).join('')}</div>`:''}`:''}${SEL.week?`<h3 style="margin-top:26px">جدول الأسبوع</h3><table class="stack"><thead><tr><th>اليوم</th><th>التمارين</th><th>النشاط الهوائي</th></tr></thead><tbody>${W.map((x,i)=>`<tr class="${i===t?'today':''}"><td data-l="اليوم">${x[0]}</td><td data-l="التمارين">${x[1]}</td><td data-l="الهوائي">${x[2]}</td></tr>`).join('')}</tbody></table>`:''}`},()=>SEL.today||SEL.week],
+ avoid:['الممنوع والمسموح',()=>avoidHTML(),()=>SEL.avoid||SEL.sports],
+ life:['نمط حياتك',()=>lifeHTML(),()=>any('life-')],
+ post:['بعد التداخل',()=>postHTML(),()=>any('iv-')],
+ flags:['الخطر والمتابعة',()=>flagsHTML(),()=>SEL.flags||SEL.follow],
+ inst:['تثبيت البرنامج',()=>instHTML(),()=>!standalone()&&!window.__CFG]};
+const TI={info:['img','الملخص المطبوع','كل ما يخصك في صفحة واحدة'],prof:['user','حالتك','نوع التزحزح ودرجته'],ex:['move','تمارينك','تمارين متحركة بجرعاتك'],plan:['cal','منهاجي','اليوم والأسبوع'],avoid:['shield','الممنوع والمسموح','حركات تتجنّبها ورياضات تناسبك'],life:['home','نمط حياتك','العمل والجلوس والنوم والغذاء'],post:['needle','بعد التداخل','الراحة وتعليمات ما بعد الحقنة'],flags:['alert','الخطر والمتابعة','متى تراجع الطبيب فوراً'],inst:['share','تثبيت البرنامج','أيقونة على شاشتك الرئيسية']};
+function instHTML(){const d=CFG.dv||'ios',ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const steps={ios:[['افتحه في Safari','إذا فُتح الرابط داخل واتساب، اضغط ⋯ أو زر البوصلة واختر "فتح في Safari".'],['اضغط زر المشاركة','المربع الذي فيه سهم للأعلى، أسفل الشاشة أو بجانب شريط العنوان.'],['إضافة إلى الشاشة الرئيسية','مرّر القائمة للأسفل واختر "إضافة إلى الشاشة الرئيسية"، ثم "إضافة".'],['افتحه من أيقونته','ستجد أيقونة "برنامجي العلاجي" على شاشتك. افتحه منها دائماً.']],
+  and:[['افتحه في Chrome','إذا فُتح الرابط داخل واتساب، اضغط ⋮ واختر "فتح في Chrome".'],['ثبّت التطبيق','اضغط زر "ثبّت الآن" أدناه إن ظهر، أو من القائمة ⋮ اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".'],['وافق على التثبيت','ستظهر أيقونة "برنامجي العلاجي" بين تطبيقاتك.']],
+  pc:[['افتحه في Chrome أو Edge','انسخ الرابط والصقه في المتصفح.'],['اضغط أيقونة التثبيت','في يسار شريط العنوان (شاشة عليها سهم)، أو من القائمة ⋮ اختر "تثبيت برنامجي العلاجي".'],['أو احفظه في المفضلة','إذا لم يظهر خيار التثبيت، احفظ الصفحة في المفضلة.']]};
+ return `<p class="sub">جهازك حسب ما حدّده الطبيب: <b>${DV[d]}</b>.${d==='ios'&&!isIOS?' يبدو أنك تفتحه من جهاز آخر، فاتبع الخطوات المناسبة لجهازك.':''}</p>
+ <ol class="isteps">${steps[d].map((s,i)=>`<li><i>${i+1}</i><div><b>${s[0]}</b><p>${s[1]}</p></div></li>`).join('')}</ol>
+ <button class="btn pri xl" id="instNow"${bip?'':' hidden'}>${ic('share')}ثبّت الآن</button>
+ <details class="pc" style="margin-top:16px"><summary style="cursor:pointer;font-weight:700">خطوات الأجهزة الأخرى</summary>${Object.keys(steps).filter(k=>k!==d).map(k=>`<h4>${DV[k]}</h4><ol>${li(steps[k].map(s=>`<b>${s[0]}:</b> ${s[1]}`))}</ol>`).join('')}</details>`}
+function homeHTML(){const keys=Object.keys(PV).filter(k=>PV[k][2]());
+ return `<div class="phero"><div class="wrap"><h1>برنامجك العلاجي</h1><div class="pinfo"><div><small>المريض</small><b>${esc(PI.name)}</b></div>${PI.age?`<div><small>العمر</small><b>${esc(PI.age)} سنة</b></div>`:''}<div class="w2"><small>التشخيص</small><b>${esc(PI.dx)}</b></div><div><small>تاريخ المشاركة</small><b>${fmtD(PI.date)}</b></div><div><small>الطبيب المعالج</small><b>د. ياسر الخزرجي</b></div></div></div></div>
+ <div class="wrap">${PV.inst[2]()?`<button class="ibanner" data-go="inst">${ic('share')}<span><b>ثبّت البرنامج على ${DV[CFG.dv||'ios']}</b><span>ليفتح كتطبيق من شاشتك الرئيسية</span></span></button>`:''}
+ <div class="tiles ptiles">${keys.filter(k=>k!=='inst').map(k=>`<button class="tile${k==='info'?' hot':''}" data-go="${k}"><span class="ic">${ic(TI[k][0])}</span><span><b>${TI[k][1]}</b><span>${TI[k][2]}</span></span></button>`).join('')}</div></div>`}
+function exHTML(i){const e=EX[i],m=mine(),pos=m.findIndex(x=>x.i===i),prv=m[pos-1],nxt=m[pos+1],steps=e.h.split('. ').map(s=>s.replace(/\.$/,'')).filter(Boolean);
+ return `<div class="wrap">${vh(e.n,'x')}<div class="det"><div><div class="stage big" data-ex="${i}" id="bigst"><div class="ctl"><button class="ib" data-pp aria-label="إيقاف مؤقت">${ic('pause')}</button></div></div></div>
+ <div><span class="dose" style="font-size:20px;padding:6px 16px">${dose(e)}</span><p class="sub" style="margin:10px 0 0">${PH[e.p][0]}</p><ol class="steps">${li(steps)}</ol>
+ ${S.age===2&&e.o?`<div class="note">${e.o}</div>`:''}${S.grade===2?'<div class="note">نفّذ هذا التمرين كما راجعه معك المعالج.</div>':''}
+ <div class="acts">${prv?`<button class="btn" data-rep="x-${prv.i}">${ic('prev')}السابق</button>`:''}${nxt?`<button class="btn" data-rep="x-${nxt.i}">التالي${ic('next')}</button>`:''}</div></div></div></div>`}
+
+let cur='home';const stack=[];
+function show(name){const a=$('app');let h;
+ if(name.startsWith('x-')&&SEL['ex-'+name.slice(2)])h=exHTML(+name.slice(2));
+ else if(PV[name]&&PV[name][2]())h=`<div class="wrap">${vh(PV[name][0],PV[name][3])}${PV[name][1]()}</div>`;
+ else{name='home';h=homeHTML()}
+ a.innerHTML=h;a.className='on';$('bk').classList.toggle('hid',name==='home');const prev=cur;cur=name;
+ if(name==='home'&&prev!=='home'){const tl=document.querySelector(`.tile[data-go="${prev.startsWith('x-')?'ex':prev}"]`);if(tl){tl.scrollIntoView({block:'center'});return}}scrollTo(0,0)}
+function go(n){stack.push(cur);location.hash=n}
+function back(){const p=stack.pop()||(cur.startsWith('x-')?'ex':'home');location.hash=p}
+addEventListener('hashchange',()=>show(location.hash.slice(1)||'home'));
+function boot(){if(CFG.e&&td()>CFG.e)return gate('expired');
+ $('gate').hidden=true;$('app').hidden=false;$('top').hidden=false;marks();
+ TZE.loop(()=>document.querySelectorAll('#app .stage'),()=>TZE.isDark()?TZE.PAL.d:TZE.PAL.l);show(location.hash.slice(1)||'home')}
+
+/* ---------- الأحداث ---------- */
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+ if(t.dataset.go)go(t.dataset.go);else if(t.dataset.rep)location.replace('#'+t.dataset.rep);
+ else if(t.hasAttribute('data-back')||t.id==='bk')back();else if(t.id==='home'){stack.length=0;location.hash='home'}
+ else if(t.dataset.pr!==undefined)pr(t.dataset.pr);
+ else if(t.hasAttribute('data-pp')){const st=$('bigst');st._paused=!st._paused;if(!st._paused)st._off=performance.now()-st._pt;t.innerHTML=ic(st._paused?'play':'pause')}
+ else if(t.id==='instNow'&&bip){bip.prompt();bip.userChoice.finally(()=>{bip=null;t.hidden=true})}});
+document.addEventListener('submit',e=>e.preventDefault());
+['contextmenu','copy','cut','dragstart'].forEach(ev=>document.addEventListener(ev,e=>{if(!(e.target.closest&&e.target.closest('input,textarea')))e.preventDefault()}));
+addEventListener('pageshow',()=>{const o=$('ok');if(o)o.checked=false});
+if('serviceWorker' in navigator&&location.protocol==='https:'&&!window.__CFG)navigator.serviceWorker.register('sw.js').catch(()=>{});
+start();
+
+}
+</script>
+</body>
+</html>
