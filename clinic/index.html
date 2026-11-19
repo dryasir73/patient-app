@@ -152,6 +152,12 @@ function save(){try{localStorage.setItem(STORE,JSON.stringify(S));}catch(e){}}
 function prof(){return S.cur&&S.profiles[S.cur]||null;}
 /* report images stay in memory until they are shared to WhatsApp */
 const IMGS={};const P0=()=>S.cur;
+/* ---------- short links: values the clinic usually sends are built into the app ---------- */
+const DEF_FA='1FAIpQLSc901WvnGPo1NNlXnC6XAGxIdwqUV3khkdk2l4msnUtzE-kig',DEF_FE='1631017821';
+const KNOWN_PL=['مستشفى مدينة الإمامين الكاظميين الحكومية','مستشفى السفير الأهلي'];
+const DEF_PLC=[[0,'3','09:00','13:00'],[1,'34','16:00','18:00']];
+function plLabels(q){return (q||[]).map(([n,d,st,en])=>{const name=typeof n==='number'?(KNOWN_PL[n]||''):n;const ds=String(d||'').split('').map(x=>DAYS[+x]).filter(Boolean).join(' و');const t=st?fmtHour(st)+(en?' - '+fmtHour(en):''):'';return name+(ds||t?' ('+[ds,t].filter(Boolean).join('، ')+')':'');}).filter(Boolean);}
+function linkDefaults(L){if(!L.fa){L.fa=DEF_FA;L.fe=DEF_FE;}if(L.x)L.e=L.x*864e5;if(L.t==='q'&&!(L.pl&&L.pl.length))L.pl=plLabels(L.q||DEF_PLC);return L;}
 function ensureProfile(link){
  const key=link.id||('g-'+(link.c||Date.now()));
  if(!S.profiles[key])S.profiles[key]={key,id:link.id||null,f:link.f||'',n:link.n||'',ph:link.ph||'',w:link.w||'',pl:link.pl||[],e:link.e||0,answers:{},screen:0,sentAt:0,appts:[],created:Date.now()};
@@ -257,7 +263,7 @@ function renderWelcome(P){
  $('#main').innerHTML=`<div class="card"><p class="big" style="margin:0 0 8px">أهلاً وسهلاً${P.n?' '+esc(P.n.split(' ')[0]):''} 🌿</p><div style="white-space:pre-wrap">${esc(D.msg.appWelcome.replace(/^.*\n/,''))}</div>
  <button class="listen" style="border-color:var(--green-ink);color:var(--green-ink)" data-say="${esc(D.msg.appWelcome)}">🔊 استماع</button></div>
  <div class="qcount">📋 عدد الأسئلة المحددة لك: ${lo===hi?lo:'من '+lo+' إلى '+hi} سؤالاً${lo===hi?'':(P.preR?'، حسب إجاباتك':'، حسب مكان الألم')}<br><small style="font-weight:700">كل سؤال في صفحة مستقلة، وأغلبها بضغطة واحدة.</small></div>
- ${P.f?`<div class="note">🔢 رقم ملفك: <span class="fileno">${esc(P.f)}</span>\n${esc(D.msg.fileNo2)}</div>`:''}
+ ${P.f&&!P.post?`<div class="note">🔢 رقم ملفك: <span class="fileno">${esc(P.f)}</span>\n${esc(D.msg.fileNo2)}</div>`:''}
  <div class="nav"><button class="btn" data-go="start">ابدأ الأسئلة ←</button></div>
  <div class="card safe"><b>🛡️ للتأكد أنك في صفحة العيادة الحقيقية</b><ul><li>عنوان الصفحة يبدأ دائماً بـ <span dir="ltr"><b>dryasir73.github.io</b></span></li><li>لن نطلب منك أبداً: كلمة سر، أو رمز تحقق يصلك برسالة، أو رقم بطاقة مصرفية، أو أي مبلغ، أو صورة هويتك.</li><li>إذا طلبت منك أي صفحة شيئاً من ذلك باسم العيادة، فهي مزوّرة. أغلقها وأبلغنا.</li></ul></div>
  <div class="card inst"><b>📲 لتثبيت التطبيق على هاتفك</b><ul><li><b>آيفون:</b> افتح الرابط في Safari، ثم زر المشاركة ⬆️، ثم «إضافة إلى الشاشة الرئيسية».</li><li><b>أندرويد:</b> في Chrome اضغط ⋮ ثم «تثبيت التطبيق».</li></ul>${window._bip?'<button class="btn blue" data-go="install">تثبيت التطبيق الآن</button>':''}</div>`;
@@ -427,7 +433,7 @@ if(IAB&&/[?&]d=/.test(location.search)){let tried=false;try{tried=!!sessionStora
 /* ---------- start: read the link ---------- */
 (async()=>{
  const d=new URLSearchParams(location.search).get('d');
- if(d){try{const L=await unseal(d,KEY);
+ if(d){try{const L=linkDefaults(await unseal(d,KEY));
    if(L.t==='q'){const P=ensureProfile(L);if(P.screen===undefined)P.screen=-1;if(!P.sentAt&&!Object.keys(P.answers).filter(k=>!['name','phone','region'].includes(k)).length)P.screen=-1;tab='q';}
    if(L.t==='a'){const P=ensureProfile({id:L.id,f:L.f,n:L.n,w:L.w,ph:L.ph,c:L.c,fa:L.fa,fe:L.fe});P.sentAt=P.sentAt||1;
     if(!P.appts.some(x=>x.b===L.b))P.appts.push({b:L.b,d:L.d,tm:L.tm,pl:L.pl,nt:L.nt||'',ap:L.ap||'',pp:L.pp||'',pm:L.pm||'',ch:L.ch?1:0,at:Date.now()});
