@@ -36,6 +36,7 @@ button{cursor:pointer}
 .tabs button{flex:1;border:2px solid var(--line);background:var(--white);border-radius:12px;padding:8px;font-weight:800;font-size:17px}
 .tabs button[aria-pressed="true"]{background:var(--green);border-color:var(--green-ink);color:var(--green-ink)}
 main{max-width:680px;margin:0 auto;padding:12px 16px 24px}
+.safe{border-color:#11603A;background:#F2FBF5}.safe ul{margin:6px 0 0;padding-inline-start:20px}.iab{position:sticky;top:0;z-index:9;background:#FFF6D6;border-bottom:2px solid #C9A227;padding:10px 12px;font-weight:700;font-size:16px}.iab .btn{margin-top:6px}
 .card{background:var(--white);border:2px solid var(--blue-2);border-radius:16px;padding:16px;margin:12px 0}
 .note{background:var(--yellow);border:2px solid var(--yellow-2);border-radius:14px;padding:12px 14px;margin:12px 0;white-space:pre-wrap}
 .alert{background:var(--red-bg);border:2px solid var(--qred);color:var(--qred);border-radius:14px;padding:12px 14px;margin:12px 0;font-weight:800;white-space:pre-wrap}
@@ -156,6 +157,7 @@ function ensureProfile(link){
  if(!S.profiles[key])S.profiles[key]={key,id:link.id||null,f:link.f||'',n:link.n||'',ph:link.ph||'',w:link.w||'',pl:link.pl||[],e:link.e||0,answers:{},screen:0,sentAt:0,appts:[],created:Date.now()};
  const P=S.profiles[key];if(link.fa){P.fa=link.fa;P.fe=link.fe;}if(link.w)P.w=link.w;if(link.pl&&link.pl.length)P.pl=link.pl;if(link.f)P.f=link.f;if(link.n&&!P.n)P.n=link.n;if(link.ph&&!P.answers.phone)P.answers.phone=link.ph;if(link.n&&!P.answers.name)P.answers.name=link.n;if(link.e!=null)P.e=link.e;
  /* name and phone already sent by the clinic are not asked again */
+ if(link.post)P.post=1;
  if(link.n&&String(link.n).trim().split(/\s+/).length>=3)P.preN=1;
  if(link.ph&&digits(link.ph).replace(/\D/g,'').length>=8)P.preP=1;
  if(link.rg&&Object.values(D.regions).some(r=>r.label===link.rg)){P.answers.region=link.rg;P.preR=1;}
@@ -184,6 +186,7 @@ function steps(a,P,auto,maxMode){const L=[],R=regKey(a)?D.regions[regKey(a)]:nul
   if(s.id==='name'&&P&&P.preN)return;
   if(s.id==='phone'&&P&&P.preP)return;
   if(s.id==='region'&&P&&P.preR)return;
+  if(P&&P.post&&['book','place','files'].includes(s.id))return;
   if(s.id==='region')s.opts=Object.values(D.regions).map(r=>r.label);
   if(s.id==='place'){s.opts=(P&&P.pl)||[];if(!s.opts.length)return;}
   if(!maxMode&&s.when&&s.when.length&&!s.when.every(c=>matchC(c,a))){if(auto&&s.skipAs!=null)auto[s.id]=s.skipAs;return;}
@@ -235,6 +238,7 @@ function render(){
  if(!P){$('#main').innerHTML=`<div class="gate"><div class="ic">🔗</div><p class="big">افتح التطبيق من الرابط</p><p>أرسلت لك العيادة رابطاً على واتساب. افتحه من هناك ليظهر ملفك.</p></div>`;return;}
  /* once an appointment arrives, the app shows the appointment only */
  if(P.appts&&P.appts.length){renderAppts(P);return;}
+ if(P.post&&P.lockedAt){if(P.sentAt)renderFinish(P);else renderDecide(P);return;}
  if(P.sentAt){renderFinish(P);return;}
  if(P.e&&Date.now()>P.e){$('#main').innerHTML=`<div class="gate"><div class="ic">⏳</div><p class="big">انتهت صلاحية هذا الرابط</p><p>تواصل مع العيادة على واتساب ليصلك رابط جديد.</p></div>`;return;}
  const a=P.answers,SC=screens(a,P);
@@ -246,7 +250,7 @@ function render(){
  $('#main').innerHTML=`${counters(P,P.screen)}<div class="prog"><i style="width:${pct}%"></i></div>
  <section data-sid="${esc(s.id)}">${qBox(s)}${input(s,a,true)}${errs[s.id]?`<div class="err">${esc(errs[s.id])}</div>`:''}${s.red&&arr(a.red).some(x=>x!==D.noneRed)?`<div class="alert">${esc(D.msg.alert)}</div>`:''}</section>
  ${auto?'<div class="hint" style="margin-top:8px">اضغط على إجابتك، وسينتقل التطبيق إلى السؤال التالي تلقائياً.</div>':''}
- <div class="nav"><button class="btn light" data-go="back">→ السابق</button>${s.type==='uploads'?'<button class="btn" data-go="filesdone">تم ✓</button>':auto?'':'<button class="btn" data-go="next">إرسال ←</button>'}</div>`;
+ <div class="nav"><button class="btn light" data-go="back">→ السابق</button>${s.type==='uploads'?'<button class="btn" data-go="filesdone">تم ✓</button>':auto?'':`<button class="btn" data-go="next">${P.post&&P.screen===SC.length-1?'تم ✓':'إرسال ←'}</button>`}</div>${P.post&&P.screen===SC.length-1?'<p class="hint">بعد الضغط على «تم» يُقفل الرابط ولا يمكن الرجوع إلى الأسئلة.</p>':''}`;
 }
 function renderWelcome(P){
  const [lo,hi]=qRange(P);
@@ -255,12 +259,13 @@ function renderWelcome(P){
  <div class="qcount">📋 عدد الأسئلة المحددة لك: ${lo===hi?lo:'من '+lo+' إلى '+hi} سؤالاً${lo===hi?'':(P.preR?'، حسب إجاباتك':'، حسب مكان الألم')}<br><small style="font-weight:700">كل سؤال في صفحة مستقلة، وأغلبها بضغطة واحدة.</small></div>
  ${P.f?`<div class="note">🔢 رقم ملفك: <span class="fileno">${esc(P.f)}</span>\n${esc(D.msg.fileNo2)}</div>`:''}
  <div class="nav"><button class="btn" data-go="start">ابدأ الأسئلة ←</button></div>
+ <div class="card safe"><b>🛡️ للتأكد أنك في صفحة العيادة الحقيقية</b><ul><li>عنوان الصفحة يبدأ دائماً بـ <span dir="ltr"><b>dryasir73.github.io</b></span></li><li>لن نطلب منك أبداً: كلمة سر، أو رمز تحقق يصلك برسالة، أو رقم بطاقة مصرفية، أو أي مبلغ، أو صورة هويتك.</li><li>إذا طلبت منك أي صفحة شيئاً من ذلك باسم العيادة، فهي مزوّرة. أغلقها وأبلغنا.</li></ul></div>
  <div class="card inst"><b>📲 لتثبيت التطبيق على هاتفك</b><ul><li><b>آيفون:</b> افتح الرابط في Safari، ثم زر المشاركة ⬆️، ثم «إضافة إلى الشاشة الرئيسية».</li><li><b>أندرويد:</b> في Chrome اضغط ⋮ ثم «تثبيت التطبيق».</li></ul>${window._bip?'<button class="btn blue" data-go="install">تثبيت التطبيق الآن</button>':''}</div>`;
 }
 /* the patient's code: everything he answered, sealed; it is what reaches the doctor */
 async function qaCode(P){const a=fullAnswers(P),key=JSON.stringify(a);
  if(P.code&&P.codeKey===key)return P.code;
- P.code='YKQ1.'+await seal({v:1,t:'qa',id:P.id,f:P.f,c:P.key,a,ts:Date.now()},KEY);P.codeKey=key;save();return P.code;}
+ P.code='YKQ1.'+await seal({v:1,t:'qa',id:P.id,f:P.f,c:P.key,a,ts:Date.now(),post:P.post?1:0},KEY);P.codeKey=key;save();return P.code;}
 function codeCard(code,title,note){return `<div class="card"><b>🔐 ${esc(title)}</b><p class="hint" style="margin:4px 0 8px">${esc(note)}</p>
  <textarea class="codebox" readonly aria-label="${esc(title)}">${esc(code||'...')}</textarea>
  <div class="nav" style="margin-top:8px"><button class="btn light" data-copy="1">📋 نسخ الكود</button></div></div>`;}
@@ -283,12 +288,21 @@ function dxHTML(P){const X=pDx(P),urgRed=arr(P.answers.red).some(x=>x!==D.noneRe
  ${list}
  ${X.urg.length||urgRed?`<div class="alert">${esc(D.msg.alert)}</div>`:''}
  <div class="warnbig">⚠️ هذا تشخيص أوّلي مبني على إجاباتك فقط، وليس تشخيصاً نهائياً، ولا يُعتمد عليه في العلاج أو تناول أي دواء. لا بد من متابعة حالتك بالفحص السريري عند طبيب مختص.</div></div>`;}
+/* one-use post link: after "تم" the diagnosis, then the booking question */
+function renderDecide(P){const pl=P.pl||[];
+ $('#main').innerHTML=`<div class="card appt"><p class="big" style="margin:0 0 6px">✅ اكتملت الأسئلة</p><p style="margin:0">شكراً لك. أُقفل هذا الرابط، ولا يمكن الرجوع إلى الأسئلة أو تعديلها.</p></div>
+ ${dxHTML(P)}
+ <div class="card"><p class="big" style="margin:0 0 10px">هل تود مراجعة العيادة وتحديد موعد؟</p>
+ ${P.pickPlace?`<p style="margin:0 0 8px">اختر مكان المراجعة الأنسب لك:</p><div class="chips">${pl.map((x,i)=>`<button class="chip" data-place="${i}">${esc(x)}</button>`).join('')}</div><div class="nav"><button class="btn light" data-go="unpick">→ رجوع</button></div>`
+ :`<div class="nav"><button class="btn" data-go="bkyes">نعم</button><button class="btn light" data-go="bkno">كلا</button></div>`}</div>`;}
+function refCode(P){return 'YK-'+P.f+'-'+String(P.key||'').replace(/[^a-z0-9]/gi,'').slice(-4).toUpperCase();}
 function renderFinish(P){
  const L=steps(P.answers,P),sent=!!P.sentAt,a=P.answers,book=/نعم/.test(a.book||''),imgs=IMGS[P0()]||[];
  const ok=P.code&&P.codeKey===JSON.stringify(fullAnswers(P));
  $('#main').innerHTML=`<div class="card appt"><p class="big" style="margin:0 0 6px">✅ ${sent?'تم إرسال ملفك':'اكتملت الأسئلة'}</p>
- <p style="margin:0">${book?'سيُعرض ملفك على الدكتور ياسر الخزرجي، وسيُحدَّد لك موعد لاحقاً'+(a.place?' في '+esc(String(a.place).split(' (')[0]):'')+'، ويصلك على واتساب.':'سيُعرض ملفك على الدكتور ياسر الخزرجي.'}</p>
- ${P.f?`<p>🔢 رقم ملفك: <span class="fileno">${esc(P.f)}</span></p>`:''}
+ <p style="margin:0">${P.post&&!book?'':book?'سيُعرض ملفك على الدكتور ياسر الخزرجي، وسيُحدَّد لك موعد لاحقاً'+(a.place?' في '+esc(String(a.place).split(' (')[0]):'')+'، ويصلك على واتساب.':'سيُعرض ملفك على الدكتور ياسر الخزرجي.'}</p>
+ ${P.post&&!book?'<p style="margin:6px 0 0">وصلت معلوماتك إلى العيادة. إذا احتجت مراجعة لاحقاً، تواصل معنا على واتساب العيادة.</p>':''}
+ ${P.f&&(!P.post||book)?`<p>🔢 ${P.post?'رقم المراجع':'رقم ملفك'}: <span class="fileno">${esc(P.f)}</span></p>${P.post?`<p>🔑 كود المراجع: <span class="fileno" dir="ltr">${esc(refCode(P))}</span></p><p class="hint">احتفظ بالرقم والكود، وسيصلك الموعد على واتساب على الرقم الذي كتبته.</p>`:''}`:''}
  ${sent?`<small class="hint">أُرسل في ${new Date(P.sentAt).toLocaleString('ar-IQ',{dateStyle:'medium',timeStyle:'short'})}</small>`:''}</div>
  ${dxHTML(P)}
  ${sent&&P.direct?'<div class="note">✅ وصل ملفك إلى العيادة مباشرة.</div>':''}
@@ -298,7 +312,7 @@ function renderFinish(P){
  ${imgs.length?`<div class="nav"><button class="btn blue" data-go="shareimg">📎 إرسال صور التقارير (${imgs.length}) إلى واتساب العيادة</button></div><p class="hint">إذا لم يظهر واتساب في قائمة المشاركة، فأرسل الصور مباشرة في محادثة العيادة.</p>`:(book&&/صورة|ملف/.test(a.files||'')?'<p class="hint">أرسل صور تقاريرك مباشرة في محادثة واتساب العيادة.</p>':'')}
  ${codeCard(ok?P.code:'',sent?'كود ملفك':'كود ملفك (يُرسل مع الملف)','هذا الكود يحمل كل معلومات ملفك مشفرة، ويُحدَّث بالموعد والعلاج والملاحظات بعد مراجعة الدكتور. لا تعدّله.')}
  <details class="card rev"><summary>📝 مراجعة إجاباتي (${L.length})</summary>${L.map(s=>`<div class="sumrow"><span class="k">${esc(s.q.split('\n')[0])}</span>${esc(fmtVal(a[s.id]))}</div>`).join('')}
- ${sent?'':'<div class="nav"><button class="btn light" data-go="back">→ رجوع لتعديل آخر إجابة</button></div>'}</details>`;
+ ${sent||P.lockedAt?'':'<div class="nav"><button class="btn light" data-go="back">→ رجوع لتعديل آخر إجابة</button></div>'}</details>`;
  if(!ok)qaCode(P).then(c=>{const t=document.querySelector('.codebox');if(t)t.value=c;});
 }
 async function shareImgs(P){const L=IMGS[P0()]||[];if(!L.length)return;
@@ -360,7 +374,8 @@ function clearSkipped(P){const ids=new Set(steps(P.answers,P).map(s=>s.id));cons
 function speakScreen(P){const SC=screens(P.answers,P);const sc=SC[P.screen];if(sc)say(sc.items.filter(s=>!hasVal(P.answers[s.id])).slice(0,1).map(s=>s.q));}
 function go(dir){const P=prof();readInputs(P);clearSkipped(P);const SC=screens(P.answers,P);
  if(dir>0&&P.screen>=0&&P.screen<SC.length){errs={};SC[P.screen].items.forEach(s=>{const e=validate(s,P.answers);if(e)errs[s.id]=e;});if(Object.keys(errs).length){render();toast('أكمل الإجابة من فضلك.');return;}}
- errs={};P.screen=Math.max(-1,Math.min(SC.length,P.screen+dir));save();render();window.scrollTo(0,0);if(P.screen>=0&&P.screen<SC.length)speakScreen(P);}
+ if(P.lockedAt)return;
+ errs={};P.screen=Math.max(-1,Math.min(SC.length,P.screen+dir));if(P.post&&P.screen>=SC.length){P.lockedAt=Date.now();stopVoice();}save();render();window.scrollTo(0,0);if(P.screen>=0&&P.screen<SC.length)speakScreen(P);}
 document.addEventListener('click',async e=>{
  const t=e.target.closest('button');if(!t)return;const P=prof();
  if(t.dataset.say){say([t.dataset.say],true);return;}
@@ -368,11 +383,15 @@ document.addEventListener('click',async e=>{
  if(t.dataset.tabgo){tab=t.dataset.tabgo;render();return;}
  if(t.dataset.copy){const box=document.querySelector('.codebox');const v=box?box.value:'';if(!v||v==='...')return;try{await navigator.clipboard.writeText(v);toast('تم نسخ الكود.');}catch(err){box.select();toast('حدّد النص وانسخه يدوياً.');}return;}
  if(!P)return;
+ if(t.dataset.place!=null){P.answers.place=(P.pl||[])[+t.dataset.place]||'';P.pickPlace=0;save();await sendAnswers(P);return;}
  if(t.dataset.appt!=null){const L=P.appts.slice().sort((x,y)=>y.at-x.at);say(apptParts(P,L[+t.dataset.appt]),true);return;}
  if(t.dataset.ics){const x=P.appts.find(z=>z.b===t.dataset.ics);if(x)ics(P,x);return;}
  if(t.dataset.reply){if(t.dataset.reply!=='yes'&&!confirm(t.dataset.reply==='no'?'هل أنت متأكد أنك لا تستطيع الحضور؟':'هل تريد تأجيل الموعد؟ سيحدد لك السكرتير أقرب موعد متاح بعده.'))return;stopVoice();await sendReply(P,t.dataset.b,t.dataset.reply);return;}
  const g=t.dataset.go;
  if(g==='start'){P.screen=0;save();render();speakScreen(P);return;}
+ if(g==='bkno'){P.answers.book='كلا، لا أرغب بموعد الآن';delete P.answers.place;save();await sendAnswers(P);return;}
+ if(g==='bkyes'){P.answers.book='نعم، أرغب بحجز موعد';const pl=P.pl||[];if(pl.length>1){P.pickPlace=1;save();render();return;}if(pl[0])P.answers.place=pl[0];save();await sendAnswers(P);return;}
+ if(g==='unpick'){P.pickPlace=0;save();render();return;}
  if(g==='install'&&window._bip){window._bip.prompt();return;}
  if(g==='back'){stopVoice();go(-1);return;}
  if(g==='next'){stopVoice();go(1);return;}
@@ -396,6 +415,15 @@ document.addEventListener('change',e=>{if(e.target.id!=='upIn')return;const L=IM
 document.addEventListener('input',e=>{const P=prof();if(P&&e.target.dataset.in){readInputs(P);save();}});
 document.addEventListener('copy',e=>{if(!e.target.closest||!e.target.closest('input,textarea'))e.preventDefault();});
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();window._bip=e;});
+/* ---------- links opened inside Facebook, Messenger, Instagram or TikTok move to the phone's own browser ---------- */
+const UA=navigator.userAgent||'',IAB=/FBAN|FBAV|FB_IAB|FBIOS|FB4A|Messenger|Orca-Android|Instagram|musical_ly|Bytedance|TikTok|Snapchat|Line\//i.test(UA);
+function extUrl(){const href=location.href;
+ if(/Android/i.test(UA))return 'intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url='+encodeURIComponent(href)+';end';
+ if(/iPhone|iPad|iPod/i.test(UA))return 'x-safari-'+href;return href;}
+function iabBar(){if(!IAB||document.getElementById('iab'))return;const d=document.createElement('div');d.id='iab';d.className='iab';
+ d.innerHTML='🌐 أنت داخل متصفح التطبيق. للحفاظ على ملفك افتح الرابط في متصفح هاتفك.<br><small>إذا لم يُفتح بالزر: اضغط ⋯ أو ⋮ في أعلى الشاشة ثم «فتح في المتصفح» أو «فتح في Safari».</small><br><button class="btn" id="iabGo">فتح في متصفح الهاتف</button>';
+ document.body.prepend(d);document.getElementById('iabGo').onclick=()=>{location.href=extUrl();};}
+if(IAB&&/[?&]d=/.test(location.search)){let tried=false;try{tried=!!sessionStorage.getItem('yk_ext');sessionStorage.setItem('yk_ext','1');}catch(e){}if(!tried)location.href=extUrl();setTimeout(iabBar,600);}
 /* ---------- start: read the link ---------- */
 (async()=>{
  const d=new URLSearchParams(location.search).get('d');
