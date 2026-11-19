@@ -277,9 +277,9 @@ function pDx(P){const a=fullAnswers(P),h=+a.height,w=+a.weight;if(h&&w)a.bmi=w/(
  const top=pool.slice(0,urg.length?1:2);
  return{urg,top};}
 function dxHTML(P){const X=pDx(P),urgRed=arr(P.answers.red).some(x=>x!==D.noneRed);
- const bar=x=>`<div class="pbar"><i style="width:${Math.max(4,x.pct)}%"></i></div><small class="pct">نسبة التطابق مع إجاباتك: ${x.pct}%</small>`;
+ const bar=()=>'';/* percentages are shown to the doctor only */
  const list=X.urg.map(x=>`<div class="dxp urg">⚠️ ${esc(x.d.n)}${bar(x)}</div>`).join('')+X.top.map((x,i)=>`<div class="dxp">${X.urg.length?2:i+1}. ${esc(x.d.n)}${bar(x)}</div>`).join('');
- return `<div class="dxbox"><b style="font-size:22px">🩺 التشخيص الأولي المحتمل</b>
+ return `<div class="dxbox"><b style="font-size:22px">🩺 التشخيص الأولي المحتمل</b><p style="margin:6px 0 0">${X.urg.length+X.top.length>1?'من المحتمل أن تكون حالتك إحدى الحالتين التاليتين:':'من المحتمل أن تكون حالتك:'}</p>
  ${list}
  ${X.urg.length||urgRed?`<div class="alert">${esc(D.msg.alert)}</div>`:''}
  <div class="warnbig">⚠️ هذا تشخيص أوّلي مبني على إجاباتك فقط، وليس تشخيصاً نهائياً، ولا يُعتمد عليه في العلاج أو تناول أي دواء. لا بد من متابعة حالتك بالفحص السريري عند طبيب مختص.</div></div>`;}
