@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="برنامجي العلاجي">
 <meta name="robots" content="noindex,nofollow">
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png">
-<title>برنامج ألم الظهر</title>
+<title>نصائح للمريض والمرافق</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: أنيق، هادئ، سريري — تطبيق علاجي شخصي
@@ -238,14 +238,14 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;paddin
 <body>
 <input type="checkbox" id="ok" autocomplete="off"><div class="splash" role="dialog" aria-modal="true" aria-labelledby="spt"><div class="sbox">
  <div class="logo"><svg viewBox="0 0 56 56"><rect x="14" y="6" width="28" height="11" rx="5" fill="#fff"/><rect x="12" y="22" width="28" height="11" rx="5" fill="#fff" opacity=".9"/><rect x="16" y="38" width="28" height="11" rx="5" fill="#ffc24d"/></svg></div>
- <h1 id="spt">برنامج ألم الظهر</h1>
+ <h1 id="spt">نصائح للمريض والمرافق</h1>
  <p>هذا البرنامج مخصص للمريض بعد أن يتم فحصه من قبل الدكتور ياسر الخزرجي، وتحديد ما يلائم حالته.</p>
  <p class="warn">لا يجوز استخدامه بدون استشارة الطبيب.</p>
  <label for="ok" class="gobtn" tabindex="0">قرأت وأوافق، ابدأ</label></div></div>
 <div class="gate" id="gate"></div>
 <header class="top" id="top" hidden><div class="wrap tbar">
  <button class="ib hid" id="bk" aria-label="رجوع للصفحة السابقة"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
- <button class="ttl" id="home">برنامج ألم الظهر</button>
+ <button class="ttl" id="home">نصائح للمريض والمرافق</button>
 </div></header>
 <main id="app" hidden></main>
 <div class="wm" id="wm" aria-hidden="true"></div><div class="pmark" id="pmark" aria-hidden="true"></div><div id="lock" aria-hidden="true"></div>
@@ -451,7 +451,7 @@ const dxAutoSp=()=>`${S.age===0?'تزحزح فقرات قطني من النوع 
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtD=d=>{try{const [y,m,dd]=d.split('-');return `${+dd}/${+m}/${y}`}catch(e){return d}};
 const LOGO=`<svg viewBox="0 0 56 56" width="56" height="56" aria-hidden="true"><rect x="14" y="6" width="28" height="11" rx="5" fill="#fff"/><rect x="12" y="22" width="28" height="11" rx="5" fill="#fff" opacity=".9"/><rect x="16" y="38" width="28" height="11" rx="5" fill="#ffc24d"/></svg>`;
-IC.needle='<path d="M18 2l4 4M20 4l-9 9M8 10l6 6M14 7l3 3M11 13l-6 6-2 1 1-2 6-6"/>';
+IC.users='<circle cx="9" cy="8" r="3.5"/><path d="M2 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5"/><circle cx="17" cy="9" r="2.8"/><path d="M16 14.6c2.8.2 4.9 2 5.6 5"/>';IC.needle='<path d="M18 2l4 4M20 4l-9 9M8 10l6 6M14 7l3 3M11 13l-6 6-2 1 1-2 6-6"/>';
 
 /* ---------- تعليمات ما بعد التداخل ---------- */
 const IV=[
@@ -795,6 +795,54 @@ function anat(){const a=document.getElementById('anat'),sp=document.getElementBy
  lg.innerHTML=`<span><i style="background:#ffd27a"></i>${CAT[S.dx]||''}: ${dxC().n}</span>`}
 
 
+/* ---------- دليل المرافق ---------- */
+Object.assign(SRC,{
+61:['Donohue GF, et al. The association between partner reactions to chronic pain and pain-related outcomes: a systematic review. European Journal of Pain 2026','https://pubmed.ncbi.nlm.nih.gov/41793381/'],
+62:['Keefe FJ, et al. Spouse-assisted coping skills training in the management of osteoarthritic knee pain (randomized trial). Arthritis Care Res 1996','https://scholars.duke.edu/publication/659590'],
+63:['Abbasi M, Keefe FJ, et al. Spouse-assisted training in pain coping skills for chronic low back pain: a 1-year randomized controlled trial. Eur J Pain 2012','https://scholars.duke.edu/publication/888789'],
+64:['Furlan AD, et al. Massage for low-back pain. Cochrane Database of Systematic Reviews 2015','https://www.cochrane.org/evidence/CD001929'],
+65:['Cambridge University Hospitals NHS Trust. Adult patients discharged following procedural sedation','https://www.cuh.nhs.uk/patient-information/adult-patients-discharged-following-procedural-sedation/'],
+66:['National Institute on Aging (NIH). Taking care of yourself: tips for caregivers','https://www.nia.nih.gov/health/caregiving/taking-care-yourself-tips-caregivers'],
+67:['CDC. How and when to use naloxone for an opioid overdose: fact sheet for family and caregivers','https://www.cdc.gov/overdose-resources/files/how-and-when-to-use-naloxone-for-an-opioid-overdose.html'],
+68:['CDC Rx Awareness. Save a life from prescription opioid overdose','https://www.cdc.gov/rxawareness/prevent/'],
+69:['U.S. Office of Disease Prevention and Health Promotion (with NIA and CDC). Lower your risk of falling','https://odphp.health.gov/myhealthfinder/healthy-living/safety/lower-your-risk-falling'],
+70:['Mayo Clinic. Caregiver stress: tips for taking care of yourself','https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/caregiver-stress/art-20044784']});
+const CAREK=['care-how','care-help','care-hands','care-flags','care-post','care-self'];
+function careHTML(){const d=dxC(),nerve=d.g==='الأعصاب'||S.dx==='piri';
+ const av=(isSp()?AV.base:[].concat(...d.avoid.slice(0,S.grade+1))).slice(0,4);
+ const C=[
+ ['care-how','كيف تتعامل مع ألمه',['استمع لألمه بتعاطف، وشجّعه في الوقت نفسه على أن يقوم بما يستطيع بنفسه. هذا النوع من الدعم يرتبط بنتائج أفضل'+R(61),
+  'تجنّب الإفراط في الحماية، مثل القيام بكل شيء عنه أو منعه من الحركة. وتجنّب الانتقاد أو الغضب من شكواه. كلا الأسلوبين يرتبطان بنتائج أسوأ للألم'+R(61),
+  'امدح التقدّم الصغير، مثل مشي أطول أو تمرين أكمله'+R(62),
+  'تعلّما معاً مهارات التعامل مع الألم: إشراك الزوج أو المرافق في هذا التدريب قلّل الألم والإعاقة في تجارب عشوائية'+R(62,63),
+  'الراحة الطويلة في السرير لا تساعد، فشجّعه على البقاء نشيطاً'+R(14,5)]],
+ ['care-help','كيف تساعده يومياً',['ذكّره بتمارينه حسب برنامجه، وامشِ معه إن استطعت'+R(5,12),
+  'ذكّره بأدويته كما وصفها الطبيب تماماً، ولا تغيّر الجرعة بنفسك',
+  'إذا كان يأخذ مسكنات أفيونية (مثل الترامادول أو المورفين): احفظها في مكان مقفل'+R(68)+'، وتعلّم علامات الجرعة الزائدة المكتوبة أدناه'+R(67),
+  'اجعل البيت آمناً: أزل ما يسبب التعثّر، وحسّن الإضاءة، وركّب مساند على جانبي الدرج'+R(69),
+  ...(av.length?['ساعده على تجنّب ما يزيد حالته، ومنه: '+av.join('، ')]:[])]],
+ ['care-hands','ما يمكنك تقديمه بيديك',[
+  'الإسناد في المشي وتمارين التوازن: قف قريباً منه وبجانبه، دون أن تحمل وزنه عنه. تمارين التوازن تقلل السقوط'+R(13),
+  'الكمادات الدافئة تخفف ألم الهجمة الحادة على المدى القصير، ويمكنك تجهيزها له'+R(15),
+  'التدليك الخفيف قد يريحه، لكن الأدلة على فائدته ضعيفة، وقد يزيد الألم عند بعض المرضى. اضغط بلطف، وتوقف إذا زاد الألم'+R(64)+(S.dx==='spasm'?'. في ألم الظهر الحاد يُعدّ التدليك من الخيارات غير الدوائية الأولى'+R(32):''),
+  ...(nerve?['لا تضغط ولا تدلّك فوق مسار العصب المتهيج'+R(47)]:[]),
+  'لا تشدّ ظهره ولا تسحب ساقيه: الشد لا يُنصح به لعلاج ألم أسفل الظهر'+R(5),
+  'التمارين في هذا البرنامج يؤديها المريض بنفسه ضمن حدود ألمه. دورك التشجيع والمرافقة، لا تحريك جسمه بالقوة']],
+ ['care-flags','متى تتصل بالطبيب أو بالإسعاف',[...FL,...(isSp()?[]:d.flags),
+  'إسعاف فوراً: إذا صعُب إيقاظه، أو أصبح تنفّسه بطيئاً جداً، أو ازرقّت شفتاه وهو يأخذ مسكنات أفيونية'+R(67)],'x'],
+ ['care-post','إذا أُجري له تداخل لعلاج الألم',[
+  'رافقه إلى الإجراء وأوصله إلى البيت، فلا يقود السيارة يوم الإجراء'+R(24,65),
+  'إذا أخذ مهدئاً فابقَ معه 24 ساعة: قد يتأثر حكمه وتوازنه، ولا يشرب كحولاً ولا يأخذ أدوية مهدئة أخرى'+R(65),
+  'امشِ بجانبه في الساعات الأولى، فقد يكون أقل ثباتاً بعد الإجراء'+R(65),
+  'مريض السكري بعد حقنة الستيرويد: ساعده على فحص السكر أكثر في الأيام الأولى، فقد يرتفع حتى أسبوعين'+R(22),
+  'بعد إحصار الفرع الإنسي التشخيصي: ساعده على تسجيل نسبة التحسّن في مفكرة الألم لمدة 5 ساعات'+R(24),
+  'بعد الكي الحراري: لا تضع كمادات حارة على مكان الإجراء لعدة أسابيع'+R(25),
+  'اتصل بالطبيب إذا ظهرت حرارة، أو احمرار، أو تورّم، أو إفرازات من مكان الحقنة'+R(25)+'، أو أي علامة من علامات الخطر بعد الإجراء في قسم "بعد التداخل"']],
+ ['care-self','اعتنِ بنفسك أيضاً',['خذ وقتاً للراحة واطلب مساعدة الآخرين في الرعاية: الاعتناء بنفسك يجعلك أقدر على رعاية مريضك'+R(66,70),
+  'اهتم بنومك وغذائك ونشاطك البدني'+R(66,70)]]];
+ return `<p class="sub">هذا القسم موجّه لمرافق المريض أو أحد أفراد أسرته: كيف يساعده، وما الذي يتجنّبه، ومتى يطلب المساعدة.</p><div class="life">${C.map(([k,t,b,x])=>PM&&!SEL[k]?'':`<div class="pc${x?' flags':''}"><div class="fh">${pk(k)}<h3>${t}</h3></div><ul${x?' class="x"':''}>${li(b)}</ul></div>`).join('')}</div>`}
+
+
 /* ---------- تطبيق المريض ---------- */
 PM=true;
 const qs=new URLSearchParams(location.search);let payload=qs.get('d');
@@ -826,10 +874,10 @@ async function start(){
 /* ---------- العلامة المائية والطباعة ---------- */
 function marks(){const nm=esc(PI.name),dt=fmtD(PI.date),line=`د. ياسر الخزرجي · المريض: ${nm} · تاريخ المشاركة: ${dt}`;
  $('wm').innerHTML=Array.from({length:14},()=>`<span>${line}</span>`).join('');
- $('pmark').innerHTML=`<b>برنامج ألم الظهر</b><span>${line}</span><span>لا يجوز استخدامه بدون استشارة الطبيب</span>`;
+ $('pmark').innerHTML=`<b>نصائح للمريض والمرافق</b><span>${line}</span><span>لا يجوز استخدامه بدون استشارة الطبيب</span>`;
  $('lock').textContent=`خاص بالمريض ${PI.name} · د. ياسر الخزرجي · ${dt}`;
  const st=document.createElement('style');const plain=`د. ياسر الخزرجي — المريض: ${PI.name} — تاريخ المشاركة: ${dt}`;
- st.textContent=`@page{size:A4;margin:16mm 11mm 18mm;@top-center{content:"${pcs(plain)}";font:600 9pt Tahoma,sans-serif;color:#4b3fd6}@bottom-center{content:"برنامج ألم الظهر — لا يجوز استخدامه بدون استشارة الطبيب — صفحة " counter(page);font:500 8pt Tahoma,sans-serif;color:#4f4c72}}`;
+ st.textContent=`@page{size:A4;margin:16mm 11mm 18mm;@top-center{content:"${pcs(plain)}";font:600 9pt Tahoma,sans-serif;color:#4b3fd6}@bottom-center{content:"نصائح للمريض والمرافق — لا يجوز استخدامه بدون استشارة الطبيب — صفحة " counter(page);font:500 8pt Tahoma,sans-serif;color:#4f4c72}}`;
  document.head.appendChild(st)}
 function pr(kind){document.body.dataset.pv=kind||'';setTimeout(()=>{try{window.print()}catch(e){toast('الطباعة غير متاحة هنا. استخدم زر المشاركة في المتصفح ثم "طباعة".')}},60)}
 addEventListener('afterprint',()=>{document.body.dataset.pv=''});
@@ -842,7 +890,7 @@ function infoHTML(){const ex=mine().slice(0,8),W=week(),it=['خفيفة','متو
  let no=[...NO_S[0]];for(let g=1;g<=S.grade;g++)no.push(...NO_S[g]);if(!isSp())no=dxNo();
  const dos=LF.map((x,i)=>SEL['life-'+i]&&(isSp()||dxC().lf.includes(i))?DO_S[i]:null).filter(Boolean);if(!isSp()&&SEL.tips)dos.push(...dxC().tips.slice(0,3).map(stripR));const ivs=IV.filter(v=>SEL['iv-'+v.k]);
  return `<div class="info" id="infoPage">
- <div class="ih"><div><small>برنامج ألم الظهر</small><h2>الملخص العلاجي</h2></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
+ <div class="ih"><div><small>نصائح للمريض والمرافق</small><h2>الملخص العلاجي</h2></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
  <div class="ipt"><div><small>المريض</small><b>${esc(PI.name)}</b></div>${PI.age?`<div><small>العمر</small><b>${esc(PI.age)} سنة</b></div>`:''}<div class="w2"><small>التشخيص</small><b>${esc(PI.dx)}</b></div><div><small>تاريخ المشاركة</small><b>${fmtD(PI.date)}</b></div></div>
  <div class="ist">${isSp()?`<div><i>${['I','II','III+'][S.grade]}</i><span>درجة التزحزح</span></div><div><i>${S.age===0?'برزخي':'تنكّسي'}</i><span>نوع التزحزح</span></div>`:`<div><i>${SEVL[S.grade]}</i><span>شدة الأعراض</span></div>`}<div><i>${S.state?'تهدئة':it}</i><span>${S.state?'المرحلة الحالية':'شدة البرنامج'}</span></div></div>
  ${ex.length?`<h3 class="ihd">تمارينك اليومية</h3><div class="iex">${ex.map(e=>`<div><div class="iimg">${snap(e.i)}</div><b>${e.n}</b><span>${dose(e)}</span></div>`).join('')}</div>`:''}
@@ -867,10 +915,11 @@ const PV={
  avoid:['الممنوع والمسموح',()=>avoidHTML(),()=>SEL.avoid||SEL.sports],
  life:['نمط حياتك',()=>lifeHTML(),()=>any('life-')],
  post:['بعد التداخل',()=>postHTML(),()=>any('iv-')],
+ care:['دليل المرافق',()=>careHTML(),()=>any('care-')],
  flags:['الخطر والمتابعة',()=>flagsHTML(),()=>SEL.flags||SEL.follow],
  refs:['المصادر العلمية',()=>refsHTML(),()=>1],
  inst:['تثبيت البرنامج',()=>instHTML(),()=>!standalone()&&!window.__CFG]};
-const TI={info:['img','الملخص المطبوع','كل ما يخصك في صفحة واحدة'],prof:['user','حالتك','تشخيصك وشدته'],ex:['move','تمارينك','تمارين متحركة بجرعاتك'],plan:['cal','منهاجي','اليوم والأسبوع'],avoid:['shield','الممنوع والمسموح','حركات تتجنّبها ورياضات تناسبك'],life:['home','نمط حياتك','العمل والجلوس والنوم والغذاء'],post:['needle','بعد التداخل','الراحة وتعليمات ما بعد الحقنة'],flags:['alert','الخطر والمتابعة','متى تراجع الطبيب فوراً'],refs:['book','المصادر العلمية','مصدر كل معلومة في برنامجك'],inst:['share','تثبيت البرنامج','أيقونة على شاشتك الرئيسية']};
+const TI={care:['users','دليل المرافق','كيف يساعدك مرافقك ومتى يتصل بالطبيب'],info:['img','الملخص المطبوع','كل ما يخصك في صفحة واحدة'],prof:['user','حالتك','تشخيصك وشدته'],ex:['move','تمارينك','تمارين متحركة بجرعاتك'],plan:['cal','منهاجي','اليوم والأسبوع'],avoid:['shield','الممنوع والمسموح','حركات تتجنّبها ورياضات تناسبك'],life:['home','نمط حياتك','العمل والجلوس والنوم والغذاء'],post:['needle','بعد التداخل','الراحة وتعليمات ما بعد الحقنة'],flags:['alert','الخطر والمتابعة','متى تراجع الطبيب فوراً'],refs:['book','المصادر العلمية','مصدر كل معلومة في برنامجك'],inst:['share','تثبيت البرنامج','أيقونة على شاشتك الرئيسية']};
 function instHTML(){const d=CFG.dv||'ios',ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
  const steps={ios:[['افتحه في Safari','إذا فُتح الرابط داخل واتساب، اضغط ⋯ أو زر البوصلة واختر "فتح في Safari".'],['اضغط زر المشاركة','المربع الذي فيه سهم للأعلى، أسفل الشاشة أو بجانب شريط العنوان.'],['إضافة إلى الشاشة الرئيسية','مرّر القائمة للأسفل واختر "إضافة إلى الشاشة الرئيسية"، ثم "إضافة".'],['افتحه من أيقونته','ستجد أيقونة "برنامجي العلاجي" على شاشتك. افتحه منها دائماً.']],
   and:[['افتحه في Chrome','إذا فُتح الرابط داخل واتساب، اضغط ⋮ واختر "فتح في Chrome".'],['ثبّت التطبيق','اضغط زر "ثبّت الآن" أدناه إن ظهر، أو من القائمة ⋮ اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".'],['وافق على التثبيت','ستظهر أيقونة "برنامجي العلاجي" بين تطبيقاتك.']],
