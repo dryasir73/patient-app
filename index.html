@@ -303,7 +303,15 @@ const AN=[
 {pin:['H',200,182],pr:'chair',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},h:-78},k:[[{},500,300],[{h:-76},150,0],[{h:-98,g:.5},800,1400],[{},800,300]]},
 {...PH_,base:{...SUP,h:180},k:[[{},500,300],[{h:182},150,0],[{h:170,g:.5},800,1500],[{},800,300]]},
 {pin:['H',200,182],pr:'chair',base:{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},k:[[{},500,300],[{h:-45},1100,700],[{},800,100],[{h:-122},1100,700],[{},800,200]]},
-{pin:['A',200,220],pr:'',base:{t:-90,h:-90,ua:74,fa:84,ua2:106,fa2:96,th:72,sh:84,ft:0,th2:108,sh2:96,ft2:180,b:0,g:0},k:[[{},500,300],[{h:-120,ua2:96},1200,1500],[{},900,200],[{h:-60},1200,1500],[{},900,200]]}
+{pin:['A',200,220],pr:'',base:{t:-90,h:-90,ua:74,fa:84,ua2:106,fa2:96,th:72,sh:84,ft:0,th2:108,sh2:96,ft2:180,b:0,g:0},k:[[{},500,300],[{h:-120,ua2:96},1200,1500],[{},900,200],[{h:-60},1200,1500],[{},900,200]]},
+{pin:['A',215,220],pr:'',base:{...STAND,ua:178,fa:178,wr:178,ua2:88,fa2:86},k:[[{},500,300],[{wr:172},150,0],[{wr:95,g:.3},1000,1500],[{},900,300]]},
+{pin:['H',200,182],pr:'chairwt',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},ua:80,fa:0,wr:-45},k:[[{},400,300],[{wr:45,g:.4},2200,300],[{wr:-45},700,400]]},
+{pin:['H',200,182],pr:'chair',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},ua:80,fa:0,wr:0},k:[[{},300,200],[{wr:-60},900,500],[{},700,100],[{wr:60},900,500],[{},700,100]]},
+{pin:['H',200,182],pr:'chair',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},ua:85,fa:5},k:[[{},500,300],[{fa:8},150,0],[{fa:-120,g:.3},1100,800],[{},1000,300]]},
+{pin:['A',255,220],pr:'wall',base:{t:-100,h:-100,ua:178,fa:180,ua2:176,fa2:178,th:110,sh:80,ft:180,th2:72,sh2:70,ft2:0,b:0,g:0},k:[[{},500,300],[{t:-98},150,0],[{t:-120,h:-115,th:122,sh:70,th2:62,sh2:62,g:.4},1100,1800],[{},900,300]]},
+{pin:['H',200,182],pr:'chair',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},sh:60,ft:0,ua:60,fa:20},k:[[{},500,300],[{ft:-45,ua:55,fa:10,g:.4},900,1800],[{},800,300]]},
+{pin:['F',230,226],pr:'',base:{...STAND,ua:92,fa:90,ua2:88,fa2:86},k:[[{},500,300],[{ft:40,ft2:42,g:.4},800,600,1],[{},1600,400]]},
+{pin:['H',200,182],pr:'chair',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},sh:40},k:[[{ft:-40},800,0],[{ft:30},800,0]]}
 ];
 AN.forEach(a=>{a.K=a.k.map(([p,d,h,e])=>({P:{...a.base,...p},d,h,e}));a.tot=a.K.reduce((s,k)=>s+k.d+k.h,0);
  let m=0,mi=0;a.K.forEach((k,i)=>{if(k.h>m){m=k.h;mi=i}});a.act=mi});
@@ -321,13 +329,13 @@ let uid=0;
 const SEG=k=>`<line class="${k} m" stroke-linecap="round"/><line class="${k} hl" stroke-linecap="round" opacity=".5"/>`;
 function stageSVG(a){const u=++uid;let pre='',post='';
  if(a.pr==='mat'||a.pr==='strap'||a.pr==='ball')pre=`<rect class="mat" x="30" y="223" width="340" height="7" rx="3.5"/>`;
- if(a.pr==='chair')pre=`<g class="chair"><rect x="175" y="186" width="50" height="9" rx="4"/><rect x="176" y="112" width="9" height="82" rx="4"/><rect x="179" y="192" width="6" height="36" rx="3"/><rect x="216" y="192" width="6" height="36" rx="3"/></g>`;
+ if(a.pr==='chair'||a.pr==='chairwt')pre=`<g class="chair"><rect x="175" y="186" width="50" height="9" rx="4"/><rect x="176" y="112" width="9" height="82" rx="4"/><rect x="179" y="192" width="6" height="36" rx="3"/><rect x="216" y="192" width="6" height="36" rx="3"/></g>`;
  if(a.pr==='wall')pre=`<g class="chair"><rect x="176" y="0" width="10" height="230" rx="3"/></g>`;
  if(a.pr==='band')pre=`<g class="chair"><rect x="70" y="60" width="14" height="168" rx="6"/><rect x="56" y="222" width="42" height="8" rx="4"/></g>`;
  if(a.walk)pre=`<line class="walk" x1="0" y1="232" x2="400" y2="232" stroke-width="3" stroke-dasharray="14 22"/>`;
  if(a.pr==='band')post=`<line class="band" stroke-width="3" stroke-linecap="round"/>`;
  if(a.pr==='strap')post=`<line class="band" stroke-width="2.5" stroke-linecap="round"/>`;
- if(a.pr==='weight')post=`<rect class="wt" width="20" height="28" rx="5"/>`;
+ if(a.pr==='weight'||a.pr==='chairwt')post=`<rect class="wt" width="20" height="28" rx="5"/>`;
  if(a.pr==='ball')post=`<circle class="ball"/>`;
  if(a.pr==='dowel')post=`<line class="dowel" stroke-width="5" stroke-linecap="round"/>`;
  return `<svg viewBox="${AN.indexOf(a)<11?'38 62 323 210':'0 0 400 260'}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="bg${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="s1"/><stop offset="1" class="s2"/></linearGradient><filter id="bl${u}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>
@@ -335,10 +343,10 @@ function stageSVG(a){const u=++uid;let pre='',post='';
  <g class="farg">${['th2','sh2','ft2','ua2','fa2'].map(SEG).join('')}</g>
  <path class="tor m" fill="none" stroke-linecap="round" stroke-width="30"/><path class="tor hl" fill="none" stroke-linecap="round" stroke-width="7" opacity=".45"/>
  <path class="glow" fill="none" stroke-linecap="round" stroke-width="9" filter="url(#bl${u})"/><path class="glow2" fill="none" stroke-linecap="round" stroke-width="3.5"/>
- <g class="neag">${['th','sh','ft','ua','fa'].map(SEG).join('')}</g>
+ <g class="neag">${['th','sh','ft','ua','fa','wr'].map(SEG).join('')}</g>
  <circle class="hd" r="13.5"/><circle class="hdh" r="4.5" opacity=".5"/>${post}</svg>`}
 function mount(el,i){el.insertAdjacentHTML('afterbegin',stageSVG(AN[i]));const s=el.querySelector('svg'),q=c=>s.querySelector(c),R={s,a:AN[i]};
- for(const k of['th','sh','ft','ua','fa','th2','sh2','ft2','ua2','fa2'])R[k]=[s.querySelector('.'+k+'.m'),s.querySelector('.'+k+'.hl')];
+ for(const k of['th','sh','ft','ua','fa','wr','th2','sh2','ft2','ua2','fa2'])R[k]=[s.querySelector('.'+k+'.m'),s.querySelector('.'+k+'.hl')];
  Object.assign(R,{tor:q('.tor.m'),torh:q('.tor.hl'),gl:q('.glow'),gl2:q('.glow2'),hd:q('.hd'),hdh:q('.hdh'),shd:q('.shd'),band:q('.band'),wt:q('.wt'),dw:q('.dowel'),ball:q('.ball'),walk:q('.walk')});
  el._R=R;return R}
 function paint(R,p){const s=R.s;
@@ -358,7 +366,7 @@ function draw(R,P,pal){if(R.pal!==pal)paint(R,pal);const a=R.a;
  J.K=add(H,P.th,L.TH);J.A=add(J.K,P.sh,L.SH);J.F=add(J.A,P.ft,L.FT);J.K2=add(H,P.th2,L.TH);J.A2=add(J.K2,P.sh2,L.SH);J.F2=add(J.A2,P.ft2,L.FT);
  const pp=J[a.pin[0]],ox=a.pin[1]-pp[0],oy=a.pin[2]-pp[1];for(const k in J)J[k]=[J[k][0]+ox,J[k][1]+oy];
  seg(R.th2,J.H,J.K2,W8.th);seg(R.sh2,J.K2,J.A2,W8.sh);seg(R.ft2,J.A2,J.F2,W8.ft);seg(R.ua2,J.S,J.E2,W8.ua);seg(R.fa2,J.E2,J.W2,W8.fa);
- seg(R.th,J.H,J.K,W8.th);seg(R.sh,J.K,J.A,W8.sh);seg(R.ft,J.A,J.F,W8.ft);seg(R.ua,J.S,J.E,W8.ua);seg(R.fa,J.E,J.W,W8.fa);
+ J.Q=add(J.W,P.wr===undefined?P.fa:P.wr,P.wr===undefined?0:15);seg(R.wr,J.W,J.Q,P.wr===undefined?0.01:8);seg(R.th,J.H,J.K,W8.th);seg(R.sh,J.K,J.A,W8.sh);seg(R.ft,J.A,J.F,W8.ft);seg(R.ua,J.S,J.E,W8.ua);seg(R.fa,J.E,J.W,W8.fa);
  const d=dir(P.t),bk=[d[1],-d[0]],m=[(J.H[0]+J.S[0])/2,(J.H[1]+J.S[1])/2],C=[m[0]+bk[0]*2*P.b,m[1]+bk[1]*2*P.b];
  R.tor.setAttribute('d',`M${J.H[0].toFixed(1)} ${J.H[1].toFixed(1)}Q${C[0].toFixed(1)} ${C[1].toFixed(1)} ${J.S[0].toFixed(1)} ${J.S[1].toFixed(1)}`);
  R.torh.setAttribute('d',`M${(J.H[0]-3).toFixed(1)} ${(J.H[1]-5).toFixed(1)}Q${(C[0]-3).toFixed(1)} ${(C[1]-5).toFixed(1)} ${(J.S[0]-3).toFixed(1)} ${(J.S[1]-5).toFixed(1)}`);
@@ -370,7 +378,7 @@ function draw(R,P,pal){if(R.pal!==pal)paint(R,pal);const a=R.a;
  sa(R.shd,{cx:(mn+mx)/2,rx:(mx-mn)/2+18});
  if(R.band){const f=a.pr==='band'?[84,140]:J.A;sa(R.band,{x1:f[0],y1:f[1],x2:J.W[0],y2:J.W[1]})}
  if(R.ball)sa(R.ball,{cx:J.K[0]-3,cy:J.K[1]+6,r:11-3*P.g});
- if(R.wt)sa(R.wt,{x:J.W[0]-10,y:J.W[1]+2});
+ if(R.wt){const T=P.wr===undefined?J.W:J.Q;sa(R.wt,{x:T[0]-10,y:T[1]+2})}
  if(R.dw){sa(R.dw,{x1:J.S[0]+bk[0]*18+d[0]*30,y1:J.S[1]+bk[1]*18+d[1]*30,x2:J.H[0]+bk[0]*18-d[0]*12,y2:J.H[1]+bk[1]*18-d[1]*12})}
  if(R.walk)R.walk.setAttribute('stroke-dashoffset',(P.fl||0).toFixed(1))}
 
@@ -803,7 +811,7 @@ const exOK=e=>dxEx().includes(e.i===undefined?EX.indexOf(e):e.i);
 
 const HL={disc:['disc'],facet:['facet'],sij:['sij'],piri:['piri'],spasm:['spasm'],coccyx:['coccyx'],cluneal:['cluneal'],hipoa:['hip'],fai:['hip'],lcs:['lcs'],ischial:['ischial'],troch:['troch'],lfcn:['lfcn'],pfcn:['pfcn'],afcn:['afcn'],femoral:['femoral'],sciatic:['sciatic'],pudendal:['pudendal'],genitofem:['genitofem'],obturator:['obturator'],adductor:['adductor'],itb:['itb']};
 const CAT={disc:'الفقرات والأقراص',facet:'مفاصل الفقرات',sij:'المفاصل',piri:'العضلات والأعصاب',spasm:'العضلات',coccyx:'العظام',cluneal:'الأعصاب',hipoa:'المفاصل',fai:'المفاصل',lcs:'العضلات',ischial:'الأكياس الزلالية',troch:'الأوتار والأكياس الزلالية',lfcn:'الأعصاب',pfcn:'الأعصاب',afcn:'الأعصاب',femoral:'الأعصاب',sciatic:'الأعصاب',pudendal:'الأعصاب',genitofem:'الأعصاب',obturator:'الأعصاب',adductor:'العضلات',itb:'العضلات والأربطة'};
-function anat(){let a=document.getElementById('anat');const sp=document.getElementById('spsv'),lg=document.getElementById('lgd');if(!a)return;const FG={shoulder:'shfig',neck:'nkfig',knee:'knfig'};Object.values(FG).forEach(i=>{const e=document.getElementById(i);if(e)e.style.display='none'});
+function anat(){let a=document.getElementById('anat');const sp=document.getElementById('spsv'),lg=document.getElementById('lgd');if(!a)return;const FG={shoulder:'shfig',neck:'nkfig',knee:'knfig',elbow:'elfig',wrist:'wrfig',foot:'ftfig'};Object.values(FG).forEach(i=>{const e=document.getElementById(i);if(e)e.style.display='none'});
  const sf=document.getElementById(FG[REG().fig]);if(sf){a.style.display='none';sp.style.display='none';a=sf;a.style.display='';if(a.id==='nkfig'&&!a.querySelector('#cv').children.length){let v='',f='',f2='',d='';for(let i=0;i<7;i++){const y=118+i*28,x=150+i*4;v+=`<rect x="${x}" y="${y}" width="42" height="20" rx="6"/>`;(i<3?(f2+=`<circle cx="${x-8}" cy="${y+10}" r="5"/>`):0);f+=`<circle cx="${x-8}" cy="${y+10}" r="5"/>`;if(i===4)d=`<rect x="${x+1}" y="${y+20.5}" width="40" height="6" rx="3"/>`}a.querySelector('#cv').innerHTML=v;a.querySelector('#cvf').innerHTML=f;a.querySelector('#cvf2').innerHTML=f2;a.querySelector('#cvd').innerHTML=d}}
  const lv=a.querySelector('#lv');if(lv&&!lv.children.length){let h='',f='',d='';for(let i=0;i<5;i++){const y=6+i*26;h+=`<rect x="143" y="${y}" width="44" height="20" rx="6"/><rect x="${i%2?160:159}" y="${y+4}" width="12" height="12" rx="3" opacity=".6"/>`;f+=`<circle cx="134" cy="${y+12}" r="4.5"/><circle cx="196" cy="${y+12}" r="4.5"/>`;if(i<4)d+=`<rect x="145" y="${y+20.5}" width="40" height="5" rx="2.5"${i===3?'':' opacity=".35"'}/>`}
   lv.innerHTML=h;a.querySelector('.hl-facet').innerHTML=f;a.querySelector('g.hl-disc').innerHTML=d}
@@ -1074,6 +1082,168 @@ knee:{t:'الركبة',dx:['kneeoa','pfp','menis','acl','baker','pesans'],fig:'k
  DO:['تمرّن بانتظام وزِد نشاطك بالتدريج','حافظ على وزن صحي','استعمل العصا أو الدعامة إن نُصحت بها','المسكنات والثلج حسب الطبيب'],
  dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. التمارين أساس علاج أغلب حالات ألم الركبة${R(40,102,104)}.`,
  flare:()=>`مع الهجمة: قلّل الأنشطة المثيرة للألم مؤقتاً، واستمر بالتمارين الخفيفة غير المؤلمة${R(40)}. إذا ظهرت حرارة أو تورّم شديد أو أي علامة خطر فراجع الطبيب.`}});
+
+
+/* ---------- المرفق والرسغ والقدم ---------- */
+Object.assign(SRC,{
+117:['StatPearls (NCBI Bookshelf). Lateral Epicondylitis (Tennis Elbow)','https://ncbi.nlm.nih.gov/books/NBK431092'],
+118:['Johnson GW, et al. Treatment of lateral epicondylitis. American Family Physician 2007','https://www.aafp.org/afp/2007/0915/p843'],
+119:['StatPearls (NCBI Bookshelf). Medial Epicondylitis (Golfer\'s Elbow)','https://www.statpearls.com/point-of-care/21196'],
+120:['StatPearls. Cubital Tunnel Syndrome','https://www.statpearls.com/sp/md/98/30739/'],
+121:['Merck Manual Professional Version. Cubital tunnel syndrome (ulnar neuropathy)','https://www.merckmanuals.com/en-ca/professional/musculoskeletal-and-connective-tissue-disorders/hand-disorders/cubital-tunnel-syndrome'],
+122:['StatPearls (NCBI Bookshelf). Olecranon Bursitis','https://www.ncbi.nlm.nih.gov/books/NBK470291/'],
+123:['AAOS OrthoInfo. Osteoarthritis of the elbow','https://orthoinfo.aaos.org/en/diseases--conditions/osteoarthritis-of-the-elbow/'],
+124:['Primary elbow osteoarthritis: current concepts (PMC review)','https://pmc.ncbi.nlm.nih.gov/articles/PMC8165431'],
+125:['American Academy of Orthopaedic Surgeons. Management of Carpal Tunnel Syndrome guideline 2024 (summary in American Family Physician 2025)','https://www.aafp.org/afp/2025/0900/practice-guidelines-carpal-tunnel-syndrome'],
+126:['AAOS Clinical Practice Guideline on the Treatment of Carpal Tunnel Syndrome. J Bone Joint Surg Am 2010','https://pmc.ncbi.nlm.nih.gov/articles/PMC6882524/'],
+127:['StatPearls. De Quervain Tenosynovitis','https://www.statpearls.com/point-of-care/20270'],
+128:['Effectiveness of corticosteroid injections for treatment of de Quervain\'s tenosynovitis. Hand (N Y) 2016','https://pmc.ncbi.nlm.nih.gov/articles/PMC5484456'],
+129:['StatPearls (NCBI Bookshelf). Trigger Finger','https://www.ncbi.nlm.nih.gov/books/NBK459310/'],
+130:['Common hand conditions: a review (carpal tunnel, trigger finger, de Quervain, thumb CMC arthritis). JAMA 2022','https://pubmed.ncbi.nlm.nih.gov/35762992/'],
+131:['StatPearls (NCBI Bookshelf). Ganglion Cyst','https://www.ncbi.nlm.nih.gov/books/NBK470168/'],
+132:['StatPearls. Triangular Fibrocartilage Complex Injuries','https://www.statpearls.com/point-of-care/30578'],
+133:['Koc TA, et al. Heel Pain - Plantar Fasciitis: Revision 2023 (APTA Clinical Practice Guideline). J Orthop Sports Phys Ther 2023','https://pubmed.ncbi.nlm.nih.gov/38037331/'],
+134:['Chimenti RL, et al. Midportion Achilles Tendinopathy: Revision 2024 (APTA Clinical Practice Guideline). J Orthop Sports Phys Ther 2024','https://www.orthopt.org/uploads/content_files/files/Achilles_Pain_revision_2024.pdf'],
+135:['FitzGerald JD, et al. 2020 American College of Rheumatology Guideline for the Management of Gout','https://pubmed.ncbi.nlm.nih.gov/32391934/'],
+136:['American Family Physician. Management of gout: update from the American College of Rheumatology, 2021','https://www.aafp.org/pubs/afp/issues/2021/0800/p209.html'],
+137:['NIDDK (NIH). Diabetes & foot problems','https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/foot-problems'],
+138:['StatPearls (NCBI Bookshelf). Morton Neuroma','https://www.ncbi.nlm.nih.gov/books/NBK470249/'],
+139:['AAOS OrthoInfo. Morton\'s neuroma','https://orthoinfo.aaos.org/en/diseases--conditions/mortons-neuroma'],
+140:['StatPearls. Tarsal Tunnel Syndrome','https://www.statpearls.com/point-of-care/29876'],
+141:['StatPearls (NCBI Bookshelf). Recurrent Ankle Sprain','https://www.ncbi.nlm.nih.gov/books/NBK560619/'],
+142:['Hertel J, Corbett RO. An updated model of chronic ankle instability. J Athl Train 2019','https://pmc.ncbi.nlm.nih.gov/articles/PMC6602403'],
+143:['AAOS OrthoInfo. Hallux rigidus (stiff big toe)','https://orthoinfo.aaos.org/en/diseases--conditions/stiff-big-toe-hallux-rigidus'],
+144:['NHS. Joint pain','https://www.nhs.uk/symptoms/joint-pain/'],
+145:['De Quervain tenosynovitis: thumb spica splint and corticosteroid injection (Hand, PMC)','https://pmc.ncbi.nlm.nih.gov/articles/PMC7076607'],
+146:['Hallux rigidus: conservative treatment review. Acta Biomedica 2020','https://pmc.ncbi.nlm.nih.gov/articles/PMC7944704'],
+147:['AAOS Management of Carpal Tunnel Syndrome guideline 2024: recommendations (Guideline Central)','https://guidelinecentral.com/guideline/9593']});
+
+EX.push(
+{p:1,n:'إطالة عضلات الساعد',h:'مدّ ذراعك للأمام والمرفق مستقيم. اثنِ الرسغ للأسفل بلطف بيدك الأخرى حتى تشعر بشد في ظهر الساعد، وثبّت.',d:['3 × 15 ث','3 × 30 ث','3 × 30 ث'],m:2,s:[117]},
+{p:2,n:'إنزال الرسغ ببطء مع وزن',h:'اجلس وساعدك على فخذك أو طاولة، وفي يدك وزن خفيف. ارفع الرسغ بمساعدة اليد الأخرى، ثم أنزله ببطء خلال 3–4 ثوانٍ.',d:['2 × 10','3 × 12','3 × 15'],m:2,s:[119,118]},
+{p:1,n:'تحريك الرسغ للأعلى والأسفل',h:'اجلس وساعدك على الطاولة. حرّك الرسغ للأعلى ثم للأسفل ببطء ضمن المدى المريح.',d:['10 مرات','15 مرة','2 × 15'],m:2,s:[40]},
+{p:1,n:'ثني المرفق ومدّه',h:'اجلس مستقيماً. اثنِ المرفق ببطء حتى أقصى مدى مريح، ثم مدّه حتى يستقيم.',d:['10 مرات','15 مرة','2 × 15'],m:2,s:[123]},
+{p:1,n:'إطالة عضلة الساق على الجدار',h:'قف مقابل الجدار ويداك عليه، والساق المصابة خلفك مستقيمة والكعب على الأرض. مِل للأمام حتى تشعر بشد في ربلة الساق، وثبّت.',d:['3 × 30 ث','3 × 30 ث','3 × 45 ث'],m:2,s:[133]},
+{p:1,n:'إطالة لفافة باطن القدم',h:'اجلس وضع القدم المصابة فوق الركبة الأخرى. اسحب أصابع القدم نحوك بيدك حتى تشعر بشد في باطن القدم، وثبّت. الأفضل قبل الخطوات الأولى صباحاً.',d:['3 × 15 ث','3 × 30 ث','3 × 30 ث'],m:2,s:[133]},
+{p:2,n:'رفع الكعبين',h:'قف ممسكاً بشيء ثابت. ارتفع على أطراف أصابعك، ثم انزل ببطء. صعّبه لاحقاً بالوقوف على ساق واحدة.',d:['2 × 10','3 × 15','3 × 15 على ساق واحدة'],m:2,s:[134]},
+{p:1,n:'تحريك الكاحل',h:'اجلس والقدم مرتفعة قليلاً عن الأرض. حرّك الكاحل للأعلى والأسفل ببطء ضمن المدى المريح.',d:['10 مرات','15 مرة','2 × 15'],m:2,s:[141]});
+
+IV.push({k:'elbj',n:'حقن المرفق أو ما حوله',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'hndj',n:'حقن الرسغ أو اليد',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'ftj',n:'حقن القدم أو الكاحل',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]});
+
+const NOEX='';
+Object.assign(DX,{
+tennis:{n:'مرفق لاعب التنس (التهاب الوتر الخارجي)',g:'الأوتار',def:'إجهاد متكرر في وتر عضلات الساعد عند الجهة الخارجية للمرفق، من القبض المتكرر بقوة أو رفع الرسغ'+R(117),
+ sev:['الانتظار والمراقبة خيار معقول، مع حزام الساعد أثناء النشاط'+R(118,117),'تمارين المقاومة التدريجية تعطي فائدة متوسطة'+R(118),'حقنة الستيرويد تخفف الألم لأسابيع فقط'+R(118)],
+ ex:[37,38,40],lf:[0,1,2,3],avoid:[['المهام التي فيها قبض متكرر بقوة أو رفع الرسغ مع حمل'+R(117)],[],[]],
+ tips:['جل مضادات الالتهاب لفترة قصيرة قد يفيد'+R(118)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(118)],['علاج طبيعي'+R(118)],['حقنة أو تقييم جراحي حسب الطبيب'+R(118)]],iv:['elbj']},
+golfer:{n:'مرفق لاعب الغولف (التهاب الوتر الداخلي)',g:'الأوتار',def:'إجهاد مزمن في أوتار العضلات القابضة عند الجهة الداخلية للمرفق'+R(119),
+ sev:['حزام الساعد أفاد أكثر من العلاج الطبيعي في الأسابيع الستة الأولى'+R(119),'تمارين الإنزال البطيء تحسّن قوة القبض وتخفف الألم'+R(119),'الحقن للحالات المستعصية، وتأثير الستيرويد قصير'+R(119)],
+ ex:[38,40],lf:[0,1,2,3],avoid:[['القبض المتكرر تحت حمل'+R(119)],[],[]],
+ tips:['التدخين والسكري من نوع 2 يزيدان خطر التهاب الأوتار'+R(119)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(119)],['علاج طبيعي'+R(119)],['الحقن حسب الطبيب'+R(119)]],iv:['elbj']},
+cubital:{n:'انضغاط العصب الزندي عند المرفق',g:'الأعصاب',def:'ضغط على العصب الزندي عند المرفق يسبب تنميلاً في الخنصر والبنصر، ويزداد غالباً مع ثني المرفق ليلاً'+R(120),
+ sev:['تقليل الضغط على العصب وثني المرفق، ودعامة أو وسادة للمرفق'+R(120),'تقليل الضغط على العصب وثني المرفق، ودعامة أو وسادة للمرفق'+R(120),'الحالات الشديدة تحتاج تقييماً جراحياً'+R(120)],
+ ex:[],lf:[0,1],avoid:[['الاتكاء على المرفق، وثني المرفق لفترات طويلة'+R(121)],[],[]],
+ tips:['أكثر ما يسببه الاتكاء على المرفق أو ثنيه طويلاً'+R(121)],flags:['ضعف أو ضمور في عضلات اليد'+R(121)],
+ follow:[['المتابعة حسب الأعراض'+R(120)],['المتابعة حسب الأعراض'+R(120)],['تقييم جراحي'+R(120)]],iv:[]},
+olec:{n:'التهاب الكيس الزلالي خلف المرفق',g:'الأكياس الزلالية',def:'التهاب الكيس الزلالي فوق رأس المرفق، وأكثر أسبابه الضغط المتكرر على المرفق'+R(122),
+ sev:['تجنّب الضغط على المرفق'+R(122),'يفرّق الطبيب بين الالتهاب العادي والجرثومي لتجنّب الإجراءات غير اللازمة'+R(122),'الحالة الجرثومية تحتاج علاجاً عاجلاً'+R(122)],
+ ex:[40],lf:[0,1],avoid:[['الاتكاء أو الضغط المتكرر على المرفق'+R(122)],[],[]],
+ tips:['الضغط المتكرر على المرفق هو السبب الأشيع'+R(122)],flags:['احمرار وسخونة في المرفق مع حرارة'+R(122)],
+ follow:[['المتابعة حسب الأعراض'+R(122)],['المتابعة حسب الأعراض'+R(122)],['مراجعة عاجلة'+R(122)]],iv:[]},
+elboa:{n:'خشونة المرفق أو جسم سائب داخل المفصل',g:'المفاصل',def:'تآكل في مفصل المرفق مع نتوءات عظمية، وأحياناً قطع سائبة داخل المفصل'+R(124),
+ sev:['المسكنات والعلاج الطبيعي وتعديل النشاط'+R(123),'حقنة الستيرويد تخفف الألم مؤقتاً'+R(123),'التنظير أو الجراحة عند عدم كفاية العلاج'+R(123)],
+ ex:[40],lf:[0,1,2],avoid:[[],[],[]],tips:['العلاج غير الجراحي هو الأشيع في المراحل المبكرة'+R(123)],flags:['المرفق يُقفل أثناء الحركة'+R(124)],
+ follow:[['المتابعة حسب الأعراض'+R(123)],['علاج طبيعي'+R(123)],['تقييم جراحي'+R(123)]],iv:['elbj']},
+cts:{n:'متلازمة النفق الرسغي',g:'الأعصاب',def:'ضغط على العصب الأوسط تحت رباط الرسغ، يصيب حتى 1 من كل 20 بالغاً'+R(125),
+ sev:['الجبيرة الليلية أو الحقنة خيار غير جراحي'+R(126),'حقنة الستيرويد لا تعطي تحسناً طويل الأمد'+R(125),'تحرير النفق جراحياً لمن لا يستجيب للعلاج'+R(130)],
+ ex:[],lf:[0,1],avoid:[[],[],[]],tips:['علاجات مثل اللاصق والليزر والكورتيزون بالفم لم تحسّن النتائج على المدى البعيد'+R(147)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(126)],['المتابعة حسب الأعراض'+R(126)],['تقييم جراحي'+R(130)]],iv:['hndj']},
+dq:{n:'التهاب أوتار الإبهام (دي كيرفان)',g:'الأوتار',def:'تضيّق حول أوتار الإبهام عند الرسغ، ويكثر مع تكرار حركات الإبهام وثني الرسغ'+R(127,145),
+ sev:['جبيرة الإبهام'+R(145),'حقنة الستيرويد نجحت عند نحو 73% خلال حقنتين'+R(128),'التحرير الجراحي عند عدم الاستجابة'+R(128)],
+ ex:[],lf:[0,1],avoid:[['تكرار حركات الإبهام مع ثني الرسغ جانبياً'+R(145)],[],[]],tips:['قد تتحسن الحالة من تلقاء نفسها'+R(127)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(128)],['الحقن حسب الطبيب'+R(128)],['تقييم جراحي'+R(128)]],iv:['hndj']},
+cmcoa:{n:'خشونة قاعدة الإبهام',g:'المفاصل',def:'خشونة المفصل عند قاعدة الإبهام. دعامة الإبهام من التوصيات القوية'+R(40),
+ sev:['دعامة الإبهام وتمارين اليد'+R(40),'دعامة الإبهام وتمارين اليد'+R(40),'تقييم من جراح اليد عند عدم الاستجابة'+R(130)],
+ ex:[39],lf:[0,1,2],avoid:[[],[],[]],tips:['دعامة الإبهام توصية قوية في خشونة قاعدة الإبهام'+R(40)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(40)],['المتابعة حسب الأعراض'+R(40)],['تقييم جراحي'+R(130)]],iv:['hndj']},
+trigger:{n:'الإصبع الزنادي (القافل)',g:'الأوتار',def:'تضيّق حول وتر الإصبع يسبب تعلّقه أو قفله، ويصيب الإبهام والبنصر أكثر'+R(129),
+ sev:['الجبيرة وحدها كعلاج أول'+R(129),'حقنة الستيرويد'+R(129),'التحرير الجراحي عند عدم التحسن أو قفل الإصبع'+R(129)],
+ ex:[],lf:[0,1],avoid:[[],[],[]],tips:['تكرار استعمال الإصبع من أسبابه'+R(129)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(129)],['الحقن حسب الطبيب'+R(129)],['تقييم جراحي'+R(129)]],iv:['hndj']},
+tfcc:{n:'إصابة غضروف الرسغ من جهة الخنصر',g:'المفاصل',def:'إصابة في الغضروف المثلث الذي يثبّت الرسغ من جهة الخنصر، تسبب ألماً وطقطقة هناك'+R(132),
+ sev:['يحدد الطبيب العلاج حسب نوع الإصابة'+R(132),'يحدد الطبيب العلاج حسب نوع الإصابة'+R(132),'يحدد الطبيب العلاج حسب نوع الإصابة'+R(132)],
+ ex:[],lf:[0,1],avoid:[['حركات ثني الرسغ نحو الخنصر مع حمل، مثل ضرب المضرب'+R(132)],[],[]],tips:['ليست كل إصابات هذا الغضروف في الصور سبباً للألم'+R(132)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(132)],['المتابعة حسب الأعراض'+R(132)],['تقييم من جراح اليد'+R(132)]],iv:['hndj']},
+ganglion:{n:'كيس زلالي (عقدة) في الرسغ',g:'الأكياس الزلالية',def:'كيس حميد مملوء بمادة هلامية، وقد يختفي من تلقاء نفسه'+R(131),
+ sev:['المراقبة والطمأنة'+R(131),'سحب السائل ممكن، لكن احتمال رجوعه أعلى من الجراحة'+R(131),'الإزالة الجراحية'+R(131)],
+ ex:[],lf:[0],avoid:[[],[],[]],tips:['الكيس حميد'+R(131)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(131)],['المتابعة حسب الأعراض'+R(131)],['تقييم جراحي'+R(131)]],iv:[]},
+pf:{n:'التهاب اللفافة الأخمصية (شوكة القدم)',g:'الأوتار',def:'ألم في باطن الكعب، أوضح مع الخطوات الأولى بعد الراحة، ويزداد بعد الوقوف الطويل أو زيادة النشاط'+R(133),
+ sev:['إطالة لفافة باطن القدم وعضلة الساق'+R(133),'يُضاف لاصق القدم والفرشات الطبية'+R(133),'الجبيرة الليلية لمن يشكو من ألم الخطوات الأولى صباحاً'+R(133)],
+ ex:[41,42,43,44,15],lf:[0,1,3],avoid:[['الزيادة المفاجئة في المشي أو الوقوف'+R(133)],[],[]],
+ tips:['الإطالة من أقوى التوصيات وتفيد على المدى القصير والبعيد'+R(133)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(133)],['علاج طبيعي'+R(133)],['علاج طبيعي'+R(133)]],iv:['ftj']},
+achil:{n:'التهاب وتر أكيليس',g:'الأوتار',def:'ألم في وتر أكيليس يزداد مع الأنشطة التي تحمّل الوتر'+R(134),
+ sev:['تمارين تحميل الوتر، بأعلى حمل محتمل، هي العلاج الأول'+R(134),'التثقيف مع تمارين التحميل'+R(134),'تمارين التحميل مع وسائل أخرى حسب الطبيب'+R(134)],
+ ex:[43,41,15],lf:[0,1],avoid:[[],[],[]],tips:['استمر بالنشاط ضمن حدود الألم، ودع الأعراض تحدد سرعة التقدّم'+R(134)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(134)],['علاج طبيعي'+R(134)],['علاج طبيعي'+R(134)]],iv:[]},
+gout:{n:'النقرس',g:'المفاصل',def:'التهاب مفاصل ناتج عن ترسّب أملاح اليوريك، ويصيب غالباً مفصل إصبع القدم الكبير'+R(135,144),
+ sev:['تقليل الكحول والأطعمة الغنية بالبيورين والمشروبات المحلاة بشراب الذرة، وإنقاص الوزن لمن لديه زيادة'+R(135),'العلاج الخافض لحمض اليوريك لمن يصاب بنوبتين أو أكثر سنوياً'+R(136),'العلاج الخافض لحمض اليوريك عند وجود ترسّبات أو تلف ظاهر في الصور'+R(135)],
+ ex:[],lf:[0,1,3],avoid:[['الكحول والأطعمة الغنية بالبيورين'+R(135)],[],[]],tips:['إنقاص الوزن يقلل نوبات النقرس'+R(136)],flags:[],
+ follow:[['المتابعة مع الطبيب'+R(135)],['المتابعة مع الطبيب وتحليل حمض اليوريك'+R(135)],['المتابعة مع الطبيب وتحليل حمض اليوريك'+R(135)]],iv:[]},
+neuro:{n:'اعتلال الأعصاب الطرفية',g:'الأعصاب',def:'تلف في الأعصاب يسبب تنميلاً وألماً وفقدان إحساس في القدمين، ومن أسبابه السكري'+R(137),
+ sev:['افحص قدميك كل يوم، والبس حذاءً مناسباً'+R(137),'افحص قدميك كل يوم، وتمارين التوازن'+R(137,13),'فحص القدم عند كل زيارة للطبيب'+R(137)],
+ ex:[15,44,43],lf:[0,1,2],avoid:[[],[],[]],tips:['قد تكون عندك مشكلة في القدم دون أن تشعر بألم، لذلك افحصها يومياً'+R(137)],flags:['جرح أو بثرة أو احمرار في القدم'+R(137)],
+ follow:[['فحص القدم عند كل زيارة'+R(137)],['فحص القدم عند كل زيارة'+R(137)],['المتابعة مع طبيب القدم'+R(137)]],iv:[]},
+morton:{n:'التهاب عصب بين أصابع القدم أو ألم مشط القدم',g:'الأعصاب',def:'انضغاط العصب بين عظام مشط القدم، غالباً بين الإصبع الثالث والرابع'+R(138),
+ sev:['حذاء واسع من الأمام وكعب منخفض'+R(139),'الفرشات الطبية'+R(138),'حقنة الستيرويد، والجراحة عند عدم التحسن'+R(138)],
+ ex:[],lf:[0,1],avoid:[['الكعب العالي والأحذية الضيقة'+R(139)],[],[]],tips:['الأحذية الضيقة تضغط عظام القدم على العصب'+R(139)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(138)],['المتابعة حسب الأعراض'+R(138)],['الحقن أو تقييم جراحي'+R(138)]],iv:['ftj']},
+tarsal:{n:'متلازمة النفق الرصغي',g:'الأعصاب',def:'انضغاط العصب الظنبوبي خلف الكعب من الداخل، يسبب ألماً أو تنميلاً في باطن القدم'+R(140),
+ sev:['يحدد الطبيب العلاج حسب السبب'+R(140),'يحدد الطبيب العلاج حسب السبب'+R(140),'تقييم من الطبيب لأسباب قابلة للعلاج'+R(140)],
+ ex:[44],lf:[0,1],avoid:[[],[],[]],tips:['التشخيص سريري غالباً، وقد تساعد الفحوص في إيجاد السبب'+R(140)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(140)],['المتابعة حسب الأعراض'+R(140)],['تقييم من الطبيب'+R(140)]],iv:['ftj']},
+ankinst:{n:'عدم ثبات الكاحل بعد الالتواء',g:'الأربطة',def:'حتى 40% من التواءات الكاحل تتحول إلى ألم وعدم ثبات وتكرار للالتواء'+R(141,142),
+ sev:['تمارين التوازن والإحساس بوضع المفصل'+R(141),'تمارين التوازن والإحساس بوضع المفصل'+R(141),'المتابعة مع الطبيب عند تكرار الالتواء'],
+ ex:[15,43,44],lf:[0,1],avoid:[[],[],[]],tips:['ضعف التوازن والإحساس بوضع المفصل يزيد تكرار الالتواء'+R(141)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(141)],['علاج طبيعي'+R(141)],['المتابعة مع الطبيب']],iv:[]},
+hallux:{n:'خشونة مفصل إصبع القدم الكبير',g:'المفاصل',def:'تيبّس وخشونة في مفصل قاعدة إصبع القدم الكبير، وهي أشيع خشونة في القدم'+R(143),
+ sev:['حذاء بنعل صلب أو نعل هزّاز، وتجنّب الكعب العالي'+R(143),'الفرشات وتعديل الحذاء قبل أي جراحة'+R(146),'الجراحة عند عدم نجاح العلاج'+R(143)],
+ ex:[],lf:[0,1],avoid:[['الكعب العالي'+R(143)],[],[]],tips:['اكتشاف الحالة مبكراً يسهّل علاجها'+R(143)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(143)],['المتابعة حسب الأعراض'+R(143)],['تقييم جراحي'+R(143)]],iv:['ftj']}});
+
+const A0={t:'الحركة والنشاط',b:['150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة'+R(12)],a:[[],[],['أضف تمارين التوازن، فهي تقلل السقوط'+R(13)]],g:[[],[],[]]};
+Object.assign(REGIONS,{
+elbow:{t:'المرفق (الكوع)',dx:['tennis','golfer','cubital','olec','elboa'],fig:'elbow',iv:['elbj'],
+ FL:['مرفق حار ومتورّم وأحمر مع حرارة أو شعور بالتوعك'+R(122,144),'ألم شديد بعد سقوط أو إصابة، أو تغيّر شكل المفصل'+R(144),'تنميل أو فقدان إحساس حول المفصل بعد إصابة'+R(144),'ضعف أو ضمور في عضلات اليد'+R(121)],
+ LF:[{...A0,b:[...A0.b,'خفف المهام التي فيها قبض متكرر بقوة'+R(117)]},
+  {t:'العمل والأدوات',b:['المهام التي فيها قبض متكرر أو ثني الرسغ تحت حمل تجهد أوتار المرفق'+R(117,119),'لا تتكئ على المرفق ولا تُبقِه مثنياً طويلاً'+R(121)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'تخفيف الألم',b:['حزام الساعد أثناء النشاط'+R(117),'جل مضادات الالتهاب لفترة قصيرة'+R(118)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'عوامل الخطر',b:['التدخين والسكري يزيدان خطر التهاب الأوتار'+R(119)],a:[[],[],[]],g:[[],[],[]]}],
+ DO:['خفف القبض المتكرر بقوة','لا تتكئ على المرفق','حزام الساعد أثناء النشاط','ابتعد عن التدخين واضبط السكري'],
+ dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك${R(118,119)}.`,
+ flare:()=>`مع الهجمة: خفف المهام التي تثير الألم، واستمر بالحركة الخفيفة${R(117)}. إذا ظهرت حرارة أو احمرار أو أي علامة خطر فراجع الطبيب.`},
+wrist:{t:'الرسغ واليد',dx:['cts','dq','cmcoa','trigger','tfcc','ganglion'],fig:'wrist',iv:['hndj'],
+ FL:['مفصل حار ومتورّم وأحمر مع حرارة أو شعور بالتوعك'+R(144,113),'ألم شديد بعد سقوط أو إصابة، أو تغيّر شكل المفصل'+R(144),'تنميل أو فقدان إحساس بعد إصابة'+R(144)],
+ LF:[A0,
+  {t:'الجبائر والدعامات',b:['الجبيرة الليلية خيار غير جراحي في متلازمة النفق الرسغي'+R(126),'جبيرة الإبهام في التهاب أوتار الإبهام'+R(145),'دعامة الإبهام توصية قوية في خشونة قاعدة الإبهام'+R(40)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'تمارين اليد',b:['تمارين اليد قد تفيد في خشونة مفاصل اليد'+R(40)],a:[[],[],[]],g:[[],[],[]]}],
+ DO:['ابقَ نشيطاً','استعمل الجبيرة كما وصفها الطبيب','مرّن يدك بانتظام'],
+ dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. أغلب حالات الرسغ واليد تُعالج بالجبائر والحقن والجراحة حسب الحالة${R(130)}.`,
+ flare:()=>`مع الهجمة: أرِح اليد من الحركات المثيرة للألم، واستعمل الجبيرة إن وُصفت لك${R(130)}. إذا ظهرت حرارة أو احمرار أو أي علامة خطر فراجع الطبيب.`},
+foot:{t:'الكاحل والقدم',dx:['pf','achil','gout','neuro','morton','tarsal','ankinst','hallux'],fig:'foot',iv:['ftj'],
+ FL:['جرح أو بثرة أو احمرار أو تورّم في القدم لا يلتئم، خاصة مع السكري'+R(137),'مفصل حار ومتورّم وأحمر مع حرارة أو شعور بالتوعك'+R(144,113),'عدم القدرة على الوقوف على القدم، أو ألم شديد بعد إصابة'+R(144),'تنميل أو فقدان إحساس بعد إصابة'+R(144)],
+ LF:[A0,
+  {t:'الأحذية',b:['حذاء مريح يناسب القدم ويحميها، مثل أحذية المشي والرياضة'+R(137),'حذاء واسع من الأمام وكعب منخفض، وتجنّب الكعب العالي'+R(139,143)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'العناية بالقدم',b:['افحص قدميك كل يوم، فقد تكون فيها مشكلة دون ألم'+R(137),'اطلب فحص قدميك عند كل زيارة للطبيب'+R(137)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'الغذاء والوزن',b:['في النقرس: قلّل الكحول والأطعمة الغنية بالبيورين والمشروبات المحلاة بشراب الذرة'+R(135),'إنقاص الوزن لمن لديه زيادة'+R(135,136)],a:[[],[],[]],g:[[],[],[]]}],
+ DO:['ابقَ نشيطاً','حذاء مريح وواسع وكعب منخفض','افحص قدميك يومياً','غذاء ووزن صحيان'],
+ dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. الإطالة وتمارين التحميل والتوازن أساس علاج أغلب حالات القدم${R(133,134,141)}.`,
+ flare:()=>`مع الهجمة: قلّل الوقوف والمشي الطويل مؤقتاً، واستمر بالإطالة والحركة الخفيفة${R(133)}. إذا ظهرت حرارة أو احمرار أو جرح أو أي علامة خطر فراجع الطبيب.`}});
 
 
 /* ---------- تطبيق المريض ---------- */
