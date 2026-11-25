@@ -171,20 +171,20 @@ sup.rf{font-size:.68em;color:var(--acc);font-weight:700;margin-inline-start:3px;
 .fl select:focus{outline:3px solid #8f7bff66;border-color:var(--acc)}
 .hname select{background-color:#fff;color:#1b1840;border-color:#fff;font-size:19px}
 .hname input,.hname select{height:54px}
-#anat .sil{fill:#ffffff10;stroke:#ffffff26;stroke-width:1.5}
-#anat .a-bone>*,#anat #lv>*{fill:#f3eee4;opacity:.88}
-#anat .a-mus>*{fill:url(#mus);stroke:#ff6f9c;opacity:0}
-#anat .a-mus .on{opacity:.85!important}
-#anat .a-joint>*{stroke:#ffd27a;opacity:0}
-#anat .a-joint .hl-facet>*,#anat .a-joint .hl-disc>*{fill:#ffd27a}
-#anat .a-nrv>*{stroke:#ffd84d;opacity:0}
-#anat .on{opacity:1!important;animation:apulse 2.2s ease-in-out infinite}
-#anat .a-nrv .on{filter:drop-shadow(0 0 5px #ffd84d)}
-#anat .a-mus .on{filter:drop-shadow(0 0 6px #ff6f9c)}
-#anat .a-bone .on{fill:#ff8fb3!important;filter:drop-shadow(0 0 6px #ff6f9c)}
-#anat .a-joint .on{filter:drop-shadow(0 0 6px #ffd27a)}
+.afig .sil{fill:#ffffff10;stroke:#ffffff26;stroke-width:1.5}
+.afig .a-bone>*,.afig #lv>*{fill:#f3eee4;opacity:.88}
+.afig .a-mus>*{fill:url(#mus);stroke:#ff6f9c;opacity:0}
+.afig .a-mus .on{opacity:.85!important}
+.afig .a-joint>*{stroke:#ffd27a;opacity:0}
+.afig .a-joint .hl-facet>*,.afig .a-joint .hl-disc>*{fill:#ffd27a}
+.afig .a-nrv>*{stroke:#ffd84d;opacity:0}
+.afig .on{opacity:1!important;animation:apulse 2.2s ease-in-out infinite}
+.afig .a-nrv .on{filter:drop-shadow(0 0 5px #ffd84d)}
+.afig .a-mus .on{filter:drop-shadow(0 0 6px #ff6f9c)}
+.afig .a-bone .on{fill:#ff8fb3!important;filter:drop-shadow(0 0 6px #ff6f9c)}
+.afig .a-joint .on{filter:drop-shadow(0 0 6px #ffd27a)}
 @keyframes apulse{0%,100%{opacity:1}50%{opacity:.55}}
-@media(prefers-reduced-motion:reduce){#anat .on{animation:none}}
+@media(prefers-reduced-motion:reduce){.afig .on{animation:none}}
 
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-bottom:40px}input,textarea{-webkit-user-select:text;user-select:text}
 .gate{position:fixed;inset:0;z-index:200;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
@@ -287,7 +287,12 @@ const AN=[
 {pin:['H',225,212],pr:'mat',base:{t:180,h:182,ua:2,fa:8,ua2:178,fa2:150,th:2,sh:0,ft:-80,th2:6,sh2:-4,ft2:-82,b:0,g:0},k:[[{},500,300],[{th:4},150,0],[{th:-34,sh:-34,ft:-118,g:.6},1100,1200,1],[{},900,300]]},
 {...PH_,pr:'ball',base:SUP,k:[[{},500,300],[{g:1,b:-5},600,1500],[{},800,400]]},
 {...PH_,base:{...SUP,ua:-60,fa:40,ua2:-62,fa2:42},k:[[{},300,200],[{b:-10,ua:-64,ua2:-66},2200,500],[{},2600,400]]},
-{...PH_,base:{...SUP,th:3,sh:3,ft:-85},k:[[{},500,300],[{th:-50,sh:72,ft:0,g:.3},1300,700],[{},1200,300]]}
+{...PH_,base:{...SUP,th:3,sh:3,ft:-85},k:[[{},500,300],[{th:-50,sh:72,ft:0,g:.3},1300,700],[{},1200,300]]},
+{pin:['A',255,220],pr:'chair',base:{...STAND,t:-155,h:-172,ua:90,fa:90,ua2:108,fa2:96,th:84,sh:96,th2:92,sh2:90,b:2,g:.2},k:[[{ua:80,fa:78},900,0],[{ua:100,fa:103},900,0]]},
+{...PH_,base:{...SUP,ua:5,fa:1,ua2:7,fa2:3},k:[[{},500,300],[{ua:9},150,0],[{ua:-160,fa:-163,ua2:-158,fa2:-161,g:.3},1700,1200],[{},1300,300]]},
+{pin:['H',225,212],pr:'weight',base:{t:180,h:182,ua:4,fa:150,ua2:186,fa2:172,th:2,sh:0,ft:-80,th2:6,sh2:-4,ft2:-82,b:0,g:0},k:[[{},500,300],[{fa:146},150,0],[{fa:300,g:.5},1100,900,1],[{},1000,300]]},
+{pin:['A',225,220],pr:'band',base:{...STAND,ua:150,fa:155,ua2:152,fa2:157},k:[[{},500,300],[{ua:153,ua2:155},150,0],[{ua:94,fa:170,ua2:96,fa2:172,b:1,g:.6},900,1200,1],[{},900,300]]},
+{pin:['A',215,220],pr:'wall',base:{...STAND,ua:95,fa:159,ua2:88,fa2:90},k:[[{},500,300],[{ua:92},150,0],[{ua:213,fa:264,g:.3},1600,1200],[{},1300,300]]}
 ];
 AN.forEach(a=>{a.K=a.k.map(([p,d,h,e])=>({P:{...a.base,...p},d,h,e}));a.tot=a.K.reduce((s,k)=>s+k.d+k.h,0);
  let m=0,mi=0;a.K.forEach((k,i)=>{if(k.h>m){m=k.h;mi=i}});a.act=mi});
@@ -306,6 +311,7 @@ const SEG=k=>`<line class="${k} m" stroke-linecap="round"/><line class="${k} hl"
 function stageSVG(a){const u=++uid;let pre='',post='';
  if(a.pr==='mat'||a.pr==='strap'||a.pr==='ball')pre=`<rect class="mat" x="30" y="223" width="340" height="7" rx="3.5"/>`;
  if(a.pr==='chair')pre=`<g class="chair"><rect x="175" y="186" width="50" height="9" rx="4"/><rect x="176" y="112" width="9" height="82" rx="4"/><rect x="179" y="192" width="6" height="36" rx="3"/><rect x="216" y="192" width="6" height="36" rx="3"/></g>`;
+ if(a.pr==='wall')pre=`<g class="chair"><rect x="176" y="0" width="10" height="230" rx="3"/></g>`;
  if(a.pr==='band')pre=`<g class="chair"><rect x="70" y="60" width="14" height="168" rx="6"/><rect x="56" y="222" width="42" height="8" rx="4"/></g>`;
  if(a.walk)pre=`<line class="walk" x1="0" y1="232" x2="400" y2="232" stroke-width="3" stroke-dasharray="14 22"/>`;
  if(a.pr==='band')post=`<line class="band" stroke-width="3" stroke-linecap="round"/>`;
@@ -436,7 +442,7 @@ function profileSpondy(){
 const aer=[['مشي سريع 30–40 دقيقة','مشي 30 دقيقة','مشي 15–20 دقيقة مرتين'],['دراجة ثابتة 30 دقيقة','دراجة ثابتة 20–30 دقيقة','دراجة ثابتة 15 دقيقة'],['سباحة 30 دقيقة','مشي في الماء 30 دقيقة','مشي في الماء 20 دقيقة']];
 const A_=k=>aer[k][S.age===2||S.grade===2?2:S.age===1||S.grade===1?1:0];
 function week(){return S.state?D.map(d=>[d,'تمارين المرحلة الأولى صباحاً ومساءً (10 دقائق)','مشي 5–10 دقائق كل ساعتين','f']):D.map((d,i)=>i===6?[d,'راحة نشطة: إطالات خفيفة','مشي هادئ','r']:i%2?[d,S.grade===2?'تثبيت وتقوية تحت إشراف (30 دقيقة)':'إحماء وتثبيت وتقوية (30–40 دقيقة)',A_(i%3),'s']:[d,'إحماء وتثبيت (15 دقيقة)',A_(i%3),'c'])}
-function dayEx(type){const P1=allowed(1),P2=allowed(2),P3=allowed(3);
+function dayEx(type){const P1=allowed(1),P2=allowed(2),P3=allowed(3);if(!isSp()){if(type==='f'||type==='r')return P1;return P1.concat(P2,P3)}
  if(type==='f')return P1;if(type==='r')return P1.filter(e=>[2,4].includes(e.i)).concat(EX.map((e,i)=>({...e,i})).filter(e=>e.i===9&&exOK(e)));
  if(type==='c')return P1.slice(0,3).concat(P2);return P1.slice(0,2).concat(P2.filter(e=>[5,6,7].includes(e.i)),P3)}
 const TL={f:'يوم تهدئة',r:'يوم راحة نشطة',c:'يوم تثبيت',s:'يوم تقوية'};
@@ -479,7 +485,7 @@ function diaryHTML(){return `<h4 style="margin:14px 0 6px">مفكرة الألم
 function postHTML(){let h='';
  if(!PM)h+=`<div class="pc" style="margin-bottom:16px"><div class="two"><label class="fl">تاريخ الإجراء<input type="date" id="ivd" value="${PI.ivd||''}"></label><label class="fl">ملاحظة الطبيب (اختيارية)<textarea id="ivn" rows="2">${esc(PI.ivn||'')}</textarea></label></div><p class="foot" style="margin:0">ضع ✓ على الإجراء الذي أُجري للمريض، واكتب أيام الراحة قبل العودة للتمارين (لا توجد قيمة افتراضية لأن المصادر لا تحدد رقماً ثابتاً). يُحسب تاريخ العودة للتمارين تلقائياً عند إدخال تاريخ الإجراء.</p></div>`;
  else{if(PI.ivd)h+=`<div class="note"><b>تاريخ الإجراء: ${fmtD(PI.ivd)}</b></div>`;if(PI.ivn)h+=`<div class="note"><b>ملاحظة الطبيب:</b> ${esc(PI.ivn)}</div>`}
- h+=IV.map(v=>{const key='iv-'+v.k;if(PM&&!SEL[key])return '';const r=restOf(v.k),bk=PI.ivd&&r!==null?addDays(PI.ivd,r):'';
+ h+=ivR().map(v=>{const key='iv-'+v.k;if(PM&&!SEL[key])return '';const r=restOf(v.k),bk=PI.ivd&&r!==null?addDays(PI.ivd,r):'';
   return `<div class="pc iv"><div class="fh">${pk(key)}<h3>${v.n}</h3></div>
   <div class="rest">${PM?(r===null?'':`<span class="restn">${r===0?'لا راحة بعد هذه الحقنة':'الراحة النسبية قبل العودة للتمارين: '+dayW(r)}</span>`):`<label class="rl">أيام الراحة قبل العودة للتمارين<input type="number" inputmode="numeric" min="0" max="60" class="rin" data-r="${v.k}" value="${r===null?'':r}" placeholder="يحدده الطبيب"></label>`}${PI.ivd&&r>0?`<span class="restd">العودة لبرنامج التمارين: ${fmtD(bk)}</span>`:''}</div>
   <ul class="ok">${li(v.b)}${li(v.x,'extra')}</ul>${v.diary?diaryHTML():''}</div>`}).join('');
@@ -582,9 +588,9 @@ const IVU={esi:[['يمكنك العودة لنشاطك المعتاد بعد ا�
 IV.forEach(v=>{v.b=IVU[v.k][0];v.x=IVU[v.k][1]});
 setArr(IVG,['إذا أخذت مهدئاً فلا تقُد السيارة يوم الإجراء'+R(24),'أدوية السيولة: أعِد تناولها حسب تعليمات طبيبك تحديداً','سجّل أي تحسّن أو تغيّر لتخبر به الطبيب في موعد المراجعة']);
 setArr(IVF,['حرارة، أو احمرار، أو تورّم، أو إفرازات من مكان الحقنة'+R(25),'صداع شديد يزيد عند الوقوف ويخف عند الاستلقاء','ضعف جديد في الساق، أو تنميل يزداد بعد زوال المخدّر','فقدان السيطرة على البول أو البراز','ألم شديد مفاجئ مختلف عن ألمك المعتاد']);
-const doseNote=()=>`<div class="note">الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. الأدلة تثبت أن التمارين تقلل ألم أسفل الظهر المزمن${R(1)}، وأن تمارين التحكم بعضلات الجذع العميقة مفيدة مثل غيرها من التمارين${R(2)}. لا توجد دراسة تحدد عدد التكرارات لكل درجة أو شدة.</div>`;
+let doseNote=()=>`<div class="note">الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. الأدلة تثبت أن التمارين تقلل ألم أسفل الظهر المزمن${R(1)}، وأن تمارين التحكم بعضلات الجذع العميقة مفيدة مثل غيرها من التمارين${R(2)}. لا توجد دراسة تحدد عدد التكرارات لكل درجة أو شدة.</div>`;
 const maintNote=()=>[5,6,7].every(i=>dxEx().includes(i))?`داوم على "الثلاثي الذهبي" (McGill curl-up، واللوح الجانبي، وBird-dog) 2–3 أيام أسبوعياً، ثم يومياً${R(4)}. أضف 150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة، وتمارين تقوية يومين على الأقل${R(12)}.`:`داوم على تمارينك بانتظام، وأضف 150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة، وتمارين تقوية يومين على الأقل${R(12)}.`;
-const flareNote=()=>`مع الهجمة: كمادات دافئة${R(15)}، والمسكن الذي يصفه طبيبك، وابقَ نشيطاً قدر استطاعتك بدل الراحة في السرير${R(14,5)}. إذا لم يتحسّن الألم خلال أسبوعين، أو نزل إلى الساق، فراجع الطبيب.`;
+let flareNote=()=>`مع الهجمة: كمادات دافئة${R(15)}، والمسكن الذي يصفه طبيبك، وابقَ نشيطاً قدر استطاعتك بدل الراحة في السرير${R(14,5)}. إذا لم يتحسّن الألم خلال أسبوعين، أو نزل إلى الساق، فراجع الطبيب.`;
 const exSrc=e=>e.s?`<p class="foot">المصادر: ${R(...e.s)}</p>`:'';
 
 
@@ -763,7 +769,7 @@ itb:{n:'متلازمة الرباط الحرقفي الظنبوبي',g:'العض
  flags:[],follow:[['المتابعة حسب الأعراض'+R(50)],['علاج طبيعي'+R(50)],['علاج طبيعي'+R(50)]],iv:[]}};
 const dxC=()=>DX[S.dx]||DX.spondy,isSp=()=>!!dxC().sp,dxEx=()=>dxC().ex;
 const stripR=t=>String(t).replace(/<sup[\s\S]*?<\/sup>/g,'');
-const dxOptions=()=>{const g={};Object.keys(DX).forEach(k=>{(g[DX[k].g]=g[DX[k].g]||[]).push(k)});return Object.keys(g).map(n=>`<optgroup label="${n}">${g[n].map(k=>`<option value="${k}"${S.dx===k?' selected':''}>${DX[k].n}</option>`).join('')}</optgroup>`).join('')};
+let dxOptions=()=>{const g={};Object.keys(DX).forEach(k=>{(g[DX[k].g]=g[DX[k].g]||[]).push(k)});return Object.keys(g).map(n=>`<optgroup label="${n}">${g[n].map(k=>`<option value="${k}"${S.dx===k?' selected':''}>${DX[k].n}</option>`).join('')}</optgroup>`).join('')};
 function setDx(k){S.dx=DX[k]?k:'spondy';setArr(GR,isSp()?['الأولى','الثانية','الثالثة – الرابعة']:['خفيفة','متوسطة','شديدة'])}
 setDx(S.dx||'spondy');
 function profileHTML(){if(isSp())return profileSpondy();const d=dxC(),it=['شدة خفيفة','شدة متوسطة','شدة أعلى'][lvl()];
@@ -786,13 +792,14 @@ const exOK=e=>dxEx().includes(e.i===undefined?EX.indexOf(e):e.i);
 
 const HL={disc:['disc'],facet:['facet'],sij:['sij'],piri:['piri'],spasm:['spasm'],coccyx:['coccyx'],cluneal:['cluneal'],hipoa:['hip'],fai:['hip'],lcs:['lcs'],ischial:['ischial'],troch:['troch'],lfcn:['lfcn'],pfcn:['pfcn'],afcn:['afcn'],femoral:['femoral'],sciatic:['sciatic'],pudendal:['pudendal'],genitofem:['genitofem'],obturator:['obturator'],adductor:['adductor'],itb:['itb']};
 const CAT={disc:'الفقرات والأقراص',facet:'مفاصل الفقرات',sij:'المفاصل',piri:'العضلات والأعصاب',spasm:'العضلات',coccyx:'العظام',cluneal:'الأعصاب',hipoa:'المفاصل',fai:'المفاصل',lcs:'العضلات',ischial:'الأكياس الزلالية',troch:'الأوتار والأكياس الزلالية',lfcn:'الأعصاب',pfcn:'الأعصاب',afcn:'الأعصاب',femoral:'الأعصاب',sciatic:'الأعصاب',pudendal:'الأعصاب',genitofem:'الأعصاب',obturator:'الأعصاب',adductor:'العضلات',itb:'العضلات والأربطة'};
-function anat(){const a=document.getElementById('anat'),sp=document.getElementById('spsv'),lg=document.getElementById('lgd');if(!a)return;
- const lv=a.querySelector('#lv');if(!lv.children.length){let h='',f='',d='';for(let i=0;i<5;i++){const y=6+i*26;h+=`<rect x="143" y="${y}" width="44" height="20" rx="6"/><rect x="${i%2?160:159}" y="${y+4}" width="12" height="12" rx="3" opacity=".6"/>`;f+=`<circle cx="134" cy="${y+12}" r="4.5"/><circle cx="196" cy="${y+12}" r="4.5"/>`;if(i<4)d+=`<rect x="145" y="${y+20.5}" width="40" height="5" rx="2.5"${i===3?'':' opacity=".35"'}/>`}
+function anat(){let a=document.getElementById('anat');const sp=document.getElementById('spsv'),lg=document.getElementById('lgd'),sf=document.getElementById('shfig');if(!a)return;if(sf)sf.style.display='none';
+ if(REG().fig==='shoulder'&&sf){a.style.display='none';sp.style.display='none';a=sf;a.style.display=''}
+ const lv=a.querySelector('#lv');if(lv&&!lv.children.length){let h='',f='',d='';for(let i=0;i<5;i++){const y=6+i*26;h+=`<rect x="143" y="${y}" width="44" height="20" rx="6"/><rect x="${i%2?160:159}" y="${y+4}" width="12" height="12" rx="3" opacity=".6"/>`;f+=`<circle cx="134" cy="${y+12}" r="4.5"/><circle cx="196" cy="${y+12}" r="4.5"/>`;if(i<4)d+=`<rect x="145" y="${y+20.5}" width="40" height="5" rx="2.5"${i===3?'':' opacity=".35"'}/>`}
   lv.innerHTML=h;a.querySelector('.hl-facet').innerHTML=f;a.querySelector('g.hl-disc').innerHTML=d}
- if(isSp()){a.style.display='none';sp.style.display='';lg.innerHTML='<span><i style="background:#ece6da"></i>الفقرة</span><span><i style="background:#9b8cf0"></i>القرص</span><span><i style="background:#ff7aa8"></i>مستوى التزحزح</span>';return}
- sp.style.display='none';a.style.display='';const ks=HL[S.dx]||[];
+ if(isSp()&&a.id==='anat'){a.style.display='none';sp.style.display='';lg.innerHTML='<span><i style="background:#ece6da"></i>الفقرة</span><span><i style="background:#9b8cf0"></i>القرص</span><span><i style="background:#ff7aa8"></i>مستوى التزحزح</span>';return}
+ sp.style.display='none';a.style.display='';const ks=HL[S.dx]||[S.dx];
  a.querySelectorAll('[class*="hl-"]').forEach(e=>{const c=e.getAttribute('class')||'';e.classList.toggle('on',ks.some(k=>c.split(/\s+/).includes('hl-'+k)))});
- lg.innerHTML=`<span><i style="background:#ffd27a"></i>${CAT[S.dx]||''}: ${dxC().n}</span>`}
+ lg.innerHTML=`<span><i style="background:#ffd27a"></i>${CAT[S.dx]||dxC().g}: ${dxC().n}</span>`}
 
 
 /* ---------- دليل المرافق ---------- */
@@ -826,7 +833,7 @@ function careHTML(){const d=dxC(),nerve=d.g==='الأعصاب'||S.dx==='piri';
   'الكمادات الدافئة تخفف ألم الهجمة الحادة على المدى القصير، ويمكنك تجهيزها له'+R(15),
   'التدليك الخفيف قد يريحه، لكن الأدلة على فائدته ضعيفة، وقد يزيد الألم عند بعض المرضى. اضغط بلطف، وتوقف إذا زاد الألم'+R(64)+(S.dx==='spasm'?'. في ألم الظهر الحاد يُعدّ التدليك من الخيارات غير الدوائية الأولى'+R(32):''),
   ...(nerve?['لا تضغط ولا تدلّك فوق مسار العصب المتهيج'+R(47)]:[]),
-  'لا تشدّ ظهره ولا تسحب ساقيه: الشد لا يُنصح به لعلاج ألم أسفل الظهر'+R(5),
+  ...(REG().back?['لا تشدّ ظهره ولا تسحب ساقيه: الشد لا يُنصح به لعلاج ألم أسفل الظهر'+R(5)]:[]),
   'التمارين في هذا البرنامج يؤديها المريض بنفسه ضمن حدود ألمه. دورك التشجيع والمرافقة، لا تحريك جسمه بالقوة']],
  ['care-flags','متى تتصل بالطبيب أو بالإسعاف',[...FL,...(isSp()?[]:d.flags),
   'إسعاف فوراً: إذا صعُب إيقاظه، أو أصبح تنفّسه بطيئاً جداً، أو ازرقّت شفتاه وهو يأخذ مسكنات أفيونية'+R(67)],'x'],
@@ -834,13 +841,105 @@ function careHTML(){const d=dxC(),nerve=d.g==='الأعصاب'||S.dx==='piri';
   'رافقه إلى الإجراء وأوصله إلى البيت، فلا يقود السيارة يوم الإجراء'+R(24,65),
   'إذا أخذ مهدئاً فابقَ معه 24 ساعة: قد يتأثر حكمه وتوازنه، ولا يشرب كحولاً ولا يأخذ أدوية مهدئة أخرى'+R(65),
   'امشِ بجانبه في الساعات الأولى، فقد يكون أقل ثباتاً بعد الإجراء'+R(65),
-  'مريض السكري بعد حقنة الستيرويد: ساعده على فحص السكر أكثر في الأيام الأولى، فقد يرتفع حتى أسبوعين'+R(22),
-  'بعد إحصار الفرع الإنسي التشخيصي: ساعده على تسجيل نسبة التحسّن في مفكرة الألم لمدة 5 ساعات'+R(24),
-  'بعد الكي الحراري: لا تضع كمادات حارة على مكان الإجراء لعدة أسابيع'+R(25),
+  ...(REG().iv.includes('esi')?['مريض السكري بعد حقنة الستيرويد فوق الجافية: ساعده على فحص السكر أكثر في الأيام الأولى، فقد يرتفع حتى أسبوعين'+R(22)]:[]),
+  ...(REG().iv.includes('mbb')?['بعد إحصار الفرع الإنسي التشخيصي: ساعده على تسجيل نسبة التحسّن في مفكرة الألم لمدة 5 ساعات'+R(24)]:[]),
+  ...(REG().iv.includes('rfa')?['بعد الكي الحراري: لا تضع كمادات حارة على مكان الإجراء لعدة أسابيع'+R(25)]:[]),
   'اتصل بالطبيب إذا ظهرت حرارة، أو احمرار، أو تورّم، أو إفرازات من مكان الحقنة'+R(25)+'، أو أي علامة من علامات الخطر بعد الإجراء في قسم "بعد التداخل"']],
  ['care-self','اعتنِ بنفسك أيضاً',['خذ وقتاً للراحة واطلب مساعدة الآخرين في الرعاية: الاعتناء بنفسك يجعلك أقدر على رعاية مريضك'+R(66,70),
   'اهتم بنومك وغذائك ونشاطك البدني'+R(66,70)]]];
  return `<p class="sub">هذا القسم موجّه لمرافق المريض أو أحد أفراد أسرته: كيف يساعده، وما الذي يتجنّبه، ومتى يطلب المساعدة.</p><div class="life">${C.map(([k,t,b,x])=>PM&&!SEL[k]?'':`<div class="pc${x?' flags':''}"><div class="fh">${pk(k)}<h3>${t}</h3></div><ul${x?' class="x"':''}>${li(b)}</ul></div>`).join('')}</div>`}
+
+
+/* ---------- أماكن الألم ---------- */
+Object.assign(SRC,{
+71:['StatPearls (NCBI Bookshelf). Frozen Shoulder (Adhesive Capsulitis)','https://www.ncbi.nlm.nih.gov/books/NBK482162/'],
+72:['Griggs SM, et al. Idiopathic adhesive capsulitis: a prospective functional outcome study of nonoperative treatment (stretching program). J Bone Joint Surg Am 2000','https://pubmed.ncbi.nlm.nih.gov/11057467/'],
+73:['Hospital for Special Surgery (HSS). Shoulder adhesive capsulitis non-operative rehabilitation guideline','https://www.hss.edu/files/HSSRehabilitationClinicalGuidelines-Shoulder-AdhesiveCapsulitis-Non-operative.pdf'],
+74:['Rangan A, et al. BESS/BOA Patient Care Pathways: Frozen Shoulder. Shoulder & Elbow 2015','https://pmc.ncbi.nlm.nih.gov/articles/PMC4935124'],
+75:['Rangan A, Hanchard N, McDaid C. What is the most effective treatment for frozen shoulder? BMJ 2016','https://doi.org/10.1136/bmj.i4162'],
+76:['StatPearls (NCBI Bookshelf). Rotator Cuff Injury','https://www.ncbi.nlm.nih.gov/books/NBK547664/'],
+77:['American Academy of Orthopaedic Surgeons. Clinical Practice Guideline for the Management of Rotator Cuff Injuries (2025 update)','https://www.aaos.org/aaos-home/newsroom/press-releases/aaos-updates-clinical-practice-guideline-for-the-management-of-rotator-cuff-injuries/'],
+78:['Harvard Health Publishing (Harvard Medical School). What to do about rotator cuff tendinitis','https://www.health.harvard.edu/pain/what-to-do-about-rotator-cuff-tendinitis'],
+79:['StatPearls (NCBI Bookshelf). Acromioclavicular Joint Injection (AC joint pain)','https://www.ncbi.nlm.nih.gov/books/NBK547727/'],
+80:['StatPearls (NCBI Bookshelf). Biceps Tendinitis','https://www.ncbi.nlm.nih.gov/books/NBK533002/'],
+81:['AAOS OrthoInfo. Biceps Tendinitis','https://orthoinfo.aaos.org/en/diseases--conditions/biceps-tendinitis'],
+82:['Nonoperative rehabilitation of the unstable shoulder: principles and programs. North American Journal of Sports Physical Therapy (PMC)','https://pmc.ncbi.nlm.nih.gov/articles/PMC2953282'],
+83:['StatPearls (NCBI Bookshelf). Multidirectional Shoulder Instability','https://ncbi.nlm.nih.gov/books/n/statpearls/article-25342/'],
+84:['Shoulder pain in primary care: diagnosis and management (PMC review)','https://pmc.ncbi.nlm.nih.gov/articles/PMC4141618'],
+85:['NHS Scotland Right Decisions. MSK pathways: shoulder conditions','https://rightdecisions.scot.nhs.uk/msk-pathways/shoulder-elbow-pathways/supporting-information-on-relevant-conditions/shoulder-conditions'],
+86:['NHS North East London. Shoulder pathway guidelines (red flags and self-management), 2025','https://primarycare.northeastlondon.icb.nhs.uk/wp-content/uploads/2025/09/Final-Shoulder-Pathway-Guidelines_May-2025-002.pdf'],
+87:['Cleveland Clinic. Biceps tendonitis','https://my.clevelandclinic.org/health/diseases/bicep-tendonitis'],
+88:['Rupani N, Gwilym SE, BESS Frozen Shoulder Working Group. British Elbow and Shoulder Society patient care pathway: frozen shoulder. Shoulder & Elbow 2025','https://www.ndorms.ox.ac.uk/publications/2118244'],
+89:['StatPearls (NCBI Bookshelf). Posterior Shoulder Instability','https://ncbi.nlm.nih.gov/books/NBK557648'],
+90:['University of Utah Orthopaedics. Anterior shoulder instability: nonoperative treatment protocol','https://www.justinernatmd.med.utah.edu/pdf/anterior-shoulder-instability-nonoperative-pt-protocol.pdf']});
+
+EX.push(
+{p:1,n:'تمرين البندول',h:'انحنِ للأمام واستند بيدك السليمة على كرسي أو طاولة. دع الذراع المصابة تتدلّى مرتخية، وحرّكها بلطف للأمام والخلف وفي دوائر صغيرة بحركة جسمك.',d:['1 دقيقة','2 دقيقة','2 × 2 دقيقة'],m:2,s:[78,73]},
+{p:1,n:'رفع الذراعين بمساعدة اليد السليمة',h:'استلقِ على ظهرك وأمسك يد الذراع المصابة بيدك السليمة. ارفع الذراعين معاً فوق رأسك ببطء حتى تشعر بشد مريح، ثم أنزلهما.',d:['8 مرات','10 مرات','2 × 10'],m:2,s:[73,72]},
+{p:2,n:'تدوير الكتف للخارج على الجنب',h:'استلقِ على جنبك السليم، والمرفق المصاب مثني 90 درجة وملتصق بجانبك. ارفع الساعد للأعلى ببطء دون أن يبتعد المرفق عن جسمك، ثم أنزله. ابدأ بلا وزن.',d:['2 × 8','3 × 10','3 × 12'],m:2,s:[82,76]},
+{p:2,n:'سحب الشريط للخلف (تقوية لوح الكتف)',h:'اربط شريطاً مطاطياً أمامك. اسحبه للخلف والمرفقان قرب جسمك، واضمم لوحي الكتف معاً، ثم ارجع ببطء.',d:['2 × 8','3 × 10','3 × 12'],m:2,s:[82,90]},
+{p:1,n:'انزلاق اليد على الجدار',h:'قف مواجهاً للجدار وضع يدك عليه. حرّك أصابعك للأعلى على الجدار ببطء حتى تشعر بشد مريح، ثم انزل.',d:['8 مرات','10 مرات','2 × 10'],m:2,s:[73,72]});
+
+IV.push({k:'shj',n:'حقن مفصل الكتف أو ما حوله',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'ssn',n:'إحصار أو كي العصب فوق لوح الكتف',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]});
+
+Object.assign(DX,{
+frozen:{n:'الكتف المتجمد',g:'المفاصل',def:'التهاب وتليّف في محفظة مفصل الكتف يسبب ألماً وتيبّساً، ويستمر أكثر من 3 أشهر'+R(71)+'. يتحسن مع الوقت، والعلاج يهدف لتخفيف الألم وتحسين الحركة أسرع'+R(88),
+ sev:['تمارين حركة لطيفة ضمن حدود الألم، مثل البندول'+R(73),'برنامج إطالة منتظم: أغلب المرضى في مرحلة التيبّس تحسّنوا به'+R(72),'حقنة الستيرويد قد تسرّع تحسّن الألم والحركة لأسابيع، والتداخل للحالات المستعصية'+R(75,74)],
+ ex:[24,25,28,26,27],lf:[0,2,3],avoid:[['الحركات المفاجئة والأنشطة التي تثير الألم بشدة'+R(73)],[],[]],
+ tips:['استمر باستعمال ذراعك في الأنشطة غير المؤلمة'+R(73),'السكري من أهم عوامل الخطر'+R(71)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(74)],['علاج طبيعي'+R(74)],['حقنة الستيرويد أو التوسيع بالسوائل أو التداخل الجراحي حسب الطبيب'+R(88,75)]],iv:['shj','ssn']},
+rcten:{n:'التهاب أوتار الكتف (الأوتار الدوارة)',g:'الأوتار',def:'ألم من أوتار الكتف الدوارة والكيس الذي فوقها، ويزداد مع رفع الذراع أو الوصول فوق الرأس'+R(78,76),
+ sev:['قلّل الرفع والوصول فوق الرأس مؤقتاً، وابدأ بتمرين البندول'+R(78),'تمارين الإطالة والتقوية مع العلاج الطبيعي'+R(78),'قد يُناقش حقن الستيرويد الموجّه عندما لا تكفي العلاجات الأخرى'+R(86)],
+ ex:[24,28,26,27,25],lf:[0,1,2],avoid:[['الرفع والوصول إلى الأمام أو فوق الرأس أثناء الألم'+R(78)],[],[]],
+ tips:['الأعمال والرياضات التي تتكرر فيها حركات فوق الرأس تزيد الخطر'+R(78),'ألم خفيف بعد تمارين التقوية متوقع، والثلج يخففه'+R(78)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(86)],['علاج طبيعي'+R(86)],['الإحالة لأخصائي إذا لم تنجح العلاجات الأولى'+R(86)]],iv:['shj','ssn']},
+rctear:{n:'تمزق أوتار الكتف',g:'الأوتار',def:'تمزق جزئي أو كامل في أوتار الكتف الدوارة، ويزداد انتشاره مع العمر'+R(76),
+ sev:['العلاج الطبيعي طويل المدى يحسّن الأعراض في كثير من التمزقات الكاملة'+R(77),'العلاج الطبيعي، مع مناقشة الجراحة حسب الحالة'+R(77),'التمزق بعد إصابة عند مريض أصغر سناً يحتاج إحالة عاجلة لجراح العظام'+R(85)],
+ ex:[24,25,26,27],lf:[0,1,2],avoid:[['الرفع الثقيل والحركات التي تثير الألم'+R(78)],[],[]],
+ tips:['نتائج الجراحة أفضل من العلاج غير الجراحي عندما يلتئم الإصلاح'+R(77)],flags:['ضعف مفاجئ في رفع الذراع بعد إصابة'+R(85)],
+ follow:[['المتابعة حسب الأعراض'+R(77)],['علاج طبيعي وتقييم من جراح الكتف'+R(77)],['تقييم جراحي'+R(85,77)]],iv:['shj','ssn']},
+acj:{n:'ألم مفصل الترقوة مع الكتف',g:'المفاصل',def:'ألم في أعلى الكتف من المفصل بين الترقوة وعظم الكتف، ويزداد عند تقريب الذراع عبر الصدر'+R(79),
+ sev:['تعديل النشاط والعلاج الطبيعي، ومضادات الالتهاب حسب الطبيب'+R(79),'تعديل النشاط والعلاج الطبيعي، ومضادات الالتهاب حسب الطبيب'+R(79),'حقنة المفصل قد تريح كثيراً عند عدم الاستجابة'+R(79)],
+ ex:[24,25,27],lf:[0,1,2],avoid:[['تقريب الذراع عبر الصدر بشكل متكرر'+R(79)],[],[]],
+ tips:['العلاج غير الجراحي هو الخط الأول'+R(79)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(79)],['علاج طبيعي'+R(79)],['حقنة المفصل حسب الطبيب'+R(79)]],iv:['shj']},
+biceps:{n:'التهاب وتر العضلة ذات الرأسين',g:'الأوتار',def:'التهاب الوتر الطويل للعضلة ذات الرأسين، يسبب ألماً في مقدمة الكتف، وغالباً يرافق مشاكل أوتار الكتف الأخرى'+R(81,80),
+ sev:['الراحة من الأنشطة المؤلمة، والثلج'+R(81,87),'العلاج الطبيعي'+R(81),'الجراحة للحالات المستعصية'+R(87)],
+ ex:[24,25,26,27],lf:[0,1,2,3],avoid:[['الأنشطة التي تسبب الألم'+R(81)],['رفع الذراع فوق الرأس والأنشطة المجهدة'+R(87)],[]],
+ tips:['العلاج غير الجراحي فعّال جداً عند أغلب المرضى'+R(81)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(81)],['علاج طبيعي'+R(81)],['تقييم جراحي'+R(87)]],iv:['shj']},
+instab:{n:'عدم ثبات الكتف',g:'المفاصل',def:'خروج أو شبه خروج رأس عظم العضد من مكانه، أو ارتخاء في مفصل الكتف. الأوتار الدوارة وعضلات لوح الكتف هي التي تثبّته أثناء الحركة'+R(83,89),
+ sev:['برنامج تأهيل يقوّي الأوتار الدوارة وعضلات لوح الكتف'+R(82),'برنامج تأهيل يقوّي الأوتار الدوارة وعضلات لوح الكتف'+R(82),'الجراحة لمن لديه نقص في العظم أو لم يستفد من التأهيل'+R(89)],
+ ex:[25,26,27,24],lf:[0,1],avoid:[['تدوير الذراع وهي مرفوعة في الأشهر الثلاثة الأولى بعد الخلع'+R(90)],[],[]],
+ tips:['العلاج غير الجراحي هو الخط الأول عند أغلب المرضى'+R(89)],flags:['خلع جديد أو تشوّه واضح في الكتف'+R(84)],
+ follow:[['المتابعة حسب الأعراض'+R(82)],['علاج طبيعي'+R(82)],['تقييم جراحي'+R(89)]],iv:[]},
+neckref:{n:'ألم منقول من الرقبة',g:'الرقبة',def:'ألم يشعر به المريض في الكتف لكن مصدره الرقبة، وهو من أشيع أسباب ألم الكتف'+R(84),
+ sev:['يُعالج حسب سببه في الرقبة: انظر برنامج «نصائح ألم الرقبة»'+R(84),'يُعالج حسب سببه في الرقبة: انظر برنامج «نصائح ألم الرقبة»'+R(84),'يُعالج حسب سببه في الرقبة: انظر برنامج «نصائح ألم الرقبة»'+R(84)],
+ ex:[],lf:[0],avoid:[[],[],[]],tips:['تمارين هذا التشخيص في برنامج الرقبة'],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(84)],['المتابعة حسب الأعراض'+R(84)],['المتابعة حسب الأعراض'+R(84)]],iv:[]}});
+
+const BACK_LF=LF.slice(),BACK_FL=FL.slice();
+const REGIONS={
+lowback:{t:'أسفل الظهر',dx:['spondy','disc','facet','sij','spasm','coccyx','cluneal','lcs','sciatic','piri'],fig:'anat',back:1,iv:['esi','facet','mbb','rfa','sij','nb']},
+hip:{t:'الورك والحوض',dx:['hipoa','fai','troch','ischial','adductor','itb','lfcn','pfcn','afcn','femoral','obturator','pudendal','genitofem'],fig:'anat',iv:['hipj','nb','rfa']},
+shoulder:{t:'الكتف',dx:['frozen','rcten','rctear','acj','biceps','instab','neckref'],fig:'shoulder',iv:['shj','ssn'],
+ FL:['ضعف مفاجئ أو عدم القدرة على رفع الذراع بعد إصابة'+R(86,84),'كتلة أو تورّم في الكتف'+R(86),'احمرار وسخونة في الكتف مع حرارة أو شعور بالتوعك'+R(86),'تشوّه واضح أو ألم شديد بعد سقوط أو حادث'+R(84),'أعراض عامة مثل الحرارة أو نقص الوزن غير المبرر'+R(84)],
+ LF:[{t:'الحركة والنشاط',b:['استمر باستعمال ذراعك في الأنشطة اليومية غير المؤلمة'+R(73),'تجنّب الحركات المفاجئة والأنشطة التي تثير الألم بشدة'+R(73),'150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة مثل المشي'+R(12)],a:[[],[],['أضف تمارين التوازن، فهي تقلل السقوط'+R(13)]],g:[[],[],[]]},
+  {t:'العمل والرفع فوق الرأس',b:['أثناء الألم قلّل الرفع والوصول إلى الأمام أو فوق الرأس'+R(78),'الأعمال والرياضات التي تتكرر فيها حركات فوق الرأس تزيد خطر مشاكل أوتار الكتف'+R(78,76)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'تخفيف الألم',b:['الثلج على الكتف يخفف الألم الخفيف بعد التمارين'+R(78),'حقنة الستيرويد قد تسرّع التحسن في بعض الحالات، ويقررها طبيبك'+R(75,86)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'عوامل الخطر',b:['السكري من أهم عوامل الخطر للكتف المتجمد، فاضبطه جيداً'+R(71),'التدخين من عوامل الخطر لالتهاب وتر العضلة ذات الرأسين'+R(87)],a:[[],[],[]],g:[[],[],[]]}],
+ DO:['استعمل ذراعك في الأنشطة غير المؤلمة','قلّل الرفع فوق الرأس أثناء الألم','الثلج بعد التمارين عند الحاجة','اضبط السكري وابتعد عن التدخين'],
+ dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. التمارين والعلاج الطبيعي أساس علاج أغلب حالات ألم الكتف${R(74,77,82)}.`,
+ flare:()=>`مع الهجمة: قلّل الأنشطة المثيرة للألم، واستمر بالحركة الخفيفة غير المؤلمة مثل تمرين البندول${R(73,78)}. إذا ظهرت أي علامة من علامات الخطر فراجع الطبيب.`}};
+const REG=()=>REGIONS[S.rg]||REGIONS.lowback;
+const regionOf=k=>Object.keys(REGIONS).find(r=>REGIONS[r].dx.includes(k))||'lowback';
+const ivR=()=>IV.filter(v=>REG().iv.includes(v.k));
+function setRegion(rg){S.rg=REGIONS[rg]?rg:'lowback';const r=REG();setArr(LF,r.LF||BACK_LF);setArr(FL,r.FL||BACK_FL);if(!r.dx.includes(S.dx))setDx(r.dx[0]);else setDx(S.dx)}
+dxOptions=()=>{const g={};REG().dx.forEach(k=>{(g[DX[k].g]=g[DX[k].g]||[]).push(k)});return Object.keys(g).map(n=>`<optgroup label="${n}">${g[n].map(k=>`<option value="${k}"${S.dx===k?' selected':''}>${DX[k].n}</option>`).join('')}</optgroup>`).join('')};
+const _dose=doseNote,_flare=flareNote;
+doseNote=()=>REG().dose?`<div class="note">${REG().dose()}</div>`:_dose();
+flareNote=()=>REG().flare?REG().flare():_flare();
 
 
 /* ---------- تطبيق المريض ---------- */
@@ -863,7 +962,7 @@ function gate(kind,err){const g=$('gate');g.hidden=false;$('app').hidden=true;$(
  if(kind==='nolink')g.innerHTML=`<div class="gbox"><div class="glogo">${LOGO}</div><h2>افتح برنامجك من الرابط</h2><p>هذا البرنامج يُفتح فقط من الرابط الخاص الذي أرسله لك الدكتور ياسر الخزرجي. إذا فتحته من الرابط ولم يعمل، اطلب من العيادة رابطاً جديداً.</p></div>`;
  else if(kind==='expired')g.innerHTML=`<div class="gbox"><div class="glogo">${LOGO}</div><h2>انتهت صلاحية البرنامج</h2><p>انتهت صلاحية برنامجك العلاجي بتاريخ ${fmtD(CFG.e)}. راجع الدكتور ياسر الخزرجي لتحديثه.</p></div>`;
 }
-function apply(c){CFG=c;setDx(c.q||'spondy');S.age=c.s[0];S.grade=c.s[1];S.state=c.s[2];SEL={};c.k.forEach(k=>SEL[k]=true);
+function apply(c){CFG=c;S.dx=c.q||'spondy';setRegion(c.g||regionOf(S.dx));S.age=c.s[0];S.grade=c.s[1];S.state=c.s[2];SEL={};c.k.forEach(k=>SEL[k]=true);
  Object.assign(PI,{name:c.n,age:c.a,dx:c.x,date:c.t,ivd:c.ivd,rest:c.r||{},ivn:c.ivn});}
 async function start(){
  if(window.__CFG){apply(window.__CFG);return boot()}
@@ -888,16 +987,16 @@ const NO_S=[['تمارين البطن التقليدية (Sit-ups)','التقو�
 const WC={c:'#4b3fd6',s:'#1d3fc4',r:'#9b8cf0',f:'#d6336c'};
 function infoHTML(){const ex=mine().slice(0,8),W=week(),it=['خفيفة','متوسطة','أعلى'][lvl()];
  let no=[...NO_S[0]];for(let g=1;g<=S.grade;g++)no.push(...NO_S[g]);if(!isSp())no=dxNo();
- const dos=LF.map((x,i)=>SEL['life-'+i]&&(isSp()||dxC().lf.includes(i))?DO_S[i]:null).filter(Boolean);if(!isSp()&&SEL.tips)dos.push(...dxC().tips.slice(0,3).map(stripR));const ivs=IV.filter(v=>SEL['iv-'+v.k]);
+ const dos=LF.map((x,i)=>SEL['life-'+i]&&(isSp()||dxC().lf.includes(i))?(REG().DO||DO_S)[i]:null).filter(Boolean);if(!isSp()&&SEL.tips)dos.push(...dxC().tips.slice(0,3).map(stripR));const ivs=IV.filter(v=>SEL['iv-'+v.k]);
  return `<div class="info" id="infoPage">
- <div class="ih"><div><small>نصائح للمريض والمرافق</small><h2>الملخص العلاجي</h2></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
+ <div class="ih"><div><small>نصائح للمريض والمرافق</small><h2>الملخص العلاجي</h2><small>نصائح ألم ${REG().t}</small></div><div class="idoc">${LOGO}<span>د. ياسر الخزرجي</span></div></div>
  <div class="ipt"><div><small>المريض</small><b>${esc(PI.name)}</b></div>${PI.age?`<div><small>العمر</small><b>${esc(PI.age)} سنة</b></div>`:''}<div class="w2"><small>التشخيص</small><b>${esc(PI.dx)}</b></div><div><small>تاريخ المشاركة</small><b>${fmtD(PI.date)}</b></div></div>
  <div class="ist">${isSp()?`<div><i>${['I','II','III+'][S.grade]}</i><span>درجة التزحزح</span></div><div><i>${S.age===0?'برزخي':'تنكّسي'}</i><span>نوع التزحزح</span></div>`:`<div><i>${SEVL[S.grade]}</i><span>شدة الأعراض</span></div>`}<div><i>${S.state?'تهدئة':it}</i><span>${S.state?'المرحلة الحالية':'شدة البرنامج'}</span></div></div>
  ${ex.length?`<h3 class="ihd">تمارينك اليومية</h3><div class="iex">${ex.map(e=>`<div><div class="iimg">${snap(e.i)}</div><b>${e.n}</b><span>${dose(e)}</span></div>`).join('')}</div>`:''}
  <div class="icol">${dos.length?`<div class="ido"><h3>افعل</h3><ul>${li(dos)}</ul></div>`:''}${SEL.avoid&&no.length?`<div class="ino"><h3>تجنّب</h3><ul>${li(no)}</ul></div>`:''}</div>
  ${SEL.week||SEL.today?`<h3 class="ihd">أسبوعك</h3><div class="iwk">${W.map(r=>`<div style="--c:${WC[r[3]]}"><b>${r[0]}</b><span>${TL[r[3]].replace('يوم ','')}</span></div>`).join('')}</div>`:''}
  ${ivs.length?`<div class="iiv"><h3>بعد الإجراء${PI.ivd?' ('+fmtD(PI.ivd)+')':''}</h3><ul>${li(ivs.map(v=>{const r=restOf(v.k);return `${v.n.split(' (')[0]}: ${r===null?(v.k==='mbb'?'سجّل الألم 5 ساعات بعد الحقنة':'حسب تعليمات الطبيب'):r?'راحة نسبية '+dayW(r)+(PI.ivd?' ثم العودة للتمارين '+fmtD(addDays(PI.ivd,r)):''):'لا راحة'}`}))}</ul></div>`:''}
- <div class="ifl"><h3>راجع الطبيب فوراً عند</h3><p>فقدان السيطرة على البول أو البراز · تنميل منطقة الجلوس · ضعف متزايد في الساق · حرارة بعد حقنة · ألم ليلي شديد لا يتغيّر</p></div>
+ <div class="ifl"><h3>راجع الطبيب فوراً عند</h3><p>${REG().FL?FL.slice(0,4).map(stripR).join(' · '):'فقدان السيطرة على البول أو البراز · تنميل منطقة الجلوس · ضعف متزايد في الساق · حرارة بعد حقنة · ألم ليلي شديد لا يتغيّر'}</p></div>
  <div class="ift">المعلومات مأخوذة من إرشادات طبية رسمية ومراجعات منهجية ومستشفيات عالمية مرموقة، ومصادرها في قسم "المصادر العلمية". أُعدّ خصيصاً للمريض ${esc(PI.name)} بتاريخ ${fmtD(PI.date)} من قبل الدكتور ياسر الخزرجي، ولا يجوز استخدامه بدون استشارة الطبيب.</div></div>`}
 
 /* ---------- الصفحات ---------- */
