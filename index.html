@@ -172,7 +172,7 @@ sup.rf{font-size:.68em;color:var(--acc);font-weight:700;margin-inline-start:3px;
 .hname select{background-color:#fff;color:#1b1840;border-color:#fff;font-size:19px}
 .hname input,.hname select{height:54px}
 .afig .sil{fill:#ffffff10;stroke:#ffffff26;stroke-width:1.5}
-.afig .a-bone>*,.afig #lv>*{fill:#f3eee4;opacity:.88}
+.afig .a-bone>*,.afig #lv>*,.afig #cv>*{fill:#f3eee4;opacity:.88}
 .afig .a-mus>*{fill:url(#mus);stroke:#ff6f9c;opacity:0}
 .afig .a-mus .on{opacity:.85!important}
 .afig .a-joint>*{stroke:#ffd27a;opacity:0}
@@ -185,6 +185,9 @@ sup.rf{font-size:.68em;color:var(--acc);font-weight:700;margin-inline-start:3px;
 .afig .a-joint .on{filter:drop-shadow(0 0 6px #ffd27a)}
 @keyframes apulse{0%,100%{opacity:1}50%{opacity:.55}}
 @media(prefers-reduced-motion:reduce){.afig .on{animation:none}}
+
+.afig .a-joint g>*{fill:#ffd27a}
+.afig .a-mus ellipse{fill:#ff8fb3}
 
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-bottom:40px}input,textarea{-webkit-user-select:text;user-select:text}
 .gate{position:fixed;inset:0;z-index:200;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;padding:28px}
@@ -292,7 +295,15 @@ const AN=[
 {...PH_,base:{...SUP,ua:5,fa:1,ua2:7,fa2:3},k:[[{},500,300],[{ua:9},150,0],[{ua:-160,fa:-163,ua2:-158,fa2:-161,g:.3},1700,1200],[{},1300,300]]},
 {pin:['H',225,212],pr:'weight',base:{t:180,h:182,ua:4,fa:150,ua2:186,fa2:172,th:2,sh:0,ft:-80,th2:6,sh2:-4,ft2:-82,b:0,g:0},k:[[{},500,300],[{fa:146},150,0],[{fa:300,g:.5},1100,900,1],[{},1000,300]]},
 {pin:['A',225,220],pr:'band',base:{...STAND,ua:150,fa:155,ua2:152,fa2:157},k:[[{},500,300],[{ua:153,ua2:155},150,0],[{ua:94,fa:170,ua2:96,fa2:172,b:1,g:.6},900,1200,1],[{},900,300]]},
-{pin:['A',215,220],pr:'wall',base:{...STAND,ua:95,fa:159,ua2:88,fa2:90},k:[[{},500,300],[{ua:92},150,0],[{ua:213,fa:264,g:.3},1600,1200],[{},1300,300]]}
+{pin:['A',215,220],pr:'wall',base:{...STAND,ua:95,fa:159,ua2:88,fa2:90},k:[[{},500,300],[{ua:92},150,0],[{ua:213,fa:264,g:.3},1600,1200],[{},1300,300]]},
+{...PH_,base:{...SUP,th:3,sh:5,ft:-80},k:[[{},500,300],[{sh:1,ft:-98,g:.7},500,1500],[{},700,300]]},
+{...PH_,base:{...SUP,th:3,sh:3,ft:-85},k:[[{},500,300],[{th:5},150,0],[{th:-38,sh:-38,ft:-125,g:.5},1000,1000,1],[{},1000,300]]},
+{pin:['A',215,220],pr:'',base:{...STAND,ua:92,fa:90,ua2:88,fa2:86},k:[[{},500,300],[{t:-88},150,0],[{t:-110,h:-100,th:122,sh:66,th2:118,sh2:68,ua:172,fa:176,ua2:170,fa2:174,g:.4},1100,800,1],[{},1000,300]]},
+{pin:['H',200,182],pr:'chair',base:{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},k:[[{},500,300],[{sh:92},150,0],[{sh:4,ft:-86,g:.4},1000,900,1],[{},1000,300]]},
+{pin:['H',200,182],pr:'chair',base:{...{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},h:-78},k:[[{},500,300],[{h:-76},150,0],[{h:-98,g:.5},800,1400],[{},800,300]]},
+{...PH_,base:{...SUP,h:180},k:[[{},500,300],[{h:182},150,0],[{h:170,g:.5},800,1500],[{},800,300]]},
+{pin:['H',200,182],pr:'chair',base:{t:-88,h:-88,ua:60,fa:-10,ua2:62,fa2:-8,th:0,sh:90,ft:0,th2:2,sh2:88,ft2:0,b:-2,g:0},k:[[{},500,300],[{h:-45},1100,700],[{},800,100],[{h:-122},1100,700],[{},800,200]]},
+{pin:['A',200,220],pr:'',base:{t:-90,h:-90,ua:74,fa:84,ua2:106,fa2:96,th:72,sh:84,ft:0,th2:108,sh2:96,ft2:180,b:0,g:0},k:[[{},500,300],[{h:-120,ua2:96},1200,1500],[{},900,200],[{h:-60},1200,1500],[{},900,200]]}
 ];
 AN.forEach(a=>{a.K=a.k.map(([p,d,h,e])=>({P:{...a.base,...p},d,h,e}));a.tot=a.K.reduce((s,k)=>s+k.d+k.h,0);
  let m=0,mi=0;a.K.forEach((k,i)=>{if(k.h>m){m=k.h;mi=i}});a.act=mi});
@@ -792,8 +803,8 @@ const exOK=e=>dxEx().includes(e.i===undefined?EX.indexOf(e):e.i);
 
 const HL={disc:['disc'],facet:['facet'],sij:['sij'],piri:['piri'],spasm:['spasm'],coccyx:['coccyx'],cluneal:['cluneal'],hipoa:['hip'],fai:['hip'],lcs:['lcs'],ischial:['ischial'],troch:['troch'],lfcn:['lfcn'],pfcn:['pfcn'],afcn:['afcn'],femoral:['femoral'],sciatic:['sciatic'],pudendal:['pudendal'],genitofem:['genitofem'],obturator:['obturator'],adductor:['adductor'],itb:['itb']};
 const CAT={disc:'الفقرات والأقراص',facet:'مفاصل الفقرات',sij:'المفاصل',piri:'العضلات والأعصاب',spasm:'العضلات',coccyx:'العظام',cluneal:'الأعصاب',hipoa:'المفاصل',fai:'المفاصل',lcs:'العضلات',ischial:'الأكياس الزلالية',troch:'الأوتار والأكياس الزلالية',lfcn:'الأعصاب',pfcn:'الأعصاب',afcn:'الأعصاب',femoral:'الأعصاب',sciatic:'الأعصاب',pudendal:'الأعصاب',genitofem:'الأعصاب',obturator:'الأعصاب',adductor:'العضلات',itb:'العضلات والأربطة'};
-function anat(){let a=document.getElementById('anat');const sp=document.getElementById('spsv'),lg=document.getElementById('lgd'),sf=document.getElementById('shfig');if(!a)return;if(sf)sf.style.display='none';
- if(REG().fig==='shoulder'&&sf){a.style.display='none';sp.style.display='none';a=sf;a.style.display=''}
+function anat(){let a=document.getElementById('anat');const sp=document.getElementById('spsv'),lg=document.getElementById('lgd');if(!a)return;const FG={shoulder:'shfig',neck:'nkfig',knee:'knfig'};Object.values(FG).forEach(i=>{const e=document.getElementById(i);if(e)e.style.display='none'});
+ const sf=document.getElementById(FG[REG().fig]);if(sf){a.style.display='none';sp.style.display='none';a=sf;a.style.display='';if(a.id==='nkfig'&&!a.querySelector('#cv').children.length){let v='',f='',f2='',d='';for(let i=0;i<7;i++){const y=118+i*28,x=150+i*4;v+=`<rect x="${x}" y="${y}" width="42" height="20" rx="6"/>`;(i<3?(f2+=`<circle cx="${x-8}" cy="${y+10}" r="5"/>`):0);f+=`<circle cx="${x-8}" cy="${y+10}" r="5"/>`;if(i===4)d=`<rect x="${x+1}" y="${y+20.5}" width="40" height="6" rx="3"/>`}a.querySelector('#cv').innerHTML=v;a.querySelector('#cvf').innerHTML=f;a.querySelector('#cvf2').innerHTML=f2;a.querySelector('#cvd').innerHTML=d}}
  const lv=a.querySelector('#lv');if(lv&&!lv.children.length){let h='',f='',d='';for(let i=0;i<5;i++){const y=6+i*26;h+=`<rect x="143" y="${y}" width="44" height="20" rx="6"/><rect x="${i%2?160:159}" y="${y+4}" width="12" height="12" rx="3" opacity=".6"/>`;f+=`<circle cx="134" cy="${y+12}" r="4.5"/><circle cx="196" cy="${y+12}" r="4.5"/>`;if(i<4)d+=`<rect x="145" y="${y+20.5}" width="40" height="5" rx="2.5"${i===3?'':' opacity=".35"'}/>`}
   lv.innerHTML=h;a.querySelector('.hl-facet').innerHTML=f;a.querySelector('g.hl-disc').innerHTML=d}
  if(isSp()&&a.id==='anat'){a.style.display='none';sp.style.display='';lg.innerHTML='<span><i style="background:#ece6da"></i>الفقرة</span><span><i style="background:#9b8cf0"></i>القرص</span><span><i style="background:#ff7aa8"></i>مستوى التزحزح</span>';return}
@@ -940,6 +951,129 @@ dxOptions=()=>{const g={};REG().dx.forEach(k=>{(g[DX[k].g]=g[DX[k].g]||[]).push(
 const _dose=doseNote,_flare=flareNote;
 doseNote=()=>REG().dose?`<div class="note">${REG().dose()}</div>`:_dose();
 flareNote=()=>REG().flare?REG().flare():_flare();
+
+
+/* ---------- الرقبة والركبة ---------- */
+Object.assign(SRC,{
+91:['Blanpied PR, et al. Neck Pain: Revision 2017. Clinical Practice Guidelines (APTA Orthopaedic Section). J Orthop Sports Phys Ther 2017','https://doi.org/10.2519/jospt.2017.0302'],
+92:['StatPearls (NCBI Bookshelf). Cervical Radiculopathy','https://pubmed.ncbi.nlm.nih.gov/28722858/'],
+93:['Childress MA, Becker BA. Nonoperative management of cervical radiculopathy. American Family Physician 2016','https://www.aafp.org/pubs/afp/issues/2016/0501/p746'],
+94:['Cervical radiculopathy: epidemiology, etiology, diagnosis, and treatment. J Spinal Disord Tech 2015','https://pubmed.ncbi.nlm.nih.gov/25985461/'],
+95:['StatPearls (NCBI Bookshelf). Cervical Spondylosis','https://www.ncbi.nlm.nih.gov/books/NBK551557/'],
+96:['Jull G, et al. A randomized controlled trial of exercise and manipulative therapy for cervicogenic headache. Spine 2002','https://search.pedro.org.au/search-results/record-detail/3738'],
+97:['Treatment of whiplash-associated disorders: systematic review of the evidence. Pain Research & Management 2010','https://pmc.ncbi.nlm.nih.gov/articles/PMC2975532'],
+98:['Mayo Clinic. Update on medical management of whiplash-associated disorders','https://www.mayoclinic.org/medical-professionals/news/update-on-medical-management-of-whiplash-associated-disorders/mac-20533159'],
+99:['Australian Clinical Guidelines for Health Professionals Managing People with Whiplash-Associated Disorders, 4th edition (SIRA): summary of recommendations','https://www.sira.nsw.gov.au/__data/assets/pdf_file/0005/1141790/Summary-of-Recommendations.pdf'],
+100:['Leeds Teaching Hospitals NHS Trust. Acute neck sprain / whiplash associated disorder: patient information','https://www.leedsth.nhs.uk/?p=46796'],
+101:['Neck and neurological symptoms: cervical myelopathy and radiculopathy in primary care. British Journal of General Practice 2018','https://pmc.ncbi.nlm.nih.gov/articles/PMC5737310'],
+102:['Willy RW, et al. Patellofemoral Pain: Clinical Practice Guidelines (APTA). J Orthop Sports Phys Ther 2019','https://www.pubmed.gov/31475628/'],
+103:['American Family Physician. Patellofemoral pain: guidelines from the American Physical Therapy Association, 2020','https://www.aafp.org/pubs/afp/issues/2020/1001/p442.html'],
+104:['Kise NJ, et al. Exercise therapy versus arthroscopic partial meniscectomy for degenerative meniscal tear in middle aged patients: RCT. BMJ 2016','https://pubmed.ncbi.nlm.nih.gov/27440192/'],
+105:['Siemieniuk RAC, et al. Arthroscopic surgery for degenerative knee arthritis and meniscal tears: a clinical practice guideline (BMJ Rapid Recommendations). BMJ 2017','https://pmc.ncbi.nlm.nih.gov/articles/PMC5426368'],
+106:['Frobell RB, et al. A randomized trial of treatment for acute anterior cruciate ligament tears (KANON). N Engl J Med 2010','https://lup.lub.lu.se/record/1644537'],
+107:['Frobell RB, et al. Treatment for acute anterior cruciate ligament tear: five year outcome of randomised trial. BMJ 2013','https://pubmed.ncbi.nlm.nih.gov/23349407/'],
+108:['StatPearls (NCBI Bookshelf). Baker\'s Cyst','https://www.ncbi.nlm.nih.gov/books/NBK430774/'],
+109:['MSD Manual (Consumer Version). Baker cysts','https://www.msdmanuals.com/home/bone-joint-and-muscle-disorders/muscle-bursa-and-tendon-disorders/baker-cysts'],
+110:['StatPearls (NCBI Bookshelf). Pes Anserine Bursitis','https://ncbi.nlm.nih.gov/books/NBK532941'],
+111:['AAOS OrthoInfo. Pes anserine (knee tendon) bursitis','https://orthoinfo.aaos.org/en/diseases--conditions/pes-anserine-knee-tendon-bursitis'],
+112:['University of Maryland School of Medicine, Emergency Medicine educational pearls. Pes anserinus pain syndrome','https://www.medschool.umaryland.edu/em/cme/umem-educational-pearls/?id=4052'],
+113:['NHS. Septic arthritis','https://www.nhs.uk/conditions/septic-arthritis/'],
+114:['NHS 111 Wales. Knee pain','https://111.wales.nhs.uk/kneepain/?locale=en'],
+115:['NHS Scotland Right Decisions (Dumfries & Galloway). Acute knee pain referral guidance','https://rightdecisions.scot.nhs.uk/dgrefhelp-nhs-dumfries-galloway/musculoskeletal-system/knee/acute-knee-pain'],
+116:['NHS. Knee pain','https://www.nhs.uk/conditions/knee-pain/']});
+
+EX.push(
+{p:1,n:'شدّ عضلة الفخذ الأمامية',h:'استلقِ والساق ممدودة. اضغط خلف الركبة نحو الأرض بشد عضلة الفخذ الأمامية، واسحب أصابع القدم نحوك. ثبّت ثم أرخِ.',d:['10 × 5 ث','10 × 10 ث','15 × 10 ث'],m:2,s:[40,102]},
+{p:2,n:'رفع الساق مستقيمة',h:'استلقِ والركبة الأخرى مثنية. شدّ عضلة الفخذ ثم ارفع الساق الممدودة إلى مستوى الركبة المثنية ببطء، وأنزلها.',d:['2 × 8','3 × 10','3 × 12'],m:2,s:[102,40]},
+{p:3,n:'القرفصاء الجزئية',h:'قف وقدماك بعرض الكتفين، واستند إلى شيء ثابت إن احتجت. انزل قليلاً بثني الركبتين والوركين كأنك تجلس، ثم اصعد. لا تنزل إلى درجة تثير الألم.',d:['2 × 8','3 × 10','3 × 15'],m:2,s:[102,103]},
+{p:2,n:'مدّ الركبة جالساً',h:'اجلس على كرسي. مدّ الركبة ببطء حتى تستقيم الساق، ثبّت ثانيتين، ثم أنزلها.',d:['2 × 8','3 × 10','3 × 12'],m:2,s:[102,40]},
+{p:1,n:'سحب الذقن للخلف',h:'اجلس مستقيماً. اسحب ذقنك للخلف كأنك تصنع ذقناً مزدوجاً، دون أن تنظر للأعلى أو للأسفل. ثبّت ثم أرخِ.',d:['8 × 3 ث','10 × 5 ث','10 × 10 ث'],m:2,s:[91]},
+{p:1,n:'إيماءة الرأس وأنت مستلقٍ',h:'استلقِ على ظهرك. أومئ برأسك ببطء كأنك تقول «نعم»، بحركة صغيرة دون رفع الرأس عن الوسادة. ثبّت ثم أرخِ. يقوّي عضلات الرقبة العميقة.',d:['8 × 5 ث','10 × 10 ث','10 × 10 ث'],m:2,s:[96,91]},
+{p:1,n:'تحريك الرقبة للأمام والخلف',h:'اجلس مستقيماً. أنزل ذقنك نحو صدرك ببطء، ثم ارفع رأسك وانظر للأعلى قليلاً، ضمن المدى المريح.',d:['8 مرات','10 مرات','2 × 10'],m:2,s:[91]},
+{p:1,n:'إمالة الرأس جانباً',h:'قف أو اجلس مستقيماً. أمِل رأسك ببطء نحو كتفك حتى تشعر بشد مريح في الجهة الأخرى، ثبّت، ثم بدّل الجهة.',d:['3 × 15 ث','3 × 20 ث','3 × 30 ث'],m:2,s:[91]});
+
+IV.push({k:'knj',n:'حقن مفصل الركبة',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'gnb',n:'إحصار أو كي أعصاب الركبة',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'cesi',n:'حقنة فوق الجافية في الرقبة',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'cfac',n:'حقن أو كي المفاصل الفقرية في الرقبة',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]},
+ {k:'gon',n:'إحصار العصب القذالي',rest:null,b:['يحدد طبيبك موعد العودة لنشاطك وتمارينك'],x:[]});
+
+Object.assign(DX,{
+crad:{n:'انضغاط جذر عصبي في الرقبة (ديسك رقبي)',g:'الأعصاب',def:'ضغط أو تهيّج لجذر عصبي في الرقبة يسبب ألماً أو تنميلاً ينزل إلى الذراع. أكثر من 85% من الحالات الحادة تتحسن خلال 8–12 أسبوعاً'+R(92),
+ sev:['أغلب المرضى يتحسنون مهما كان نوع العلاج غير الجراحي'+R(93),'العلاج الطبيعي بالتقوية والإطالة قد يفيد'+R(93),'الجراحة لمن يستمر عنده الألم رغم العلاج أو لديه ضعف واضح'+R(94)],
+ ex:[33,34,35,27],lf:[0,1,3],avoid:[['أي حركة تجعل الألم أو التنميل ينزل أبعد في الذراع، وأخبر طبيبك بها'+R(91)],[],[]],
+ tips:['تمارين الحركة والتثبيت للرقبة جزء من العلاج'+R(91)],flags:['ضعف يزداد في الذراع أو اليد'+R(94,101)],
+ follow:[['المتابعة حسب الأعراض'+R(92)],['علاج طبيعي'+R(93)],['تقييم جراحي أو حقنة حسب الطبيب'+R(94)]],iv:['cesi']},
+cfacet2:{n:'خشونة المفاصل الفقرية في الرقبة',g:'المفاصل',def:'تغيرات تنكّسية مع العمر في أقراص ومفاصل الرقبة، تسبب ألماً وتيبّساً، وتظهر عند أغلب الناس بعد الخمسين'+R(95),
+ sev:['تمارين حركة الرقبة والبقاء نشيطاً'+R(91),'تمارين تقوية وتحمّل للرقبة ولوح الكتف والجذع'+R(91),'التداخلات الموجّهة بالأشعة خيار للحالات المستمرة'+R(95)],
+ ex:[35,33,34,27,36],lf:[0,1,3],avoid:[['البقاء في وضعية واحدة طويلاً'+R(100)],[],[]],
+ tips:['التغيرات في الصور شائعة جداً حتى عند من لا يشكون من ألم'+R(95)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(91)],['علاج طبيعي'+R(91)],['حقن المفاصل أو الكي الحراري حسب الطبيب'+R(95)]],iv:['cfac']},
+cmech:{n:'ألم عضلي ووضعي في الرقبة',g:'العضلات',def:'ألم في الرقبة مع محدودية في حركتها، دون ضغط على الأعصاب'+R(91),
+ sev:['تمارين حركة الرقبة والبقاء نشيطاً'+R(91),'تمارين تقوية وتحمّل للرقبة ولوح الكتف والجذع'+R(91),'علاج طبيعي متعدد الوسائل'+R(91)],
+ ex:[35,33,36,27,34],lf:[0,1,3],avoid:[['البقاء في وضعية واحدة طويلاً عند الجلوس أو القيادة'+R(100)],['الجلوس منحنياً مع اندفاع الذقن للأمام'+R(100)],[]],
+ tips:['وازن بين الراحة والتمارين الخفيفة لتمنع التيبّس'+R(100)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(91)],['علاج طبيعي'+R(91)],['علاج طبيعي'+R(91)]],iv:['cfac']},
+wad:{n:'إصابة الرقبة الارتدادية بعد حادث',g:'العضلات',def:'إصابة في الرقبة من حركة مفاجئة للأمام والخلف، غالباً في حوادث السيارات، وتسبب ألماً وتيبّساً'+R(98),
+ sev:['التثقيف والنصيحة بالبقاء نشيطاً يقللان الألم والإعاقة'+R(98,97),'التمارين جزء من العلاج الموصى به'+R(99),'الإحالة لأخصائي عند استمرار الأعراض'+R(99)],
+ ex:[35,33,34,27],lf:[0,1,2,3],avoid:[['الطوق الطري: لا يفيد وقد يؤخر الشفاء'+R(97)],['الخمول الطويل والبقاء في وضعية واحدة'+R(100)],[]],
+ tips:['من يبقون نشيطين ويمرّنون رقبتهم يتعافون بشكل أفضل'+R(100)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(99)],['علاج طبيعي'+R(99)],['تقييم من أخصائي'+R(99)]],iv:[]},
+cgh:{n:'صداع منشؤه الرقبة',g:'الأعصاب',def:'صداع مصدره مفاصل أو عضلات الرقبة العليا، يزداد مع وضعيات أو حركات الرقبة'+R(91),
+ sev:['تمارين عضلات الرقبة العميقة تقلل تكرار الصداع وشدته'+R(96),'التمارين مع العلاج اليدوي'+R(96),'المتابعة مع الطبيب لخيارات أخرى'],
+ ex:[34,33,27,35],lf:[0,1,3],avoid:[['الوضعيات التي تثير الصداع لفترات طويلة'+R(91)],[],[]],
+ tips:['تأثير التمارين استمر حتى 12 شهراً في دراسة عشوائية'+R(96)],flags:['صداع مفاجئ شديد جداً، أو صداع مع حرارة وتيبّس الرقبة'+R(101)],
+ follow:[['المتابعة حسب الأعراض'+R(96)],['علاج طبيعي'+R(91)],['المتابعة مع الطبيب'+R(91)]],iv:['gon','cfac']},
+kneeoa:{n:'خشونة الركبة',g:'المفاصل',def:'خشونة مفصل الركبة. التمارين، وإنقاص الوزن لمن لديه زيادة، واستعمال العصا والدعامة من أقوى التوصيات'+R(40),
+ sev:['تمارين منتظمة وبرامج الإدارة الذاتية'+R(40),'يُضاف إنقاص الوزن عند زيادته، والتاي تشي'+R(40),'العصا والدعامة مع الاستمرار بالتمارين؛ والتنظير لا يُنصح به في خشونة الركبة'+R(40,105)],
+ ex:[29,30,32,13,31,23,15,8],lf:[0,1,2,3],avoid:[[],[],[]],sports:['التمارين المنتظمة'+R(40),'التاي تشي'+R(40),'المشي'+R(12)],
+ tips:['التمارين وإنقاص الوزن والتاي تشي والعصا ودعامة الركبة: توصيات قوية'+R(40),'تنظير الركبة لا يحسّن الألم أو الوظيفة على المدى البعيد في أمراض الركبة التنكّسية'+R(105)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(40)],['المتابعة حسب الأعراض'+R(40)],['المتابعة حسب الأعراض والقدرة على المشي'+R(40)]],iv:['knj','gnb']},
+pfp:{n:'ألم الرضفة (الصابونة)',g:'المفاصل',def:'ألم حول الصابونة أو خلفها، يزداد مع القرفصاء والدرج والجلوس الطويل والجري'+R(102),
+ sev:['تمارين عضلات الورك الخلفية والفخذ الأمامية هي العلاج الأكثر فعالية'+R(103),'التمارين بعدد تكرارات كبير مع زيادتها بالتدريج'+R(103),'إضافة لاصق الرضفة أو فرشات القدم للتمارين تخفف الألم على المدى القصير'+R(103)],
+ ex:[29,30,32,20,8,31],lf:[0,2,3],avoid:[['الإكثار من الأنشطة التي تثير الألم مثل القرفصاء العميقة والدرج والجلوس الطويل بركبة مثنية'+R(102)],[],[]],
+ tips:['زيادة النشاط الرياضي بالتدريج أفضل طريقة للوقاية'+R(102)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(103)],['علاج طبيعي'+R(103)],['علاج طبيعي'+R(103)]],iv:[]},
+menis:{n:'تمزق الغضروف الهلالي',g:'المفاصل',def:'تمزق في الغضروف الهلالي داخل الركبة. في التمزق التنكّسي عند متوسطي العمر، العلاج بالتمارين لم يكن أقل من الجراحة بالتنظير'+R(104),
+ sev:['برنامج تمارين منظم'+R(104),'برنامج تمارين منظم تحت إشراف'+R(104),'تنظير الركبة لا يُنصح به في أغلب حالات الركبة التنكّسية'+R(105)],
+ ex:[29,30,32,23,31,13,15],lf:[0,2,3],avoid:[[],[],[]],
+ tips:['أغلب المرضى يتحسنون بشكل مهم بدون تنظير'+R(105)],flags:['الركبة تُقفل ولا تستقيم'+R(115,114)],
+ follow:[['المتابعة حسب الأعراض'+R(104)],['علاج طبيعي'+R(104)],['تقييم من جراح العظام'+R(115)]],iv:['knj']},
+acl:{n:'إصابة الرباط الصليبي',g:'الأربطة',def:'تمزق الرباط الصليبي الأمامي، إصابة شائعة عند الشباب النشطين'+R(106),
+ sev:['برنامج تأهيل منظم هو الأساس'+R(106),'التأهيل مع إمكانية الجراحة لاحقاً عند الحاجة كان مساوياً للجراحة المبكرة'+R(106,107),'عدم ثبات الركبة رغم التأهيل يحتاج تقييماً من جراح العظام'+R(107)],
+ ex:[29,30,32,23,31,15,8],lf:[0,2],avoid:[[],[],[]],
+ tips:['نصف المرضى تقريباً في دراسة KANON لم يحتاجوا جراحة بعد التأهيل'+R(107)],flags:['إصابة قوية مع تورّم سريع وعدم ثبات'+R(115)],
+ follow:[['المتابعة مع الطبيب والمعالج'+R(106)],['تأهيل منظم'+R(106)],['تقييم جراحي'+R(107)]],iv:[]},
+baker:{n:'كيس بيكر خلف الركبة',g:'الأكياس الزلالية',def:'كيس مملوء بسائل المفصل خلف الركبة، وغالباً يرتبط بمشكلة داخل المفصل مثل الخشونة أو التمزق'+R(108,109),
+ sev:['مسكنات مضادات الالتهاب هي العلاج الأول للألم'+R(109),'قد يسحب الطبيب السائل ويحقن الكيس'+R(109),'إزالة الكيس جراحياً نادراً'+R(109)],
+ ex:[29,30,23],lf:[0,2,3],avoid:[[],[],[]],
+ tips:['علاج المشكلة الأساسية في المفصل جزء من العلاج'+R(109)],flags:['تورّم وألم مفاجئ في ربلة الساق: قد يكون تمزّق الكيس أو جلطة، ويحتاج فحصاً عاجلاً'+R(109)],
+ follow:[['المتابعة حسب الأعراض'+R(108)],['المتابعة حسب الأعراض'+R(109)],['تقييم من جراح العظام'+R(109)]],iv:['knj']},
+pesans:{n:'التهاب الكيس الزلالي في الجهة الداخلية للركبة',g:'الأكياس الزلالية',def:'ألم في الجهة الداخلية أسفل الركبة، ويرتبط كثيراً بخشونة الركبة. يتحسن غالباً بالتمارين والإطالة'+R(110),
+ sev:['تقليل الأنشطة المثيرة للألم، والثلج، وإطالة عضلات الفخذ الخلفية'+R(112),'العلاج الطبيعي، ومضادات الالتهاب حسب الطبيب'+R(112),'حقنة الكيس عند عدم الاستجابة'+R(112)],
+ ex:[4,29,30,32,20],lf:[0,1,3],avoid:[['الأنشطة التي تثير الألم مثل صعود الدرج والجري على المرتفعات'+R(112,111)],[],[]],
+ tips:['السمنة وشدّ عضلات الفخذ الخلفية من عوامل الخطر'+R(111)],flags:[],
+ follow:[['المتابعة حسب الأعراض'+R(110)],['علاج طبيعي'+R(112)],['حقنة الكيس حسب الطبيب'+R(112)]],iv:['knj']}});
+
+Object.assign(REGIONS,{
+neck:{t:'الرقبة',dx:['crad','cfacet2','cmech','wad','cgh'],fig:'neck',iv:['cesi','cfac','gon'],
+ FL:['ضعف أو تنميل يزداد في الذراعين أو الساقين'+R(101),'صعوبة في استعمال اليدين بدقة أو عدم ثبات في المشي'+R(101),'حرارة، أو نقص وزن غير مبرر، أو ألم يزداد ولا يهدأ أو يوقظك من النوم'+R(101),'تاريخ إصابة بالسرطان أو التهاب المفاصل'+R(101)],
+ LF:[{t:'الحركة والنشاط',b:['ابقَ نشيطاً وتابع حياتك اليومية رغم الألم'+R(100),'وازن بين الراحة والتمارين الخفيفة لتمنع التيبّس'+R(100),'150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة مثل المشي'+R(12)],a:[[],[],['أضف تمارين التوازن، فهي تقلل السقوط'+R(13)]],g:[[],[],[]]},
+  {t:'الجلوس والشاشة',b:['لا تبقَ في وضعية واحدة طويلاً عند الجلوس أو القيادة'+R(100),'تجنّب الجلوس منحنياً مع اندفاع الذقن للأمام'+R(100)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'الطوق الطبي',b:['الطوق الطري في إصابة الرقبة الارتدادية لا يفيد وقد يؤخر الشفاء'+R(97)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'تخفيف الألم',b:['المسكنات التي يصفها الطبيب تساعدك على الحركة والبقاء نشيطاً'+R(100)],a:[[],[],[]],g:[[],[],[]]}],
+ DO:['ابقَ نشيطاً وتابع حياتك اليومية','لا تبقَ في وضعية واحدة طويلاً','لا تستعمل الطوق إلا بوصفة','المسكنات حسب الطبيب لتتحرك'],
+ dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. التمارين أساس علاج أغلب أنواع ألم الرقبة${R(91)}.`,
+ flare:()=>`مع الهجمة: استمر بالحركة الخفيفة ضمن المدى المريح، والمسكن الذي يصفه طبيبك${R(100)}. إذا نزل الألم إلى الذراع مع ضعف، أو ظهرت أي علامة خطر، فراجع الطبيب.`},
+knee:{t:'الركبة',dx:['kneeoa','pfp','menis','acl','baker','pesans'],fig:'knee',iv:['knj','gnb'],
+ FL:['ركبة حارة ومتورّمة أو حمراء مع ألم شديد أو حرارة أو شعور بالتوعك'+R(113),'عدم القدرة على تحريك الركبة أو الوقوف عليها، أو تغيّر شكلها'+R(114),'الركبة تُقفل أو تخون أو تطقطق بألم'+R(114),'إصابة قوية مع تورّم سريع وعدم ثبات'+R(115),'تورّم وألم مفاجئ في ربلة الساق'+R(109)],
+ LF:[{t:'الحركة والنشاط',b:['التمارين المنتظمة من أقوى التوصيات لألم الركبة التنكّسي'+R(40),'زِد نشاطك الرياضي بالتدريج'+R(102),'150–300 دقيقة أسبوعياً من نشاط هوائي متوسط الشدة'+R(12)],a:[[],[],['أضف تمارين التوازن، فهي تقلل السقوط'+R(13)]],g:[[],[],[]]},
+  {t:'الوزن',b:['إنقاص الوزن لمن لديه زيادة توصية قوية في خشونة الركبة'+R(40)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'الأدوات المساعدة',b:['العصا ودعامة الركبة توصيات قوية في خشونة الركبة'+R(40),'لاصق الرضفة أو فرشات القدم قد تخفف ألم الصابونة على المدى القصير مع التمارين'+R(103)],a:[[],[],[]],g:[[],[],[]]},
+  {t:'تخفيف الألم',b:['المسكنات أو جل مضادات الالتهاب حسب الطبيب'+R(116),'الثلج قد يخفف ألم التهاب الكيس الزلالي'+R(112)],a:[[],[],[]],g:[[],[],[]]}],
+ DO:['تمرّن بانتظام وزِد نشاطك بالتدريج','حافظ على وزن صحي','استعمل العصا أو الدعامة إن نُصحت بها','المسكنات والثلج حسب الطبيب'],
+ dose:()=>`الجرعات المكتوبة نقطة بداية يحددها طبيبك ويعدّلها حسب استجابتك. التمارين أساس علاج أغلب حالات ألم الركبة${R(40,102,104)}.`,
+ flare:()=>`مع الهجمة: قلّل الأنشطة المثيرة للألم مؤقتاً، واستمر بالتمارين الخفيفة غير المؤلمة${R(40)}. إذا ظهرت حرارة أو تورّم شديد أو أي علامة خطر فراجع الطبيب.`}});
 
 
 /* ---------- تطبيق المريض ---------- */
